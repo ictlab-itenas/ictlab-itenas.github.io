@@ -49,7 +49,7 @@
             <img class="img1" src="8.jpg" alt="Active Member of ITENAS Badminton Student Unit" style="--pos: 8">
         </div>
         <div >
-            <div id="image-caption">*Hover over the image to see the description.</div>
+            <div class="image-caption" id="image-caption">*Hover over the image to see the description.</div>
         </div>
     </section>
     </div>
@@ -265,25 +265,68 @@
 
         AOS.init();
         const app = document.getElementById('typed-role');    
+
+        // Function to check screen width and set the text accordingly
+        function getTypewriterText() {
+            if (window.innerWidth <= 500) {
+                return [
+                    "Python Developer",
+                    " - ",
+                    "Backend Developer"
+                ];
+            } else {
+                return [
+                    "Python Developer",
+                    " - ",
+                    "AI Engineer",
+                    " - ",
+                    "Backend Developer"
+                ];
+            }
+        }
+
         const typewriter = new Typewriter(app, {
             loop: true,          // Mengulang animasi
             delay: 100,          // Jeda antar huruf (ms)
             deleteSpeed: 1000     // Kecepatan menghapus huruf
         });
-    
+
+        // Get the typewriter text based on the screen size
+        const typewriterText = getTypewriterText();
+
+        typewriterText.forEach((text, index) => {
+            if (index % 2 === 0) {
+                typewriter.typeString(text);
+            } else {
+                typewriter.pauseFor(250).typeString(text);
+            }
+        });
+
         typewriter
-            .typeString("Python Developer")
-            .pauseFor(250)
-            .typeString(" - ")
-            .pauseFor(250)
-            .typeString("AI Engineer")
-            .pauseFor(200)
-            .typeString(" - ")
-            .pauseFor(250)
-            .typeString("Backend Developer")
             .pauseFor(4000)
             .deleteAll()
             .start();
+
+        // Optional: Listen for window resize to update the text dynamically
+        window.addEventListener('resize', () => {
+            typewriter.stop();
+            const typewriterText = getTypewriterText();
+            typewriter.clear();
+            
+            typewriterText.forEach((text, index) => {
+                if (index % 2 === 0) {
+                    typewriter.typeString(text);
+                } else {
+                    typewriter.pauseFor(250).typeString(text);
+                }
+            });
+
+            typewriter
+                .pauseFor(4000)
+                .deleteAll()
+                .start();
+        });
+
     </script>
 </body>
 </html>

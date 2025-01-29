@@ -501,3 +501,137 @@ color: #fff;
     opacity: 1; /* Tampilkan 'Advanced' saat hover */
 }
 
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 8px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-menu {
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .hero {
+        height: auto;
+        padding: 80px 20px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .hero .cta {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
+
+    .navbar-logo {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .navbar {
+        display: none;
+    }
+
+    /* Other mobile adjustments */
+    .hero h1 {
+        margin-top: -20px;
+        font-size: 1.7rem;
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .hero p {
+        margin-top: 30px;
+        font-size: 1.2rem;
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;
+    }
+
+    .hero .cta {
+        padding: 8px 15px;
+        font-size: 1rem;
+    }
+
+    #typed-role {
+        margin-top: 15px;
+        font-size: 1rem;
+    }
+
+    .activity {
+        height: 400px; /* Further reduce height */
+        margin: 0 10px; /* Less margin */
+    }
+
+    .section-title {
+        font-size: 2rem; /* Even smaller font size */
+        margin-top: 30px;
+    }
+
+    :root {
+        --height: 40vh; /* Even smaller slider height */
+        --duration: 30s; /* Further decrease animation duration */
+    }
+
+    .slider {
+        width: 400%; /* Adjust slider width */
+    }
+
+    .img1 {
+        height: 28vh;
+        animation-duration: var(--duration); /* Adjust animation duration */
+    }
+
+    #image-caption {
+        margin-left: 15px;
+        font-size: 1rem;/* Even smaller font for mobile */
+        margin-top: 10px;      
+        justify-content: center;
+    }
+    
+    .about {
+        height: 210vh;
+        padding: 15px; /* Reduced padding */
+    }
+
+    .about h1 {
+        margin-top: 50px;
+        font-size: 2rem; /* Even smaller font size */
+    }
+
+    .about p {
+        font-size: 0.9rem; /* Further reduced text size */
+        margin-left: 10px;
+        margin-right: 10px; /* Less margin */
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(1, 1fr); /* Single column on very small screens */
+    }
+
+    .skill-box {
+        width: 100%; /* Full width for skill box */
+        height: 50px; /* Even smaller height */
+    }
+
+    .skill-name {
+        font-size: 12px; /* Even smaller skill name */
+    }
+
+    .advanced-label {
+        font-size: 7px; /* Even smaller 'Advanced' label */
+    }
+}

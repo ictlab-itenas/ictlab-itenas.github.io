@@ -417,6 +417,16 @@ color: #fff;
     margin-right: 50px;
 }
 
+.skills-grid1 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 kolom */
+    gap: 20px;
+    padding: 20px;
+    margin-top: -15px;
+    margin-left: 200px;
+    margin-right: 50px;
+}
+
 .skill-box {
     display: flex;
     align-items: center;
@@ -633,5 +643,10 @@ color: #fff;
 
     .advanced-label {
         font-size: 7px; /* Even smaller 'Advanced' label */
+    }
+
+    .skills-grid1 {
+        grid-template-columns: repeat(1, 1fr); /* Single column on very small screens */
+        margin-left: 50px;
     }
 }

@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f4f4f9;
@@ -14,6 +18,7 @@ body {
     height: 100vh; /* Membatasi tinggi layar */
     overflow-x: hidden;
     overflow-y: scroll; /* Scroll vertikal */
+    scroll-snap-type: y mandatory;
 }
 
 ::-webkit-scrollbar {
@@ -257,7 +262,7 @@ color: #fff;
     --items-count: 8; /* Jumlah gambar */
     --width: 90vw; /* Lebar slider sesuai dengan lebar layar */
     --height: 60vh; /* Tinggi slider sesuai dengan tinggi layar */
-    --duration: 30s; /* Durasi animasi */
+    --duration: 44s; /* Durasi animasi */
   }
   
   
@@ -393,12 +398,35 @@ color: #fff;
 }
 
 .about h1 {
-    margin-top: 0px;
+    margin-top: 40px;
     font-size: 3rem;
     color: #222;
 }
 
 .about p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: 25px;
+}
+
+.skill {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 660px;
+}
+
+.skill h1 {
+    margin-top: 0px;
+    font-size: 3rem;
+    color: #222;
+}
+
+.skill p {
     font-size: 1.2rem;
     color: #555;
     margin-top: -10px;
@@ -423,7 +451,7 @@ color: #fff;
     gap: 20px;
     padding: 20px;
     margin-top: -15px;
-    margin-left: 200px;
+    margin-left: 160px;
     margin-right: 50px;
 }
 
@@ -510,6 +538,89 @@ color: #fff;
 .skill-box:hover .advanced-label {
     opacity: 1; /* Tampilkan 'Advanced' saat hover */
 }
+
+  /* Sembunyikan semua teks tambahan */
+  .calendar .contrib-column-first, /* Hapus teks "Contributions in the last year" */
+  .calendar .contrib-column,       /* Hapus total kontribusi & rentang tanggal */
+  .calendar .calendar-footer,       /* Hapus footer */
+  .calendar .contrib-info {         /* Hapus info kontribusi */
+    display: none !important;
+  }
+
+/* From Uiverse.io by barisdogansutcu */ 
+.download-button {
+    margin-top: 25px;
+    position: relative;
+    border-width: 0;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    z-index: 1;
+  }
+  
+  .download-button .docs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 10px;
+    border-radius: 4px;
+    z-index: 1;
+    background-color: #242a35;
+    border: solid 1px #e8e8e82d;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  
+  .download-button:hover {
+    box-shadow:
+      rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px,
+      rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px,
+      rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+  
+  .download {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90%;
+    margin: 0 auto;
+    z-index: -1;
+    border-radius: 4px;
+    transform: translateY(0%);
+    background-color: #000000;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  
+  .download-button:hover .download {
+    transform: translateY(100%);
+  }
+  
+  .download svg polyline,
+  .download svg line {
+    animation: docs 1s infinite;
+  }
+  
+  @keyframes docs {
+    0% {
+      transform: translateY(0%);
+    }
+  
+    50% {
+      transform: translateY(-15%);
+    }
+  
+    100% {
+      transform: translateY(0%);
+    }
+  }
+  
 
 @media screen and (max-width: 768px) {
     .navbar {

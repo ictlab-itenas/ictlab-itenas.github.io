@@ -262,7 +262,7 @@ color: #fff;
     --items-count: 8; /* Jumlah gambar */
     --width: 90vw; /* Lebar slider sesuai dengan lebar layar */
     --height: 60vh; /* Tinggi slider sesuai dengan tinggi layar */
-    --duration: 44s; /* Durasi animasi */
+    --duration: 15s; /* Durasi animasi */
   }
   
   
@@ -410,6 +410,10 @@ color: #fff;
     margin-left: 150px;
     margin-right: 150px;
     margin-top: 25px;
+}
+
+.about p span{
+    color: #c20000;
 }
 
 .skill {

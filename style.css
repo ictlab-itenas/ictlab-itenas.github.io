@@ -513,7 +513,7 @@ color: #fff;
     display: flex;
     gap: 15px;
     margin-top: 10px;
-    opacity: 0; /* Sembunyikan level skill secara default */
+    opacity: 1; /* Sembunyikan level skill secara default */
     transition: opacity 0.3s;
     justify-content: center; /* Agar dot berada di tengah */
 }

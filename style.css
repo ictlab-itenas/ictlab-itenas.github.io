@@ -15,33 +15,33 @@ body {
     background-color: #f4f4f9;
     color: #333;
     line-height: 1.6;
-    height: 100vh; /* Membatasi tinggi layar */
+    height: 100vh; 
     overflow-x: hidden;
-    overflow-y: scroll; /* Scroll vertikal */
+    overflow-y: scroll;
     scroll-snap-type: y mandatory;
 }
 
 ::-webkit-scrollbar {
-    height: 8px; /* Menentukan tinggi scrollbar */
-    width: 0px;  /* Menyembunyikan scrollbar vertikal */
+    height: 8px; 
+    width: 0px; 
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Warna track */
+    background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888; /* Warna thumb */
+    background: #888; 
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Hover state thumb */
+    background: #555; 
 }
 
 ::-webkit-scrollbar {
     position: absolute;
-    bottom: 0; /* Menempatkan scrollbar di bawah */
+    bottom: 0;
     width: 100%;
 }
 
@@ -146,13 +146,13 @@ body {
 }
 
 .hero p span {
-    display: inline-block;  /* Pastikan kata tetap berada di baris yang sama */
+    display: inline-block;
     transition: all 0.3s ease-in-out;
   }
   
   .hero p span:hover {
-    color: #000000; /* Mengubah warna kata */
-    transform: translateY(-5px); /* Memberikan efek pergeseran ke atas */
+    color: #000000;
+    transform: translateY(-5px); 
     cursor: pointer;
   }
 
@@ -162,7 +162,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* From Uiverse.io by cssbuttons-io */ 
 button {
 position: relative;
 display: inline-block;
@@ -278,10 +277,10 @@ color: #fff;
 }
 
 :root {
-    --items-count: 8; /* Jumlah gambar */
-    --width: 90vw; /* Lebar slider sesuai dengan lebar layar */
-    --height: 60vh; /* Tinggi slider sesuai dengan tinggi layar */
-    --duration: 44s; /* Durasi animasi */
+    --items-count: 8;
+    --width: 90vw; 
+    --height: 60vh; 
+    --duration: 44s;
   }
   
   
@@ -299,12 +298,12 @@ color: #fff;
   
   
   .slider:hover img {
-    animation-play-state: paused !important; /* Menjeda animasi saat hover */
+    animation-play-state: paused !important; 
     filter: grayscale(1);
   }
   
   .slider img:hover {
-    filter: grayscale(0); /* Efek hover pada gambar */
+    filter: grayscale(0);
   }
   
   .img1 {
@@ -312,12 +311,12 @@ color: #fff;
     width: auto;
     flex-shrink: 0;
     height: var(--height);
-    object-fit: cover; /* Menyesuaikan gambar dengan ukuran kontainer */
+    object-fit: cover;
     transition: filter 0.3s;
     left: 100%;
     border-radius: 5px;
-    filter: grayscale(0); /* Tidak ada filter grayscale di awal */
-    animation: autoRunSlider var(--duration) linear infinite; /* Animasi looping */
+    filter: grayscale(0); 
+    animation: autoRunSlider var(--duration) linear infinite; 
     animation-delay: calc((var(--pos) - 1) * (-1 * var(--duration) / 8));
   }
   
@@ -326,7 +325,7 @@ color: #fff;
       left: 100%;
     }
     to {
-      left: calc(-100%); /* Pindahkan gambar ke kiri secara terus menerus */
+      left: calc(-100%);
     }
   }
   
@@ -335,7 +334,7 @@ color: #fff;
     font-size: 18px;
     font-weight: 0.3s;
     color: #333;
-    min-height: 30px; /* Agar tidak berubah-ubah tinggi */
+    min-height: 30px;
 }
 
   .box {
@@ -461,7 +460,7 @@ color: #fff;
 
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 kolom */
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
     padding: 20px;
     margin-top: -15px;
@@ -471,7 +470,7 @@ color: #fff;
 
 .skills-grid1 {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 kolom */
+    grid-template-columns: repeat(5, 1fr); 
     gap: 20px;
     padding: 20px;
     margin-top: -15px;
@@ -488,7 +487,7 @@ color: #fff;
     transition: 0.3s;
     position: relative;
     overflow: hidden;
-    width: 220px; /* Sesuaikan ukuran */
+    width: 220px;
     height: 80px;
 }
 
@@ -502,7 +501,7 @@ color: #fff;
     height: 40px;
     transition: 0.3s;
     margin-left: 15px;
-    margin-right: 30px; /* Memberikan jarak antara gambar dan teks */
+    margin-right: 30px;
 }
 
 .skill-box:hover img {
@@ -512,7 +511,7 @@ color: #fff;
 .skill-info {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Agar teks berada di sebelah kanan gambar */
+    align-items: flex-start;
     justify-content: center;
     flex: 1;
     text-align: center;
@@ -523,23 +522,23 @@ color: #fff;
     font-size: 18px;
     font-weight: bold;
     transition: transform 0.3s ease-in-out;
-    transform: translateY(-20px); /* Geser teks ke atas saat hover */
+    transform: translateY(-20px);
 }
 
 .skill-level {
     display: flex;
     gap: 15px;
     margin-top: 10px;
-    opacity: 1; /* Sembunyikan level skill secara default */
+    opacity: 1; 
     transition: opacity 0.3s;
-    justify-content: center; /* Agar dot berada di tengah */
+    justify-content: center;
 }
 
 .dot {
     margin-top: -27px;
     width: 12px;
     height: 12px;
-    background-color: rgb(0, 0, 0); /* Ubah warna dot menjadi putih */
+    background-color: rgb(0, 0, 0); 
     border-radius: 50%;
 }
 
@@ -582,8 +581,8 @@ color: #fff;
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #000; /* Ganti warna menjadi hitam */
-    animation: spark-animation 1s ease-out forwards; /* Durasi lebih panjang dan efek smooth */
+    background-color: #000;
+    animation: spark-animation 1s ease-out forwards; 
     pointer-events: none;
 }
 
@@ -597,15 +596,15 @@ color: #fff;
         transform: scale(0) translate(var(--x), var(--y));
     }
 }
-  /* Sembunyikan semua teks tambahan */
-  .calendar .contrib-column-first, /* Hapus teks "Contributions in the last year" */
-  .calendar .contrib-column,       /* Hapus total kontribusi & rentang tanggal */
-  .calendar .calendar-footer,       /* Hapus footer */
-  .calendar .contrib-info {         /* Hapus info kontribusi */
-    display: none !important;
-  }
 
-/* From Uiverse.io by barisdogansutcu */ 
+.calendar .contrib-column-first, 
+.calendar .contrib-column,       
+.calendar .calendar-footer,       
+.calendar .contrib-info {         
+display: none !important;
+}
+
+
 .download-button {
     margin-top: 25px;
     position: relative;

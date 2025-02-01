@@ -166,7 +166,7 @@
                 <div class="skill-info">
                     <span class="skill-name">Dart</span>
                     <div class="skill-level"></div>
-                    <span class="advanced-label"></span> <!-- Label untuk 'Advanced' -->
+                    <span class="advanced-label"></span>
                 </div>
             </div>
             
@@ -204,7 +204,7 @@
                 <div class="skill-info">
                     <span class="skill-name">MySQL</span>
                     <div class="skill-level"></div>
-                    <span class="advanced-label"></span> <!-- Label untuk 'Advanced' -->
+                    <span class="advanced-label"></span>
                 </div>
             </div>
             
@@ -267,29 +267,29 @@
         document.addEventListener("DOMContentLoaded", function () {
             const h1 = document.querySelector("h1");
             const text = h1.innerText.split(" ");
-            h1.innerHTML = ""; // Clear the content
+            h1.innerHTML = "";
 
             text.forEach((word, index) => {
                 const span = document.createElement("span");
                 span.innerText = word;
-                span.style.animation = `fallBlur 1s ${index * 0.2}s forwards`; // Delay each word
+                span.style.animation = `fallBlur 1s ${index * 0.2}s forwards`;
                 h1.appendChild(span);
-                h1.innerHTML += " "; // Add space between words
+                h1.innerHTML += " ";
             });
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-    const p = document.querySelector("p");
-    const text = p.innerText.split(" "); // Memecah teks berdasarkan spasi
-    p.innerHTML = ""; // Clear the content
+            const p = document.querySelector("p");
+            const text = p.innerText.split(" ");
+            p.innerHTML = "";
 
-    text.forEach((word) => {
-        const span = document.createElement("span");
-        span.innerText = word;
-        p.appendChild(span);
-        p.appendChild(document.createTextNode(" ")); // Menambahkan spasi antar kata
-    });
-});
+            text.forEach((word) => {
+                const span = document.createElement("span");
+                span.innerText = word;
+                p.appendChild(span);
+                p.appendChild(document.createTextNode(" "));
+            });
+        });
         // window.addEventListener('wheel', function(event) {
         //     if (event.deltaY > 0) {
         //         window.scrollBy(0, 660);
@@ -303,11 +303,9 @@
             const ink = document.createElement("div");
             ink.className = "ink";
             
-            // Tentukan posisi ink berdasarkan klik
-            ink.style.left = (x - 90) + "px";  // Sesuaikan posisi ink
-            ink.style.top = (y - 90) + "px";   // Sesuaikan posisi ink
+            ink.style.left = (x - 90) + "px";  
+            ink.style.top = (y - 90) + "px";  
             
-            // Pilihan warna tinta random
             const colors = [
                 "rgba(255, 0, 0, 0.4)", 
                 "rgba(0, 255, 0, 0.4)", 
@@ -320,20 +318,17 @@
 
             document.body.appendChild(ink);
 
-            // Hapus setelah animasi selesai
             setTimeout(() => {
                 ink.remove();
             }, 5000);
         }
-
-        // Tambahkan event listener untuk klik di seluruh halaman
+        
         document.body.addEventListener("click", (event) => {
-            const x = event.clientX; // Posisi X dari klik
-            const y = event.clientY; // Posisi Y dari klik
-            createInkEffect(x, y);  // Panggil fungsi ink dengan posisi klik
+            const x = event.clientX; 
+            const y = event.clientY; 
+            createInkEffect(x, y); 
         });
 
-        // Jalankan efek random setiap 700ms untuk latar belakang
         setInterval(() => {
             const x = Math.random() * window.innerWidth;
             const y = Math.random() * window.innerHeight;
@@ -344,7 +339,7 @@
 
         function downloadCV() {
             const link = document.createElement('a');
-            link.href = 'CV_Afin.pdf'; // Ganti dengan path file CV Anda
+            link.href = 'CV_Afin.pdf';
             link.download = 'CV_Afin_Maulana';
             link.click();
         }
@@ -356,14 +351,12 @@
             let levelContainer = item.querySelector('.skill-level');
             let advancedLabel = item.querySelector('.advanced-label');
             
-            // Menambahkan dot sesuai level
             for (let i = 0; i < level; i++) {
                 let dot = document.createElement('span');
                 dot.classList.add('dot');
                 levelContainer.appendChild(dot);
             }
 
-            // Menambahkan label 'Advanced' jika level adalah 4
             if (level == 4) {
                 advancedLabel.textContent = 'Expert';
             }
@@ -381,10 +374,7 @@
             }
 
             if (level == 5) {
-                // Mengubah teks dari advancedLabel
                 advancedLabel.textContent = 'Master';
-
-                // Memastikan kamu mengakses elemen dengan benar dan mengubah gap
                 let skillLevel = item.querySelector(".skill-level");
                 skillLevel.style.gap = "10px";
             }
@@ -395,14 +385,14 @@
             img.addEventListener("mouseover", function() {
                 let caption = document.getElementById("image-caption");
                 caption.textContent = this.alt;
-                caption.style.fontWeight = "bold"; // Tebalkan saat hover
+                caption.style.fontWeight = "bold";
                 caption.style.fontSize = "18px";
             });
 
             img.addEventListener("mouseout", function() {
                 let caption = document.getElementById("image-caption");
                 caption.textContent = "*Hover over the image to see the description.";
-                caption.style.fontWeight = "300"; // Kembali tipis saat tidak di-hover
+                caption.style.fontWeight = "300";
                 caption.style.fontSize = "18px";
             });
         });
@@ -427,7 +417,6 @@
         AOS.init();
         const app = document.getElementById('typed-role');    
 
-        // Function to check screen width and set the text accordingly
         function getTypewriterText() {
             if (window.innerWidth <= 500) {
                 return [
@@ -447,12 +436,11 @@
         }
 
         const typewriter = new Typewriter(app, {
-            loop: true,          // Mengulang animasi
-            delay: 100,          // Jeda antar huruf (ms)
-            deleteSpeed: 1000     // Kecepatan menghapus huruf
+            loop: true,       
+            delay: 100,        
+            deleteSpeed: 1000  
         });
 
-        // Get the typewriter text based on the screen size
         const typewriterText = getTypewriterText();
 
         typewriterText.forEach((text, index) => {

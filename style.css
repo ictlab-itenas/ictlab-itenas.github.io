@@ -74,6 +74,7 @@ body {
     font-weight: 400;
     text-transform: lowercase;
     transition: color 0.3s, transform 0.2s;
+    z-index: 1;
 }
 
 .navbar-menu a:hover {
@@ -110,6 +111,31 @@ body {
     font-size: 3rem;
     color: #222;
 }
+.hero h1 span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(-100px);
+    filter: blur(5px);
+    animation: fallBlur 1s ease forwards;
+  }
+
+  @keyframes fallBlur {
+    0% {
+      opacity: 0;
+      transform: translateY(-100px);
+      filter: blur(5px);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateY(10px);
+      filter: blur(3px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
 
 .hero p {
     font-size: 1.2rem;
@@ -119,23 +145,16 @@ body {
     margin-right: 100px;
 }
 
-
-.hero .cta {
-    display: inline-block;
-    padding: 12px 25px;
-    background-color: #333;
-    color: #fff;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.hero .cta:hover {
-    background-color: #555;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
+.hero p span {
+    display: inline-block;  /* Pastikan kata tetap berada di baris yang sama */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .hero p span:hover {
+    color: #000000; /* Mengubah warna kata */
+    transform: translateY(-5px); /* Memberikan efek pergeseran ke atas */
+    cursor: pointer;
+  }
 
 #typed-role {
     font-size: 1.5rem;
@@ -387,6 +406,7 @@ color: #fff;
     outline: none;
     border: none;
     background: transparent;
+    z-index: 1;
   }
 
   .about {
@@ -540,6 +560,43 @@ color: #fff;
     background-color: white;
 }
 
+.ink {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 10%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+    border-radius: 50%;
+    filter: blur(15px);
+    transform: scale(0);
+    opacity: 1;
+    animation: spread 5s ease-out forwards;
+    pointer-events: none;
+}
+@keyframes spread {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(6); opacity: 0; }
+}
+
+.spark {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #000; /* Ganti warna menjadi hitam */
+    animation: spark-animation 1s ease-out forwards; /* Durasi lebih panjang dan efek smooth */
+    pointer-events: none;
+}
+
+@keyframes spark-animation {
+    0% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translate(var(--x), var(--y));
+    }
+}
   /* Sembunyikan semua teks tambahan */
   .calendar .contrib-column-first, /* Hapus teks "Contributions in the last year" */
   .calendar .contrib-column,       /* Hapus total kontribusi & rentang tanggal */

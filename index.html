@@ -18,11 +18,13 @@
                 <a id="skill-btn" style="cursor: pointer;">skill</a>
                 <a id="projek-btn" style="cursor: pointer;">project</a>
             </div>
-            <button>
-                <span class="box">
-                    Contact
-                </span>
-            </button>
+            <a id="contact-btn">
+                <button>
+                    <span class="box">
+                        Contact
+                    </span>
+                </button>
+            </a>
         </nav>
     </section>
 
@@ -417,7 +419,7 @@
                 <img src="asset/github.svg" alt="GitHub">
                 <span>afinmh</span>
             </a>
-            
+
             <a id="twitter" class="social-btn flex-center" href="https://instagram.com/afiinm_" target="_blank">
                 <img src="asset/ig.svg" alt="Twitter">
                 <span>@afiinm_</span>
@@ -433,8 +435,8 @@
                 <span>afinmh</span>
             </a>
         </div>        
-        <p>Every time this page is refreshed, everything will change! Try to see the magic!</p>
-        <p>You can also move the boxes around!</p>
+        <p style="color: black;">Every time this page is refreshed, everything will change! Try to see the magic!</p>
+        <p style="color: black;">You can also move the boxes around!</p>
       </section>
       
 
@@ -649,6 +651,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         document.getElementById("projek-btn").addEventListener("click", function () {
             document.querySelector(".projek").scrollIntoView({ behavior: "smooth" });
+        });
+
+        document.getElementById("contact-btn").addEventListener("click", function () {
+            document.querySelector(".contact").scrollIntoView({ behavior: "smooth" });
         });
 
         document.getElementById("about-btn").addEventListener("click", function () {

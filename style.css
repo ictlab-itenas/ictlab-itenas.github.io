@@ -576,15 +576,94 @@ color: #fff;
     100% { transform: scale(6); opacity: 0; }
 }
 
+.contact {
+    text-align: center;
+    padding: 5px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 660px;
+    overflow: hidden;
+    position: relative;
+}
+
+.contact h2 {
+    margin-top: 100px;
+    font-size: 2.5rem;
+    color: #222;
+    margin-bottom: 50px;
+    z-index: 99;
+}
+
+.contact p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-left: 100px;
+    margin-right: 100px;
+    z-index: 99;
+}
+
+/* From Uiverse.io by Pradeepsaranbishnoi */ 
+.social-links,.flex-center {
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .social-links a{
+    text-decoration: none;
+  }
+  
+  .social-btn {
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    font-family: 'Titillium Web', sans-serif;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0px 10px 10px rgba(0,0,0,0.1);
+    background: white;
+    margin: 5px;
+    transition: 0.3s;
+    justify-content: center;
+  }
+  
+  .social-btn img {
+    height: 24px;
+    width: 24px;
+  }
+  
+  .social-btn span {
+    width: 0px;
+    overflow: hidden;
+    transition: 0.3s;
+    text-align: center;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+  
+  .social-btn:hover {
+    width: 150px;
+    border-radius: 5px;
+  }
+  
+  .social-btn:hover span {
+    padding: 2px;
+    width: 80px;
+  }
+  
+
 .projek {
     text-align: center;
     padding: 5px 20px;
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: 600px;
+    height: 660px;
 }
 
 .projek h1 {
+    margin-top: 40px;
     font-size: 3rem;
     color: #222;
 }

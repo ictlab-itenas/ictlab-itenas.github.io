@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>afinmh</title>
+    <title>Afin Maulana / Portofolio</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css"/>
     <link rel="stylesheet" href="style.css">
@@ -407,53 +407,135 @@
         </div>
     </section>    
 
+    <section id="contact" class="contact">
+        <h2>Want to Know More? Let’s Connect!</h2>
+        <p>Curious about what I do or the projects I’m working on?</p>
+        <p>Whether you have questions, want to collaborate, or just feel like stalking—go ahead, I won’t stop you.</p>
+        <p style="padding-bottom: 50px;">Feel free to reach out through the links below, and let’s make something awesome together!</p>
+        <div class="social-links">
+            <a id="github" class="social-btn flex-center" href="https://github.com/afinmh" target="_blank">
+                <img src="asset/github.svg" alt="GitHub">
+                <span>afinmh</span>
+            </a>
+            
+            <a id="twitter" class="social-btn flex-center" href="https://instagram.com/afiinm_" target="_blank">
+                <img src="asset/ig.svg" alt="Twitter">
+                <span>@afiinm_</span>
+            </a>
+        
+            <a id="gmail" class="social-btn flex-center" href="mailto:mafinhida@gmail.com" target="_blank">
+                <img src="asset/gmail.svg" alt="Gmail">
+                <span>mafinhida</span>
+            </a>
+        
+            <a id="linkedin" class="social-btn flex-center" href="https://www.linkedin.com/in/afinmh" target="_blank">
+                <img src="asset/li.svg" alt="LinkedIn">
+                <span>afinmh</span>
+            </a>
+        </div>        
+        <p>Every time this page is refreshed, everything will change! Try to see the magic!</p>
+        <p>You can also move the boxes around!</p>
+      </section>
+      
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typewriter-effect@latest/dist/core.js"></script>
     <script>
-            let currentIndex = 0;
-    const projects = document.querySelectorAll('.projek-item');
+document.addEventListener("DOMContentLoaded", function () {
+    const contactSection = document.querySelector("#contact");
+    
+    function getRandomPosition(max) {
+        return Math.floor(Math.random() * max) + "px";
+    }
 
-    function showProject(index) {
-        projects.forEach((project, i) => {
-            project.classList.remove('active');
-            if (i === index) {
-                project.classList.add('active');
+    function createRandomBox() {
+        const box = document.createElement("div");
+        box.style.width = Math.floor(Math.random() * 50 + 20) + "px";
+        box.style.height = box.style.width;
+        
+        // Membuat warna kotak lebih lembut dan tidak solid
+        const color1 = `hsl(${Math.random() * 360}, 100%, 70%)`;
+        const color2 = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        box.style.background = `linear-gradient(45deg, ${color1}, ${color2})`;
+
+        box.style.position = "absolute";
+        box.style.top = getRandomPosition(contactSection.clientHeight - 50);
+        box.style.left = getRandomPosition(contactSection.clientWidth - 50);
+        box.style.borderRadius = "10px"; // Menambah kelengkungan
+        box.style.opacity = "0.6"; // Membuat kotak sedikit transparan
+
+        contactSection.appendChild(box);
+
+        // Menambahkan kemampuan untuk drag (pindahkan kotak)
+        box.addEventListener("mousedown", function (e) {
+            // Menyimpan posisi mouse saat mulai drag
+            let offsetX = e.clientX - box.offsetLeft;
+            let offsetY = e.clientY - box.offsetTop;
+
+            // Fungsi untuk menangani pergerakan kotak
+            function moveAt(e) {
+                box.style.left = e.clientX - offsetX + "px";
+                box.style.top = e.clientY - offsetY + "px";
             }
-        });
-    }
 
-    function nextProject() {
-        currentIndex = (currentIndex + 1) % projects.length;
-        showProject(currentIndex);
-    }
+            // Menangani saat mouse bergerak
+            document.addEventListener("mousemove", moveAt);
 
-    function prevProject() {
-        currentIndex = (currentIndex - 1 + projects.length) % projects.length;
-        showProject(currentIndex);
-    }
-
-    // Tampilkan proyek pertama saat halaman dimuat
-    showProject(currentIndex);
-        document.addEventListener("DOMContentLoaded", function () {
-            const h1 = document.querySelector("h1");
-            const text = h1.innerText.split(" ");
-            h1.innerHTML = "";
-
-            text.forEach((word, index) => {
-                const span = document.createElement("span");
-                span.innerText = word;
-                span.style.animation = `fallBlur 1s ${index * 0.2}s forwards`;
-                h1.appendChild(span);
-                h1.innerHTML += " ";
+            // Menangani saat mouse dilepaskan (drag selesai)
+            box.addEventListener("mouseup", function () {
+                document.removeEventListener("mousemove", moveAt);
+                box.removeEventListener("mouseup", arguments.callee);
             });
         });
+    }
+
+    // Membatasi jumlah kotak yang ditambahkan
+    for (let i = 0; i < 30; i++) {
+        createRandomBox();
+    }
+});
+
+
+            let currentIndex = 0;
+            const projects = document.querySelectorAll('.projek-item');
+            function showProject(index) {
+                projects.forEach((project, i) => {
+                    project.classList.remove('active');
+                    if (i === index) {
+                        project.classList.add('active');
+                    }
+                });
+            }
+
+            function nextProject() {
+                currentIndex = (currentIndex + 1) % projects.length;
+                showProject(currentIndex);
+            }
+
+            function prevProject() {
+                currentIndex = (currentIndex - 1 + projects.length) % projects.length;
+                showProject(currentIndex);
+            }
+
+            showProject(currentIndex);
+                document.addEventListener("DOMContentLoaded", function () {
+                    const h1 = document.querySelector("h1");
+                    const text = h1.innerText.split(" ");
+                    h1.innerHTML = "";
+                    text.forEach((word, index) => {
+                        const span = document.createElement("span");
+                        span.innerText = word;
+                        span.style.animation = `fallBlur 1s ${index * 0.2}s forwards`;
+                        h1.appendChild(span);
+                        h1.innerHTML += " ";
+                    });
+                });
 
         document.addEventListener("DOMContentLoaded", function () {
             const p = document.querySelector("p");
             const text = p.innerText.split(" ");
             p.innerHTML = "";
-
             text.forEach((word) => {
                 const span = document.createElement("span");
                 span.innerText = word;
@@ -461,14 +543,6 @@
                 p.appendChild(document.createTextNode(" "));
             });
         });
-        // window.addEventListener('wheel', function(event) {
-        //     if (event.deltaY > 0) {
-        //         window.scrollBy(0, 660);
-        //     }
-        //     else {
-        //         window.scrollBy(0, -660);
-        //     }
-        // });
 
         function createInkEffect(x, y) {
             const ink = document.createElement("div");

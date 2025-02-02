@@ -16,7 +16,7 @@
                 <a id="explore-btn" style="cursor: pointer;">activity</a>
                 <a id="about-btn" style="cursor: pointer;">about</a>
                 <a id="skill-btn" style="cursor: pointer;">skill</a>
-                <a href="#project">project</a>
+                <a id="projek-btn" style="cursor: pointer;">project</a>
             </div>
             <button>
                 <span class="box">
@@ -43,14 +43,14 @@
         <section class="activity" data-aos="fade-down">
             <h1 class="section-title">Activity</h1>
             <div class="slider">
-                <img class="img1" src="1.jpg" alt="Study Visit from IPWIJA University Jakarta" style="--pos: 1">
-                <img class="img1" src="2.jpg" alt="Campus Introduction Expo (Informatics Department)" style="--pos: 2">
-                <img class="img1" src="3.jpg" alt="Basic Programming Lab Assistant 2024" style="--pos: 3">
-                <img class="img1" src="4.jpg" alt="Visit from LLDIKTI Region XVI Accreditation" style="--pos: 4">
-                <img class="img1" src="5.jpg" alt="Visit College from Bintulu Malaysia Vocational" style="--pos: 5">
-                <img class="img1" src="6.jpg" alt="IFRIT Developer and Development Team" style="--pos: 6">
-                <img class="img1" src="7.jpg" alt="Main Line Up of ICT & Cyber Security Laboratory" style="--pos: 7">
-                <img class="img1" src="8.jpg" alt="Active Member of ITENAS Badminton Student Unit" style="--pos: 8">
+                <img class="img1" src="gambar/1.jpg" alt="Study Visit from IPWIJA University Jakarta" style="--pos: 1">
+                <img class="img1" src="gambar/2.jpg" alt="Campus Introduction Expo (Informatics Department)" style="--pos: 2">
+                <img class="img1" src="gambar/3.jpg" alt="Basic Programming Lab Assistant 2024" style="--pos: 3">
+                <img class="img1" src="gambar/4.jpg" alt="Visit from LLDIKTI Region XVI Accreditation" style="--pos: 4">
+                <img class="img1" src="gambar/5.jpg" alt="Visit College from Bintulu Malaysia Vocational" style="--pos: 5">
+                <img class="img1" src="gambar/6.jpg" alt="IFRIT Developer and Development Team" style="--pos: 6">
+                <img class="img1" src="gambar/7.jpg" alt="Main Line Up of ICT & Cyber Security Laboratory" style="--pos: 7">
+                <img class="img1" src="gambar/8.jpg" alt="Active Member of ITENAS Badminton Student Unit" style="--pos: 8">
             </div>
             <div >
                 <div class="image-caption" id="image-caption">*Hover over the image to see the description.</div>
@@ -248,22 +248,193 @@
         <div class="calendar" style="margin-left: 250px; margin-right: 250px; border: none;" data-aos="fade-right"  data-aos-duration="3000">Loading...</div>
     </section>
 
-    <section class="project" style="display: none;">
-        <h1 data-aos="fade-right"  data-aos-duration="2000" >Hi, I'm Afin Maulana</h1>
-        <div id="typed-role" data-aos="zoom-in"  data-aos-duration="2000"></div>
-        <p data-aos="fade-left"  data-aos-duration="2000">I’m an informatics student with experience in web development, IoT, and Machine Learning. Passionate about learning new things, especially in digital image processing and IoT. For me "learning by project" is the best way to improve technical skills, creativity, and problem-solving. </p>
-        <button class="learn-more" style="margin-top: 10px;" data-aos="zoom-out"  data-aos-duration="2000">
-            <span class="circle" aria-hidden="true">
-            <span class="icon arrow"></span>
-            </span>
-            <span class="button-text" id="explore-btn1">Explore It!</span>
-          </button>
-    </section>
+    <section class="projek">
+        <h1 data-aos="fade-down" data-aos-duration="2000">Project</h1>
+        <div class="projek-container" data-aos="fade-up" data-aos-duration="2000">
+            <button class="nav-btn left" onclick="prevProject()">&#10094;</button>
+            <div class="projek-content">
+                <div class="projek-item active">
+                    <div class="projek-left" data-aos="zoom-out" data-aos-duration="2000">
+                        <video controls>
+                            <source src="video/Cheator.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="projek-right" data-aos="fade-left" data-aos-duration="2000">
+                        <h2 class="projek-title">Cheator</h2>
+                        <p class="projek-panjang">
+                            Cheator - Cheat Detector.
+                        </p>
+                        <p class="projek-desc">
+                            Using Python and YoloV8 for online and offline exam fraud detection.
+                        </p>
+                        <p class="projek-job">
+                            *As a Full-Stack Developer and AI Engineer
+                        </p>
+
+                        <!-- From Uiverse.io by Mangesh636 --> 
+                        <button class="git">
+                            <svg
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            height="28"
+                            width="28"
+                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                            <path
+                                d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
+                            ></path>
+                            </svg>
+                            <span>GitHub</span>
+                        </button>
+  
+  
+                    </div>
+                </div>
+
+                <div class="projek-item">
+                    <div class="projek-left">
+                        <video controls>
+                            <source src="video/Ifrit.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="projek-right">
+                        <h2 class="projek-title">IFRIT</h2>
+                        <p class="projek-panjang">
+                            Integrated Fire Respone & IoT Technology. 
+                        </p>
+                        <p class="projek-desc">
+                            An IoT-based fire truck with fire detection using cameras and distance sensors.
+                        </p>
+                        <p class="projek-job">
+                            *As a Backend and System Integrator
+                        </p>
+                        <a href="http://ifrit.great-site.net/" target="_blank">
+                            <button class="git">
+                                <svg
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                height="28"
+                                width="28"
+                                xmlns="http://www.w3.org/2000/svg"
+                                >
+                                <path
+                                    d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
+                                ></path>
+                                </svg>
+                                <span>Linked</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="projek-item">
+                    <div class="projek-left">
+                        <video controls>
+                            <source src="video/Medlytics.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="projek-right">
+                        <h2 class="projek-title">Medlytics</h2>
+                        <p class="projek-panjang">
+                            Medlytics - Medical Analytics.
+                        </p>
+                        <p class="projek-desc">
+                            A smart system that provides medical information based on medical journals.
+                        </p>
+                        <p class="projek-job">
+                            *As a Web Developer (Prototype)
+                        </p>
+                        <a href="https://medlytics.netlify.app/" target="_blank" style="text-decoration: none;">
+                            <button class="git">
+                                <svg
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                height="28"
+                                width="28"
+                                xmlns="http://www.w3.org/2000/svg"
+                                >
+                                <path
+                                    d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
+                                ></path>
+                                </svg>
+                                <span>Linked</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="projek-item">
+                    <div class="projek-left">
+                        <video controls>
+                            <source src="video/Hand.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="projek-right">
+                        <h2 class="projek-title">HandSpeak</h2>
+                        <p class="projek-panjang">
+                            Hand Gesture Detection
+                        </p>
+                        <p class="projek-desc">
+                            Detects hand gestures to form letters, words, sentences, and enables drawing.
+                        </p>
+                        <p class="projek-job">
+                            *Personal Project
+                        </p>
+                        <a href="https://github.com/afinmh/HandyMany" target="_blank" style="text-decoration: none;">
+                            <button class="git">
+                                <svg
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                height="28"
+                                width="28"
+                                xmlns="http://www.w3.org/2000/svg"
+                                >
+                                <path
+                                    d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
+                                ></path>
+                                </svg>
+                                <span>GitHub</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-btn right" onclick="nextProject()">&#10095;</button>
+        </div>
+    </section>    
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typewriter-effect@latest/dist/core.js"></script>
     <script>
+            let currentIndex = 0;
+    const projects = document.querySelectorAll('.projek-item');
+
+    function showProject(index) {
+        projects.forEach((project, i) => {
+            project.classList.remove('active');
+            if (i === index) {
+                project.classList.add('active');
+            }
+        });
+    }
+
+    function nextProject() {
+        currentIndex = (currentIndex + 1) % projects.length;
+        showProject(currentIndex);
+    }
+
+    function prevProject() {
+        currentIndex = (currentIndex - 1 + projects.length) % projects.length;
+        showProject(currentIndex);
+    }
+
+    // Tampilkan proyek pertama saat halaman dimuat
+    showProject(currentIndex);
         document.addEventListener("DOMContentLoaded", function () {
             const h1 = document.querySelector("h1");
             const text = h1.innerText.split(" ");
@@ -400,6 +571,10 @@
 
         document.getElementById("explore-btn1").addEventListener("click", function () {
             document.querySelector(".bungkus").scrollIntoView({ behavior: "smooth" });
+        });
+
+        document.getElementById("projek-btn").addEventListener("click", function () {
+            document.querySelector(".projek").scrollIntoView({ behavior: "smooth" });
         });
 
         document.getElementById("about-btn").addEventListener("click", function () {

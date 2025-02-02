@@ -111,6 +111,7 @@ body {
     font-size: 3rem;
     color: #222;
 }
+
 .hero h1 span {
     display: inline-block;
     opacity: 0;
@@ -437,7 +438,6 @@ color: #fff;
 
 .skill {
     text-align: center;
-    padding: 10px 20px;
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     height: 660px;
@@ -576,26 +576,179 @@ color: #fff;
     100% { transform: scale(6); opacity: 0; }
 }
 
-.spark {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #000;
-    animation: spark-animation 1s ease-out forwards; 
-    pointer-events: none;
+.projek {
+    text-align: center;
+    padding: 5px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 600px;
 }
 
-@keyframes spark-animation {
-    0% {
-        opacity: 1;
-        transform: scale(1) translate(0, 0);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0) translate(var(--x), var(--y));
-    }
+.projek h1 {
+    font-size: 3rem;
+    color: #222;
 }
+
+.projek-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 1200px;
+    margin: auto;
+    position: relative;
+}
+
+.projek-content {
+    margin-top: 50px;
+    width: 100%;
+    max-width: 1000px;
+    overflow: hidden;
+    position: relative;
+}
+
+.projek-item {
+    display: none;
+    flex-wrap: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+.projek-item.active {
+    display: flex;
+}
+
+.projek-left video {
+    width: 560px; /* 16:9 aspect ratio */
+    height: 315px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.projek-right {
+    width: 400px;
+    max-width: 400px;
+    text-align: left;
+    padding: 20px;
+    margin-left: 50px;
+}
+
+.projek-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: -50px;
+}
+
+.projek-panjang {
+    font-size: 16px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+
+
+.projek-desc {
+    font-size: 16px;
+    color: #555;
+}
+
+.projek-job {
+    margin-top: 5px;
+    font-size: 15px;
+    color: #000000;
+}
+
+.nav-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+}
+
+.nav-btn.left {
+    left: 0;
+}
+
+.nav-btn.right {
+    right: 0;
+}
+
+.nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+/* From Uiverse.io by Mangesh636 */ 
+.git {
+    margin-top: 20px;
+    margin-bottom: -50px;
+    background: transparent;
+    position: relative;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid rgb(36, 41, 46);
+    border-radius: 25px;
+    outline: none;
+    overflow: hidden;
+    color: rgb(36, 41, 46);
+    transition: color 0.3s 0.1s ease-out;
+    text-align: center;
+    width: 150px;
+    height: 40px;
+  }
+
+  .projek-right a{
+    text-decoration: none;
+    max-width: 150px;
+  }
+
+  .git svg {
+    margin-left: 5px;
+  }
+
+  .git span {
+    margin: 10px;
+  }
+  
+  .git::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    content: "";
+    border-radius: 50%;
+    display: block;
+    width: 20em;
+    height: 20em;
+    left: -5em;
+    text-align: center;
+    transition: box-shadow 0.5s ease-out;
+    z-index: -1;
+  }
+  
+  .git:hover {
+    color: #fff;
+    border: 1px solid rgb(36, 41, 46);
+  }
+  
+ .git:hover::before {
+    box-shadow: inset 0 0 0 10em rgb(36, 41, 46);
+  }
+  
 
 .calendar .contrib-column-first, 
 .calendar .contrib-column,       

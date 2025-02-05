@@ -993,7 +993,7 @@ display: none !important;
 
     :root {
         --height: 40vh; /* Even smaller slider height */
-        --duration: 30s; /* Further decrease animation duration */
+        --duration: 30s;
     }
 
     .slider {

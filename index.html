@@ -562,6 +562,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         function createInkEffect(x, y) {
+            if (window.innerWidth <= 500) return;
             const ink = document.createElement("div");
             ink.className = "ink";
             
@@ -594,7 +595,6 @@ document.addEventListener("DOMContentLoaded", function () {
         setInterval(() => {
             const x = Math.random() * window.innerWidth;
             const y = Math.random() * window.innerHeight;
-            if (window.innerWidth <= 500) return;
             createInkEffect(x, y);
         }, 700);
 

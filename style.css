@@ -1017,14 +1017,14 @@ display: none !important;
   }
 
     .hero-mobile h1 {
-      margin-top: -10px;
+      margin-top: 40px;
         font-size: 40px;
         margin-left: -10px;
         margin-right: -10px;
     }
 
     .hero-mobile p {
-        margin-top: 30px;
+        margin-top: 20px;
         font-size: 15px;
         margin-left: 10px;
         margin-right: 10px;
@@ -1033,9 +1033,9 @@ display: none !important;
     }
 
     #typed-role {
-        margin-top: 15px;
+        margin-top: 10px;
         font-size: 20px;
-        font-weight: bold;
+        font-weight: 400;
     }
 
     .activity {

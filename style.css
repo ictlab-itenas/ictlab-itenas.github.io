@@ -163,6 +163,66 @@ body {
     margin-bottom: 10px;
 }
 
+.hero-mobile {
+  display: none;
+  text-align: center;
+  padding: 100px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 600px;
+}
+
+.hero-mobile h1 {
+  margin-top: 25px;
+  font-size: 3rem;
+  color: #222;
+}
+
+.hero-mobile h1 span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-100px);
+  filter: blur(5px);
+  animation: fallBlur 1s ease forwards;
+}
+
+@keyframes fallBlur {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+    filter: blur(5px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(10px);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.hero-mobile p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 20px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.hero-mobile p span {
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+.hero-mobile p span:hover {
+  color: #000000;
+  transform: translateY(-5px); 
+  cursor: pointer;
+}
+
 button {
 position: relative;
 display: inline-block;
@@ -924,24 +984,15 @@ display: none !important;
         margin-top: 10px;
     }
 
-    .hero {
-        height: auto;
-        padding: 80px 20px;
-    }
 
-    .hero h1 {
+    .hero-mobile h1 {
         font-size: 2.5rem;
     }
 
-    .hero p {
+    .hero-mobile p {
         font-size: 1rem;
         margin-left: 20px;
         margin-right: 20px;
-    }
-
-    .hero .cta {
-        padding: 10px 20px;
-        font-size: 0.95rem;
     }
 
     .navbar-logo {
@@ -955,33 +1006,40 @@ display: none !important;
         display: none;
     }
 
-    /* Other mobile adjustments */
-    .hero h1 {
-        margin-top: -20px;
-        font-size: 1.7rem;
-        margin-left: -5px;
-        margin-right: -5px;
+    .hero {
+      display: none;
     }
 
-    .hero p {
+    .hero-mobile {
+      display: block;
+      height: 100vh;
+      padding: 80px 20px;
+  }
+
+    .hero-mobile h1 {
+      margin-top: -20px;
+        font-size: 40px;
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    .hero-mobile p {
         margin-top: 30px;
-        font-size: 1.2rem;
+        font-size: 15px;
         margin-left: 10px;
         margin-right: 10px;
         text-align: center;
-    }
-
-    .hero .cta {
-        padding: 8px 15px;
-        font-size: 1rem;
+        word-spacing: 5px;
     }
 
     #typed-role {
         margin-top: 15px;
-        font-size: 1rem;
+        font-size: 20px;
+        font-weight: bold;
     }
 
     .activity {
+        display: none;
         height: 400px; /* Further reduce height */
         margin: 0 10px; /* Less margin */
     }
@@ -992,7 +1050,7 @@ display: none !important;
     }
 
     :root {
-        --height: 40vh; /* Even smaller slider height */
+        --height: 40vh; 
         --duration: 30s;
     }
 
@@ -1013,6 +1071,7 @@ display: none !important;
     }
     
     .about {
+      display: none;
         height: 210vh;
         padding: 15px; /* Reduced padding */
     }
@@ -1026,6 +1085,10 @@ display: none !important;
         font-size: 0.9rem; /* Further reduced text size */
         margin-left: 10px;
         margin-right: 10px; /* Less margin */
+    }
+
+    .skill {
+      display: none;
     }
 
     .skills-grid {
@@ -1048,5 +1111,13 @@ display: none !important;
     .skills-grid1 {
         grid-template-columns: repeat(1, 1fr); /* Single column on very small screens */
         margin-left: 50px;
+    }
+
+    .projek {
+      display: none;
+    }
+
+    .contact {
+      display: none;
     }
 }

@@ -1011,6 +1011,7 @@ display: none !important;
     }
 
     .hero-mobile {
+      overflow: hidden;
       display: block;
       height: 100vh;
       padding: 80px 20px;

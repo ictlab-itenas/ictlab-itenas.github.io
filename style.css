@@ -492,6 +492,10 @@ color: #fff;
     margin-top: 25px;
 }
 
+.yes {
+  display: none;
+}
+
 .about p span{
     color: #c20000;
 }
@@ -526,6 +530,16 @@ color: #fff;
     margin-top: -15px;
     margin-left: 50px;
     margin-right: 50px;
+}
+
+.skills-grid-mobile {
+  display: none;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  padding: 20px;
+  margin-top: -15px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .skills-grid1 {
@@ -955,6 +969,52 @@ display: none !important;
   .download svg line {
     animation: docs 1s infinite;
   }
+  .back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #242a35;  /* Background hitam */
+    color: white;  /* Panah putih */
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.5s ease, transform 0.4s ease-in-out;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+}
+
+.back-to-top:hover {
+    background-color: #000000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.back-to-top.hide {
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+}
+
+.back-to-top svg, .back-to-top img {
+  width: 24px;
+  height: 24px;
+  filter: invert(1);
+}
+
+
   
   @keyframes docs {
     0% {
@@ -1040,13 +1100,13 @@ display: none !important;
     }
 
     .activity {
-        display: none;
-        height: 400px; /* Further reduce height */
+      overflow: hidden;
+        height: 100vh; /* Further reduce height */
         margin: 0 10px; /* Less margin */
     }
 
     .section-title {
-        font-size: 2rem; /* Even smaller font size */
+        font-size: 35px; /* Even smaller font size */
         margin-top: 30px;
     }
 
@@ -1056,49 +1116,87 @@ display: none !important;
     }
 
     .slider {
-        width: 400%; /* Adjust slider width */
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* Dua gambar per baris */
+      gap: 10px;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+      row-gap: 20px;
+    }
+  
+    .slider img {
+      position: static;
+      width: 90%;
+      height: auto;
+      object-fit: cover;
+      animation: none; /* Matikan animasi di mobile */
+      filter: grayscale(0);
+      margin-left: 15px;
     }
 
-    .img1 {
-        height: 28vh;
-        animation-duration: var(--duration); /* Adjust animation duration */
-    }
 
     #image-caption {
         margin-left: 15px;
         font-size: 1rem;/* Even smaller font for mobile */
-        margin-top: 10px;      
+        margin-top: 20px;      
         justify-content: center;
+        text-align: center;
     }
     
     .about {
-      display: none;
-        height: 210vh;
+      overflow: hidden;
+        height: 100vh;
         padding: 15px; /* Reduced padding */
     }
 
     .about h1 {
-        margin-top: 50px;
-        font-size: 2rem; /* Even smaller font size */
+      font-size: 40px;
+      margin-left: -10px;
+      margin-right: -10px;
     }
 
     .about p {
-        font-size: 0.9rem; /* Further reduced text size */
-        margin-left: 10px;
-        margin-right: 10px; /* Less margin */
+      font-size: 15px;
+      margin-left: 10px;
+      margin-right: 10px;
+      word-spacing: 0px;
     }
 
+    .no {  
+      display: none;  
+  } 
+
+    .yes {
+      display: block;
+     }
+
     .skill {
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .skill h1{
+      margin-top: 40px;
+    }
+
+    .skills-grid-mobile {
+      display: grid;
+      margin-top: 10px;
+        grid-template-columns: repeat(2, 1fr); /* Single column on very small screens */
+    }
+
+    .skills-grid{
       display: none;
     }
 
-    .skills-grid {
-        grid-template-columns: repeat(1, 1fr); /* Single column on very small screens */
+    .skills-grid1 {
+      display: none;
     }
 
     .skill-box {
-        width: 100%; /* Full width for skill box */
-        height: 50px; /* Even smaller height */
+        width: 100%;
+        height: 50px; 
     }
 
     .skill-name {
@@ -1109,9 +1207,8 @@ display: none !important;
         font-size: 7px; /* Even smaller 'Advanced' label */
     }
 
-    .skills-grid1 {
-        grid-template-columns: repeat(1, 1fr); /* Single column on very small screens */
-        margin-left: 50px;
+    .calendar {
+      display: none;
     }
 
     .projek {

@@ -406,7 +406,7 @@
             <div class="projek-content">
                 <div class="projek-item active">
                     <div class="projek-left" data-aos="zoom-out" data-aos-duration="2000">
-                        <video controls>
+                        <video>
                             <source src="video/Cheator.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -445,7 +445,7 @@
 
                 <div class="projek-item">
                     <div class="projek-left">
-                        <video controls>
+                        <video>
                             <source src="video/Ifrit.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -482,7 +482,7 @@
 
                 <div class="projek-item">
                     <div class="projek-left">
-                        <video controls>
+                        <video>
                             <source src="video/Medlytics.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -519,7 +519,7 @@
 
                 <div class="projek-item">
                     <div class="projek-left">
-                        <video controls>
+                        <video>
                             <source src="video/Hand.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -661,14 +661,31 @@ function scrollToTop() {
 
         let currentIndex = 0;
             const projects = document.querySelectorAll('.projek-item');
-            function showProject(index) {
-                projects.forEach((project, i) => {
-                    project.classList.remove('active');
-                    if (i === index) {
-                        project.classList.add('active');
-                    }
-                });
+    function showProject(index) {
+        projects.forEach((project, i) => {
+            const video = project.querySelector('video');
+
+            project.classList.remove('active');
+
+            // Hapus atribut autoplay dan loop dari semua video
+            if (video) {
+                video.removeAttribute('autoplay');
+                video.removeAttribute('loop');
+                video.pause();
             }
+
+            if (i === index) {
+                project.classList.add('active');
+
+                // Tambahkan autoplay dan loop hanya pada proyek yang aktif
+                if (video) {
+                    video.setAttribute('autoplay', '');
+                    video.setAttribute('loop', '');
+                    video.play();
+                }
+            }
+        });
+    }
 
             function nextProject() {
                 currentIndex = (currentIndex + 1) % projects.length;

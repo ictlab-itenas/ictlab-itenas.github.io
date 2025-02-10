@@ -773,7 +773,7 @@ color: #fff;
 }
 
 .projek-left video {
-    width: 560px; /* 16:9 aspect ratio */
+    width: 560px;
     height: 315px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -798,8 +798,6 @@ color: #fff;
     color: #000000;
     margin-bottom: 10px;
 }
-
-
 
 .projek-desc {
     font-size: 16px;
@@ -837,8 +835,6 @@ color: #fff;
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-
-/* From Uiverse.io by Mangesh636 */ 
 .git {
     margin-top: 20px;
     margin-bottom: -50px;

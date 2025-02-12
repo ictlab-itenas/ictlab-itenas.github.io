@@ -406,7 +406,7 @@
             <div class="projek-content">
                 <div class="projek-item active">
                     <div class="projek-left" data-aos="zoom-out" data-aos-duration="2000">
-                        <video>
+                        <video controls>
                             <source src="video/Cheator.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -445,7 +445,7 @@
 
                 <div class="projek-item">
                     <div class="projek-left">
-                        <video>
+                        <video controls>
                             <source src="video/Ifrit.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -482,7 +482,7 @@
 
                 <div class="projek-item">
                     <div class="projek-left">
-                        <video>
+                        <video controls>
                             <source src="video/Medlytics.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -519,7 +519,7 @@
 
                 <div class="projek-item">
                     <div class="projek-left">
-                        <video>
+                        <video controls>
                             <source src="video/Hand.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -668,21 +668,9 @@ function scrollToTop() {
             project.classList.remove('active');
 
             // Hapus atribut autoplay dan loop dari semua video
-            if (video) {
-                video.removeAttribute('autoplay');
-                video.removeAttribute('loop');
-                video.pause();
-            }
 
             if (i === index) {
                 project.classList.add('active');
-
-                // Tambahkan autoplay dan loop hanya pada proyek yang aktif
-                if (video) {
-                    video.setAttribute('autoplay', '');
-                    video.setAttribute('loop', '');
-                    video.play();
-                }
             }
         });
     }

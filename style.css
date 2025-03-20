@@ -10,6 +10,11 @@ html {
   scroll-behavior: smooth;
 }
 
+.navbar-logo img {
+  height: 35px; /* Sesuaikan dengan ukuran yang diinginkan */
+  width: auto;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f4f4f9;

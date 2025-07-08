@@ -1,6 +1,7 @@
 @import url('./lenis.css');
 @import url('./inter.css');
 @import url('./zen-old-mincho.css');
+@import url('./projects.css');
 
 * {
   margin: 0;
@@ -439,6 +440,7 @@ body {
   min-height: 100lvh;
   position: relative;
   z-index: 7; /* Higher than hero section to overlay everything */
+  padding-bottom: 200px;
   margin-top: 150lvh; /* Match parallax-container height untuk overlay langsung */
 }
 

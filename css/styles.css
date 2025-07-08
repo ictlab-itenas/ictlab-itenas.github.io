@@ -10,7 +10,7 @@
 
 :root {
   background: #f9f9f9;
-  font-family: 'Zen Old Mincho', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -244,8 +244,44 @@ body {
 .marquee-row.start-animation:nth-child(3) { animation-delay: 0.6s; }
 .marquee-row.start-animation:nth-child(4) { animation-delay: 0.9s; }
 
+/* Scroll */
+@keyframes scroll-scale {
+  0% {
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  50% {
+    transform-origin: top;
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  51% {
+    transform-origin: bottom;
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform-origin: bottom;
+    transform: scaleY(0);
+    opacity: 0;
+  }
+}
+
+#top-scroll {
+  z-index: 999;
+  position: fixed;
+  margin: auto;
+  padding: 3rem 2px;
+  max-width: 4px;
+  background-color: white;
+  inset: auto 0 1rem;
+  animation: 3s ease 0s scroll-scale infinite both;
+}
+
 /* Hero Section */
 .hero {
+  user-select: none;
   color: white;
   height: 100lvh;
   width: 100vw;
@@ -285,7 +321,7 @@ body {
 }
 
 .hero-left h2 {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 700;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
   font-family: 'Zen Old Mincho', serif;
@@ -329,6 +365,7 @@ body {
   object-fit: contain;
   transition: transform 0.3s ease;
   margin-bottom: 40px;
+  filter: drop-shadow(0px 0px 10px white);
 }
 
 .hero-logo img:hover {
@@ -354,10 +391,11 @@ body {
 
 
 .hero-left .hero-description p {
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   line-height: 1.6;
   font-weight: 400;
   max-width: 400px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
   font-family: 'Zen Old Mincho', serif;
   opacity: 0.95;
   text-align: justify;
@@ -1147,7 +1185,7 @@ body {
 
 @media (max-width: 768px) {
   .splash h1 {
-    font-size: 1rem;
+    font-size: 2rem;
     letter-spacing: 2px;
   }
 
@@ -1163,7 +1201,7 @@ body {
   }
 
   .hero-left h2 {
-    font-size: 1.8rem;
+    font-size: max(2rem, 5vw);
     line-height: 1.3;
     padding-left: 0;
     margin-bottom: 20px;
@@ -1181,7 +1219,7 @@ body {
   }
 
   .hero-left .hero-description p {
-    font-size: 0.9rem;
+    font-size: max(1rem, 2.5vw);
     line-height: 1.5;
     max-width: 100%;
   }
@@ -1203,7 +1241,8 @@ body {
   }
 
   .hero-logo img {
-    width: 280px;
+    padding: 0 50px;
+    width: 75vw;
     height: auto;
   }
 

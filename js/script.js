@@ -32,9 +32,9 @@ async function startSplash() {
   const typingElement = document.getElementById('typingText');
 
   // Wait 1.5 seconds before starting typing animation
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await new Promise(resolve => setTimeout(resolve, 300));
 
-  await typeText('ICT LABORATORY', typingElement, 120);
+  await typeText('ICT LABORATORY', typingElement, 80);
 
   // Wait a bit then fade out
   setTimeout(() => {
@@ -43,7 +43,7 @@ async function startSplash() {
     // Start main content after splash fade out
     setTimeout(() => {
       loadAndStart();
-    }, 1000);
+    }, 800);
   }, 800);
 }
 
@@ -136,6 +136,7 @@ function setupParallaxScroll() {
     marqueeParallax.classList.remove('shrink', 'compact', 'blur');
     heroSection.classList.remove('visible', 'show-right');
     navbar.classList.remove('visible');
+    document.querySelector('#top-scroll').classList.remove('hidden');
 
     // Apply effects based on scroll progress with smooth transitions
     if (scrollProgress > 0 && scrollProgress < 0.5) {
@@ -160,6 +161,7 @@ function setupParallaxScroll() {
       // Show navbar saat masuk Hall of Fame
       const hallOfFameRect = hallOfFame.getBoundingClientRect();
       if (hallOfFameRect.top <= 100) {
+        document.querySelector('#top-scroll').classList.add('hidden');
         navbar.classList.add('visible');
       }
     }

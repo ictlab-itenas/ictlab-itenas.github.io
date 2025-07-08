@@ -1,7 +1,17 @@
+document.scrollingElement.scrollTo({ top: 0, behavior: 'instant' });
+document.scrollingElement.style.overflowY = 'hidden';
+history.scrollRestoration = 'manual';
+
 // Initialize Lenis smooth scrolling
 const lenis = new Lenis({
   autoRaf: true,
 });
+
+// Initialize page scroll
+// const progressBar = new ScrollProgressBar({
+//   background: '#fff',
+//   height: '0.5rem',
+// });
 
 // Typing animation for splash
 function typeText(text, element, speed = 150) {
@@ -43,6 +53,7 @@ async function startSplash() {
     // Start main content after splash fade out
     setTimeout(() => {
       loadAndStart();
+      document.scrollingElement.style.overflowY = 'inherit';
     }, 800);
   }, 800);
 }
@@ -123,20 +134,14 @@ function setupParallaxScroll() {
   const heroSection = document.getElementById('heroSection');
   const hallOfFame = document.getElementById('hallOfFame');
   const navbar = document.getElementById('navbar');
-  let ticking = false;
+  const topScroll = document.querySelector('#top-scroll');
 
-  function updateParallax() {
+  lenis.on('scroll', () => {
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
 
     // Calculate scroll progress (0 to 1.5 for shorter parallax)
     const scrollProgress = Math.min(scrollY / windowHeight, 1.5);
-
-    // Always reset classes first for smooth transitions
-    marqueeParallax.classList.remove('shrink', 'compact', 'blur');
-    heroSection.classList.remove('visible', 'show-right');
-    navbar.classList.remove('visible');
-    document.querySelector('#top-scroll').classList.remove('hidden');
 
     // Apply effects based on scroll progress with smooth transitions
     if (scrollProgress > 0 && scrollProgress < 0.5) {
@@ -157,22 +162,20 @@ function setupParallaxScroll() {
       // Stage 4: Show hero right content dan mulai Hall of Fame (100%+ scroll)
       marqueeParallax.classList.add('compact', 'blur');
       heroSection.classList.add('visible', 'show-right');
+      topScroll.classList.add('hidden');
 
       // Show navbar saat masuk Hall of Fame
+      // TODO: ini bermasalah
       const hallOfFameRect = hallOfFame.getBoundingClientRect();
       if (hallOfFameRect.top <= 100) {
-        document.querySelector('#top-scroll').classList.add('hidden');
         navbar.classList.add('visible');
       }
-    }
-
-    ticking = false;
-  }
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
+    } else {
+      // Always reset classes first for smooth transitions
+      marqueeParallax.classList.remove('shrink', 'compact', 'blur');
+      heroSection.classList.remove('visible', 'show-right');
+      navbar.classList.remove('visible');
+      topScroll.classList.remove('hidden');
     }
   });
 }

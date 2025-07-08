@@ -53,6 +53,11 @@ async function startSplash() {
     // Start main content after splash fade out
     setTimeout(() => {
       loadAndStart();
+      sal({
+        threshold: 0.3,
+        once: true,
+        disabled: false
+      });
       document.scrollingElement.style.overflowY = 'inherit';
     }, 800);
   }, 800);

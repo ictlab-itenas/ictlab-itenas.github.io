@@ -444,7 +444,7 @@ body {
 
 .hall-of-fame-container {
   display: grid;
-  gap: 60px;
+  gap: 120px;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
@@ -752,7 +752,7 @@ body {
 /* About Section */
 .about {
   background: rgba(240,235,222,255);
-  padding: 100px 0;
+  padding: 200px 0;
   position: relative;
   z-index: 5;
 }

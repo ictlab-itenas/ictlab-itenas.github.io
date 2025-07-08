@@ -1,600 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITENAS ICT LAB</title>
-    <meta property="og:title" content="ITENAS ICT LAB">
-    <meta property="og:description" content="Welcome to ICT Laboratory ITENAS! We are a research and development hub for information and communication technology, Cloud Computing, artificial intelligence, cybersecurity, and modern computing.">
-    <meta property="og:image" content="https://ictlab-itenas.github.io/thumbnail.png">
-    <meta property="og:url" content="https://ictlab-itenas.github.io">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="ITENAS ICT LAB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ICT LABORATORY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ITENAS ICT LAB">
-    <meta name="twitter:description" content="Welcome to ICT Laboratory ITENAS! Join us in shaping the future of technology.">
-    <meta name="twitter:image" content="https://ictlab-itenas.github.io/thumbnail.png">
-    <meta name="twitter:url" content="https://ictlab-itenas.github.io">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <section class="atas">
-      <nav class="navbar">
-        <div class="navbar-logo">
-          <img src="gambar/logo.jpg" alt="ICT Laboratory Logo" />
-          <img src="gambar/logo2.jpg" alt="ICT Laboratory Logo" />
-        </div>
-        <div class="navbar-menu">
-          <a id="explore-btn" style="cursor: pointer;">activity</a>
-          <a id="about-btn" style="cursor: pointer;">about</a>
-          <a id="projek-btn" style="cursor: pointer;">project</a>
-        </div>
-        <a id="contact-btn">
-          <button>
-            <span class="box">
-              Contact
-            </span>
-          </button>
-        </a>
-      </nav>
-    </section>
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-container">
+    <div class="navbar-logo">
+      <img src="img/logo.png" alt="ICT Lab Logo">
+    </div>
+    <div class="navbar-menu">
+      <a href="#" class="navbar-item">Activity</a>
+      <a href="#hallOfFame" class="navbar-item">Hall of Fame</a>
+      <a href="#about" class="navbar-item">About</a>
+      <a href="#project" class="navbar-item">Project</a>
+      <a href="#contact" class="navbar-item">Contact</a>
+    </div>
+  </div>
+</nav>
 
-    <section class="hero">
-      <h1>ICT Laboratory ITENAS</h1>
-      <div id="typed-role" data-aos="zoom-in"  data-aos-duration="2000"></div>
-      <p data-aos="fade-left"  data-aos-duration="2000">
-        Welcome to ICT Laboratory ITENAS! We are a research and development hub for information and communication technology, Cloud Computing, artificial intelligence, cybersecurity, and modern computing. Join us in shaping the future of technology!.
-      </p>
-      <button class="learn-more" style="margin-top: 10px;" data-aos="zoom-out"  data-aos-duration="2000">
-        <span class="circle" aria-hidden="true">
-          <span class="icon arrow"></span>
-        </span>
-        <span class="button-text" id="explore-btn2">Explore It!</span>
-      </button>
-    </section>
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-content">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+    <div class="loading-progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p class="loading-percentage" id="loadingPercentage">0%</p>
+  </div>
+</div>
 
-    <section class="hero-mobile">
-      <div data-aos="fade-left"  data-aos-duration="2000">
-        <h1>Information And Communication Technology Laboratory</h1>
+<!-- Splash -->
+<div class="splash" id="splash">
+  <h1 class="typing-text" id="typingText"></h1>
+</div>
+
+<!-- Parallax Container -->
+<div class="parallax-container">
+  <!-- Marquee Parallax -->
+  <div class="marquee-parallax" id="marqueeParallax">
+    <!-- Marquee Rows -->
+    <div class="marquee-row left"><div class="marquee-track" id="track1"></div></div>
+    <div class="marquee-row right two"><div class="marquee-track" id="track2"></div></div>
+    <div class="marquee-row left three"><div class="marquee-track" id="track3"></div></div>
+    <div class="marquee-row right four"><div class="marquee-track" id="track4"></div></div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="heroSection">
+  <div class="hero-left">
+    <h2>Information and Communication Technology Laboratory</h2>
+    <div class="hero-description">
+      <p>We are a research and development hub for information and communication technology, Cloud Computing, artificial intelligence, cybersecurity, and modern computing. Join us in shaping the future of technology!</p>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-content" id="heroRightContent">
+      <div class="hero-logo">
+        <img src="img/logo.png" alt="ICT Laboratory Logo" id="heroLogo">
       </div>
-      <div id="typed-role" data-aos="zoom-in"  data-aos-duration="2000">Berdaya Saing - Kompeten</div>
-      <p data-aos="fade-left"  data-aos-duration="2000">
-        Welcome to ICT Laboratory ITENAS! We are a research and development hub for information and communication technology, driving innovation in IoT, artificial intelligence, cybersecurity, and modern computing. Join us in shaping the future of technology!.
-      </p>
-      <button class="learn-more" style="margin-top: 10px;" data-aos="fade-right"  data-aos-duration="2000">
-        <span class="circle" aria-hidden="true">
-          <span class="icon arrow"></span>
-        </span>
-        <span class="button-text" id="explore-btn1">Explore It!</span>
-      </button>
-    </section>
+    </div>
+  </div>
+</section>
 
-
-    <section class="bungkus">
-      <section class="activity" data-aos="fade-down">
-        <h1 class="section-title">Activity</h1>
-        <div class="slider">
-          <img loading="lazy" class="img1" src="gambar/111.jpg" alt="Study Visit from IPWIJA University Jakarta" style="--pos: 1">
-          <img loading="lazy" class="img1" src="gambar/211.jpg" alt="Campus Introduction Expo (Informatics Department)" style="--pos: 2">
-          <img loading="lazy" class="img1" src="gambar/311.jpg" alt="Visit from LLDIKTI Region XVI Accreditation" style="--pos: 3">
-          <img loading="lazy" class="img1" src="gambar/411.jpg" alt="Visit College from Bintulu Malaysia Vocational" style="--pos: 4">
-          <img loading="lazy" class="img1" src="gambar/511.jpg" alt="Prokimnas - Pengabdian Kepada Masyarakat" style="--pos: 5">
-          <img loading="lazy" class="img1" src="gambar/611.jpg" alt="Main Line Up of ICT & Cyber Security Laboratory" style="--pos: 6">
-          <img loading="lazy" class="img1" src="gambar/711.jpg" alt="Team Huawei Competition 2024" style="--pos: 7">
-          <img loading="lazy" class="img1" src="gambar/811.jpg" alt="Essay Competition Universitas Ahmad Dahlan" style="--pos: 8">
+<!-- Hall of Fame Section -->
+<section class="hall-of-fame" id="hallOfFame">
+  <div class="hall-of-fame-container">
+    <div class="hall-of-fame-header">
+      <h2>Hall of Fame</h2>
+      <p>Recognizing excellence and achievements in our ICT Laboratory community</p>
+    </div>
+    <div class="hall-of-fame-content">
+      <div class="hall-of-fame-item">
+        <div class="hall-decor-1">
+          <img src="img/decor1.png" alt="Decoration">
         </div>
-        <div >
-          <div class="image-caption" id="image-caption">*Hover image to see description.</div>
+        <div class="hall-of-fame-image">
+          <img src="img/juara1.jpeg" alt="Pharmation">
         </div>
-      </section>
-    </section>
-
-    <section class="about">
-      <h1 data-aos="fade-right"  data-aos-duration="1000" >About</h1>
-      <div id="typed-role" data-aos="zoom-in"  data-aos-duration="2000"></div>
-      <p class="no" data-aos="fade-left"  data-aos-duration="2000">
-        ICT Laboratory ITENAS is a community focused on AI, cybersecurity, and other technological fields, providing a platform for students and tech enthusiasts to learn, discuss, and develop their skills.<span> With a spirit of collaboration and innovation,</span> We strive to create an environment that fosters curiosity, encourages technological exploration, and supports the real-world application of knowledge through hands-on projects and collaboration.
-      </p>
-      <p class="no" data-aos="fade-right"  data-aos-duration="2000">
-        As a dynamic community, ICT Laboratory ITENAS regularly organizes workshops, seminars, training sessions, and collaborative projects. We believe that sharing knowledge and experiences accelerates skill development and fosters impactful innovations. Through partnerships with academia, industry, and other tech communities, we are committed to supporting digital talent growth and shaping a better technological future.
-      </p>
-      <p class="yes" data-aos="fade-left"  data-aos-duration="2000">
-        I am an Informatics student at Institut Teknologi Nasional Bandung, skilled in problem-solving and software development. Through various projects, I’ve honed my ability to tackle complex challenges. <span>While design is my weakness</span>, I’m actively improving to become more well-rounded in tech.
-      </p>
-      <p class="yes" data-aos="fade-right"  data-aos-duration="2000">
-        Outside of academics, I love outdoor adventures and exploring history and mythology. I aim to innovate with technology for a positive impact on society.
-      </p>
-    </section>
-
-    <section id="hall-of-fame" class="container">
-      <h1 data-aos="fade-up"  data-aos-duration="1000" >Hall of Fame</h1>
-      <div class="grid">
-          <div class="achievement" onclick="openModal('ach1')" data-aos="zoom-in"  data-aos-duration="2000">
-              <img src="gambar/juara1.jpeg" alt="Achievement 1">
-              <div class="overlay">Third Place Winner of the Pharmation 2024 Essay Competition.</div>
+        <div class="hall-of-fame-info">
+          <div class="hall-of-fame-position">
+            <span class="hall-of-fame-position-text">3rd Place Winner</span>
+            <span class="hall-of-fame-year">2024</span>
           </div>
-          <div class="achievement" onclick="openModal('ach2')" data-aos="zoom-in"  data-aos-duration="2000">
-              <img src="gambar/juara2.jpg" alt="Achievement 2">
-              <div class="overlay">Third Place Winner Asia Pacific “Teaching Competition” Huawei ICT Competition 2024-2025</div>
+          <h3 class="hall-of-fame-title">Pharmation Essay Competition</h3>
+          <p class="hall-of-fame-description">Our team, consisting of Pasha and Hendra, achieved third place in the prestigious Pharmation Essay Competition by presenting a thought-provoking analysis on the intersection of technology and healthcare, emphasizing digital transformation and sustainable pharmaceutical innovation.</p>
+          <div class="hall-decor-2">
+            <img src="img/decor2.png" alt="Decoration">
           </div>
-          <div class="achievement" onclick="openModal('ach3')" data-aos="zoom-in"  data-aos-duration="2000">
-              <img src="gambar/juara3.jpg" alt="Achievement 3">
-              <div class="overlay">2ND CLOUD TRACK WINNER OF HUAWEI ICT COMPETITION 2024-2025 NATIONAL FINAL.</div>
-          </div>
-          <div class="achievement" onclick="openModal('ach1')" data-aos="zoom-in"  data-aos-duration="2000">
-            <img src="gambar/juara4.png" alt="Achievement 1">
-            <div class="overlay">2nd Hope Award in Software Development Hology 7.0</div>
-          </div>
-          <div class="achievement" onclick="openModal('ach2')" data-aos="zoom-in"  data-aos-duration="2000">
-              <img src="gambar/juara5.jpg" alt="Achievement 2">
-              <div class="overlay">Second Place Winner of the 2024 Lintas Ormawa National Scientific Paper Competition.</div>
-          </div>
-          <div class="achievement" onclick="openModal('ach3')" data-aos="zoom-in"  data-aos-duration="2000">
-              <img src="gambar/juara6.jpeg" alt="Achievement 3">
-              <div class="overlay">Third Place Winner of Jabar Datathon 2023</div>
-          </div>
+        </div>
       </div>
-      
-      <!-- Modal -->
-      <div id="modal" class="modal">
-          <div class="modal-content">
-              <span class="close" onclick="closeModal()">&times;</span>
-              <img id="modal-img" src="" alt="Achievement">
-              <p id="modal-text"></p>
+    </div>
+    
+    <!-- Content kedua dengan layout terbalik -->
+    <div class="hall-of-fame-content">
+      <div class="hall-of-fame-item hall-of-fame-item-reverse">
+        <div class="hall-of-fame-image">
+          <img src="img/juara2.jpg" alt="HUAWEI ICT COMPETITION NATIONAL FINAL">
+        </div>
+        <div class="hall-of-fame-info hall-of-fame-info-left">
+          <div class="hall-of-fame-position">
+            <span class="hall-of-fame-position-text">2nd Place Winner</span>
+            <span class="hall-of-fame-year">2024</span>
           </div>
+          <h3 class="hall-of-fame-title">Huawei ICT Competition FINAL NATIONAL</h3>
+          <p class="hall-of-fame-description">Rievan Averillio, Paris Ahmad, and Beril Berekhya achieved second place in the Huawei ICT Competition National Final <strong>(Cloud Track)</strong>, demonstrating advanced skills in cloud infrastructure, deployment strategies, and system optimization. Their performance reflected a deep understanding of real-world cloud computing challenges at the national level.</p>
+          <div class="hall-decor-4">
+            <img src="img/decor4.png" alt="Decoration">
+          </div>
+        </div>
+        <div class="hall-decor-3">
+          <img src="img/decor3.png" alt="Decoration">
+        </div>
       </div>
-  </section>
-  
-
-    <section class="projek">
-      <h1 data-aos="fade-down" data-aos-duration="2000">Project</h1>
-      <div class="projek-container" data-aos="fade-up" data-aos-duration="2000">
-        <button class="nav-btn left" onclick="prevProject()">&#10094;</button>
-        <div class="projek-content">
-          <div class="projek-item active">
-            <div class="projek-left" data-aos="zoom-out" data-aos-duration="2000">
-              <video controls>
-                <source src="video/Cheator.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="projek-right" data-aos="fade-left" data-aos-duration="2000">
-              <h2 class="projek-title">Cheator</h2>
-              <p class="projek-panjang">
-                Cheator - Cheat Detector.
-              </p>
-              <p class="projek-desc">
-                Using Python and YoloV8 for online and offline exam fraud detection.
-              </p>
-              <button class="git">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  height="28"
-                  width="28"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
-                  ></path>
-                </svg>
-                <span>GitHub</span>
-              </button>
-
-
-            </div>
+    </div>
+    
+    <!-- Content ketiga dengan layout normal (sama seperti content pertama) -->
+    <div class="hall-of-fame-content">
+      <div class="hall-of-fame-item">
+        <div class="hall-decor-5">
+          <img src="img/decor5.png" alt="Decoration">
+        </div>
+        <div class="hall-of-fame-image">
+          <img src="img/juara3.jpg" alt="Competition Achievement">
+        </div>
+        <div class="hall-of-fame-info">
+          <div class="hall-of-fame-position">
+            <span class="hall-of-fame-position-text">3rd Place Winner</span>
+            <span class="hall-of-fame-year">2024</span>
           </div>
+          <h3 class="hall-of-fame-title">Huawei ICT Competition ASIA PASIFIC</h3>
+          <p class="hall-of-fame-description">Founder of the ICT Laboratory, Mrs. Lisa, secured third place in the Huawei ICT Competition – <strong>Teaching Competition</strong>, representing the Asia-Pacific region. This international recognition highlights her excellence in ICT education and innovative teaching practices.</p>
+        </div>
+            <div class="hall-decor-10">
+          <img src="img/decor10.png" alt="Decoration">
+        </div>
+      </div>
+    </div>
 
-          <div class="projek-item">
-            <div class="projek-left">
-              <video controls>
-                <source src="video/herbalin.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="projek-right">
-              <h2 class="projek-title">Herbalin</h2>
-              <p class="projek-panjang">
-                Smart Herbal Guide
-              </p>
-              <p class="projek-desc">
-                Discover herbs easily with AI-powered insights and a comprehensive glossary.
-              </p>
-                <button class="git">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    height="28"
-                    width="28"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
-                    ></path>
-                  </svg>
-                  <span>GitHub</span>
-                </button>
+    <div class="hall-of-fame-content">
+      <div class="hall-of-fame-item hall-of-fame-item-reverse">
+        <div class="hall-of-fame-image">
+          <img src="img/juara4.jpg" alt="Lintas Ormawa National Scientific Paper Competition">
+        </div>
+        <div class="hall-of-fame-info hall-of-fame-info-left">
+          <div class="hall-of-fame-position">
+            <span class="hall-of-fame-position-text">2nd Place Winner</span>
+            <span class="hall-of-fame-year">2024</span>
+          </div>
+          <h3 class="hall-of-fame-title">Lintas Ormawa Scientific Paper Competition</h3>
+          <p class="hall-of-fame-description">Second place in the <strong>Lintas Ormawa Scientific Paper Competition</strong> was awarded to Maulana Seno, Muhammad Zulfan, and Dedrick, whose paper stood out for its strong analytical approach, innovative perspective, and effective presentation of ideas aligned with current social and technological challenges.
+
+</p>
+          <div class="hall-decor-4">
+            <img src="img/decor4.png" alt="Decoration">
+          </div>
+        </div>
+        <div class="hall-decor-3">
+          <img src="img/decor3.png" alt="Decoration">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Content kelima dengan layout normal (sama seperti content pertama dan ketiga) -->
+    <div class="hall-of-fame-content">
+      <div class="hall-of-fame-item">
+        <div class="hall-decor-9">
+          <img src="img/decor9.png" alt="Decoration">
+        </div>
+        <div class="hall-of-fame-image">
+          <img src="img/juara5.jpeg" alt="Innovation Challenge Competition">
+        </div>
+        <div class="hall-of-fame-info">
+          <div class="hall-of-fame-position">
+            <span class="hall-of-fame-position-text">3rd Place Winner</span>
+            <span class="hall-of-fame-year">2023</span>
+          </div>
+          <h3 class="hall-of-fame-title">Jawa Barat Datathon</h3>
+          <p class="hall-of-fame-description">As a participant in the <strong>Jabar Datathon 2023</strong>, Zufar Dafy achieved third place by leveraging data analytics to uncover meaningful insights and propose practical solutions for regional development challenges. His work was recognized for its clarity, relevance, and impact.</p>
+          <div class="hall-decor-7">
+            <img src="img/decor7.png" alt="Decoration">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Content keenam dengan layout terbalik (sama seperti content kedua dan keempat) -->
+    <div class="hall-of-fame-content">
+      <div class="hall-of-fame-item hall-of-fame-item-reverse">
+        <div class="hall-of-fame-image">
+          <img src="img/juara6.jpg" alt="KTI Chemical Engineering Competition">
+        </div>
+        <div class="hall-of-fame-info hall-of-fame-info-left">
+          <div class="hall-of-fame-position">
+            <span class="hall-of-fame-position-text">Best Presentation</span>
+            <span class="hall-of-fame-year">2025</span>
+          </div>
+          <h3 class="hall-of-fame-title">LKTI Chemical Engineering Fair</h3>
+          <p class="hall-of-fame-description">At the LKTI Chemical Engineering Fair, Afin Maulana, Rievan Averillio, and Hanifah Dwi earned the <strong>Best Presentation</strong> award for their exceptional clarity, confident delivery, and ability to effectively convey complex research ideas to the judging panel.
+
+</p>
+          <div class="hall-decor-8">
+            <img src="img/decor8.png" alt="Decoration">
+          </div>
+        </div>
+        <div class="hall-decor-11">
+          <img src="img/decor11.png" alt="Decoration">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+  <div class="about-container">
+    <div class="about-header">
+      <h2>About Us</h2>
+      <p>Discover our mission, vision, and the story behind ICT Laboratory</p>
+    </div>
+    <div class="about-content">
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>Our Mission</h3>
+          <p>To advance the field of information and communication technology through innovative research, cutting-edge education, and collaborative partnerships that drive technological progress.</p>
+        </div>
+        <div class="about-card">
+          <h3>Our Vision</h3>
+          <p>To be a leading center of excellence in ICT research and development, fostering innovation and preparing the next generation of technology leaders.</p>
+        </div>
+        <div class="about-card">
+          <h3>Our Values</h3>
+          <p>Innovation, collaboration, excellence, and integrity guide everything we do as we push the boundaries of what's possible in technology.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Project Section -->
+<section class="project" id="project">
+  <div class="project-container">
+    <div class="project-header">
+      <h2>Our Projects</h2>
+      <p>Explore our latest research initiatives and innovative solutions</p>
+    </div>
+    <div class="project-content">
+      <div class="coming-soon-container">
+        <h2>Coming Soon</h2>
+        <p>We are currently undergoing maintenance and working on the development of innovative projects that will be launching soon. Please stay tuned for the latest updates from the ICT Laboratory.<strong>"yang bikin seorang soalnya :( "</strong>  </p>
+        <div class="maintenance-icon">
+          <i class="fas fa-tools"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+  <div class="contact-container">
+    <div class="contact-header">
+      <h2>Contact Us</h2>
+      <p>Get in touch with our team for collaborations and inquiries</p>
+    </div>
+    <div class="contact-content">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <h3>Address</h3>
+            <p>Jl. PHH Mustopha No.23<br>Bandung 40124, West Java<br>Gedung 2 Lantai 1 ITENAS</p>
+          </div>
+          <div class="contact-item">
+            <h3>Email</h3>
+            <p>contact@labict.itenas.ac.id</p>
+          </div>
+          <div class="contact-item">
+            <h3>Social Media</h3>
+            <div class="social-links">
+              <a href="https://github.com/ictlab-itenas" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i> GitHub
               </a>
-            </div>
-          </div>
-
-          <div class="projek-item">
-            <div class="projek-left">
-              <video controls>
-                <source src="video/Ifrit.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="projek-right">
-              <h2 class="projek-title">IFRIT</h2>
-              <p class="projek-panjang">
-                Integrated Fire Respone & IoT Technology.
-              </p>
-              <p class="projek-desc">
-                An IoT-based fire truck with fire detection using cameras and distance sensors.
-              </p>
-              <a href="http://ifrit.great-site.net/" target="_blank">
-                <button class="git">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    height="28"
-                    width="28"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
-                    ></path>
-                  </svg>
-                  <span>GitHub</span>
-                </button>
+              <a href="https://www.instagram.com/ictlab_itenas" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> Instagram
               </a>
-            </div>
-          </div>
-
-          <div class="projek-item">
-            <div class="projek-left">
-              <video controls>
-                <source src="video/Medlytics.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="projek-right">
-              <h2 class="projek-title">Medlytics</h2>
-              <p class="projek-panjang">
-                Medlytics - Medical Analytics.
-              </p>
-              <p class="projek-desc">
-                A smart system that provides medical information based on medical journals.
-              </p>
-              <a href="https://medlytics.netlify.app/" target="_blank" style="text-decoration: none;">
-                <button class="git">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    height="28"
-                    width="28"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
-                    ></path>
-                  </svg>
-                  <span>GitHub</span>
-                </button>
+              <a href="https://www.linkedin.com/company/ictlab-itenas" target="_blank" rel="noopener">
+                <i class="fab fa-linkedin"></i> LinkedIn
               </a>
-            </div>
-          </div>
-          <div class="projek-item">
-            <div class="projek-left">
-              <video controls>
-                <source src="video/Hand.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="projek-right">
-              <h2 class="projek-title">HandSpeak</h2>
-              <p class="projek-panjang">
-                Hand Gesture Detection
-              </p>
-              <p class="projek-desc">
-                Detects hand gestures to form letters, words, sentences, and enables drawing.
-              </p>
-              <a href="https://github.com/afinmh/HandyMany" target="_blank" style="text-decoration: none;">
-                <button class="git">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    height="28"
-                    width="28"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
-                    ></path>
-                  </svg>
-                  <span>GitHub</span>
-                </button>
+              <a href="https://www.tiktok.com/@ictlab_itenas" target="_blank" rel="noopener">
+                <i class="fab fa-tiktok"></i> TikTok
               </a>
             </div>
           </div>
         </div>
-        <button class="nav-btn right" onclick="nextProject()">&#10095;</button>
+        <div class="contact-form">
+          <h3>Send us a message</h3>
+          <form>
+            <div class="form-group">
+              <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+              <textarea placeholder="Your Message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section id="contact" class="contact">
-      <h2>Want to Know More? Let’s Connect!</h2>
-      <p>Curious about what I do or the projects I’m working on?</p>
-      <p>Whether you have questions, want to collaborate, or just feel like stalking—go ahead, I won’t stop you.</p>
-      <p style="padding-bottom: 50px;">Feel free to reach out through the links below, and let’s make something awesome together!</p>
-      <div class="social-links">
-        <a id="github" class="social-btn flex-center" href="https://github.com/ictlab-itenas" target="_blank">
-          <img src="asset/github.svg" alt="GitHub">
-          <span>ICTLAB</span>
-        </a>
-
-        <a id="twitter" class="social-btn flex-center" href="https://instagram.com/ictlab_itenas" target="_blank">
-          <img src="asset/ig.svg" alt="Twitter">
-          <span>ICTLAB</span>
-        </a>
-
-        <!-- <a id="gmail" class="social-btn flex-center" href="mailto:mafinhida@gmail.com" target="_blank"> -->
-        <!--   <img src="asset/gmail.svg" alt="Gmail"> -->
-        <!--   <span>mafinhida</span> -->
-        <!-- </a> -->
-
-        <!-- <a id="linkedin" class="social-btn flex-center" href="https://www.linkedin.com/in/afinmh" target="_blank"> -->
-        <!--   <img src="asset/li.svg" alt="LinkedIn"> -->
-        <!--   <span>afinmh</span> -->
-        <!-- </a> -->
-      </div>
-      <p style="color: black;">Every time this page is refreshed, everything will change! Try to see the magic!</p>
-      <p style="color: black;">You can move the boxes around (not the social media ones, though)!</p>
-    </section>
-
-    <button id="backToTop" class="back-to-top" onclick="scrollToTop()">
-      <img src="asset/top.svg" alt="Back to Top">
-    </button>
-
-
-
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typewriter-effect@latest/dist/core.js"></script>
-    <script>
-    window.addEventListener("scroll", function () {
-      const button = document.getElementById("backToTop");
-      if (window.scrollY > 200) {
-        button.classList.add("show");
-        button.classList.remove("hide");
-      } else {
-        button.classList.add("hide");
-        setTimeout(() => button.classList.remove("show"), 300);
-      }
-    });
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-
-    AOS.init();
-
-    let currentIndex = 0;
-    const projects = document.querySelectorAll('.projek-item');
-    function showProject(index) {
-      projects.forEach((project, i) => {
-        const video = project.querySelector('video');
-
-        project.classList.remove('active');
-
-        // Hapus atribut autoplay dan loop dari semua video
-
-        if (i === index) {
-          project.classList.add('active');
-        }
-      });
-    }
-
-    function nextProject() {
-      currentIndex = (currentIndex + 1) % projects.length;
-      showProject(currentIndex);
-    }
-
-    function prevProject() {
-      currentIndex = (currentIndex - 1 + projects.length) % projects.length;
-      showProject(currentIndex);
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const contactSection = document.querySelector("#contact");
-
-      function getRandomPosition(max) {
-        return Math.floor(Math.random() * max) + "px";
-      }
-
-      function createRandomBox() {
-        const box = document.createElement("div");
-        box.style.width = Math.floor(Math.random() * 50 + 20) + "px";
-        box.style.height = box.style.width;
-
-        // Membuat warna kotak lebih lembut dan tidak solid
-        const color1 = `hsl(${Math.random() * 360}, 100%, 70%)`;
-        const color2 = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        box.style.background = `linear-gradient(45deg, ${color1}, ${color2})`;
-
-        box.style.position = "absolute";
-        box.style.top = getRandomPosition(contactSection.clientHeight - 50);
-        box.style.left = getRandomPosition(contactSection.clientWidth - 50);
-        box.style.borderRadius = "10px"; // Menambah kelengkungan
-        box.style.opacity = "0.6"; // Membuat kotak sedikit transparan
-
-        contactSection.appendChild(box);
-
-        // Menambahkan kemampuan untuk drag (pindahkan kotak)
-        box.addEventListener("mousedown", function (e) {
-          // Menyimpan posisi mouse saat mulai drag
-          let offsetX = e.clientX - box.offsetLeft;
-          let offsetY = e.clientY - box.offsetTop;
-
-          // Fungsi untuk menangani pergerakan kotak
-          function moveAt(e) {
-            box.style.left = e.clientX - offsetX + "px";
-            box.style.top = e.clientY - offsetY + "px";
-          }
-
-          // Menangani saat mouse bergerak
-          document.addEventListener("mousemove", moveAt);
-
-          // Menangani saat mouse dilepaskan (drag selesai)
-          box.addEventListener("mouseup", function () {
-            document.removeEventListener("mousemove", moveAt);
-            box.removeEventListener("mouseup", arguments.callee);
-          });
-        });
-      }
-
-      // Membatasi jumlah kotak yang ditambahkan
-      for (let i = 0; i < 25; i++) {
-        createRandomBox();
-      }
-    });
-
-    showProject(currentIndex);
-    document.addEventListener("DOMContentLoaded", function () {
-      const h1 = document.querySelector("h1");
-      const text = h1.innerText.split(" ");
-      h1.innerHTML = "";
-      text.forEach((word, index) => {
-        const span = document.createElement("span");
-        span.innerText = word;
-        span.style.animation = `fallBlur 1s ${index * 0.2}s forwards`;
-        h1.appendChild(span);
-        h1.innerHTML += " ";
-      });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const p = document.querySelector("p");
-      const text = p.innerText.split(" ");
-      p.innerHTML = "";
-      text.forEach((word) => {
-        const span = document.createElement("span");
-        span.innerText = word;
-        p.appendChild(span);
-        p.appendChild(document.createTextNode(" "));
-      });
-    });
-
-    function createInkEffect(x, y) {
-      if (window.innerWidth <= 480) return;
-      const ink = document.createElement("div");
-      ink.className = "ink";
-
-      ink.style.left = (x - 90) + "px";
-      ink.style.top = (y - 90) + "px";
-
-      const colors = [
-        "rgba(255, 0, 0, 0.4)",
-        "rgba(0, 255, 0, 0.4)",
-        "rgba(0, 0, 255, 0.4)",
-        "rgba(255, 255, 0, 0.4)",
-        "rgba(255, 0, 255, 0.4)",
-        "rgba(0, 255, 255, 0.4)"
-      ];
-      ink.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]} 10%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%)`;
-
-      document.body.appendChild(ink);
-
-      setTimeout(() => {
-        ink.remove();
-      }, 5000);
-    }
-
-    document.body.addEventListener("click", (event) => {
-      const x = event.clientX;
-      const y = event.clientY;
-      createInkEffect(x, y);
-    });
-
-    setInterval(() => {
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
-      createInkEffect(x, y);
-    }, 700);
-
-
-    document.querySelectorAll(".slider img").forEach(img => {
-      img.addEventListener("mouseover", function() {
-        let caption = document.getElementById("image-caption");
-        caption.textContent = this.alt;
-        caption.style.fontWeight = "bold";
-        caption.style.fontSize = "18px";
-      });
-
-      img.addEventListener("mouseout", function() {
-        let caption = document.getElementById("image-caption");
-        caption.textContent = "*Hover over the image to see the description.";
-        caption.style.fontWeight = "300";
-        caption.style.fontSize = "18px";
-      });
-    });
-
-
-    document.getElementById("explore-btn1").addEventListener("click", function () {
-      document.querySelector(".bungkus").scrollIntoView({ behavior: "smooth" });
-    });
-
-    document.getElementById("explore-btn2").addEventListener("click", function () {
-      document.querySelector(".bungkus").scrollIntoView({ behavior: "smooth" });
-    });
-
-    document.getElementById("projek-btn").addEventListener("click", function () {
-      document.querySelector(".projek").scrollIntoView({ behavior: "smooth" });
-    });
-
-    document.getElementById("contact-btn").addEventListener("click", function () {
-      document.querySelector(".contact").scrollIntoView({ behavior: "smooth" });
-    });
-
-    document.getElementById("about-btn").addEventListener("click", function () {
-      document.querySelector(".about").scrollIntoView({ behavior: "smooth" });
-    });
-
-    document.getElementById("explore-btn").addEventListener("click", function () {
-      document.querySelector(".bungkus").scrollIntoView({ behavior: "smooth" });
-    });
-
-    const app = document.getElementById('typed-role');
-
-    function getTypewriterText() {
-      return "Information and Communication Technology Laboratory".split(' ').map(s => ` ${s} `)
-    }
-
-    const typewriter = new Typewriter(app, {
-      loop: true,
-      delay: 100,
-      deleteSpeed: 1000
-    });
-
-    const typewriterText = getTypewriterText();
-
-    typewriterText.forEach((text, index) => {
-      if (index % 2 === 0) {
-        typewriter.typeString(text);
-      } else {
-        typewriter.pauseFor(250).typeString(text);
-      }
-    });
-
-    typewriter
-      .pauseFor(4000)
-      .deleteAll()
-      .start();
-    </script>
-  </body>
+<script src="script.js"></script>
+</body>
 </html>

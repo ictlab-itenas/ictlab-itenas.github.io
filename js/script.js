@@ -1,3 +1,8 @@
+// Initialize Lenis smooth scrolling
+const lenis = new Lenis({
+  autoRaf: true,
+});
+
 // Typing animation for splash
 function typeText(text, element, speed = 150) {
   return new Promise((resolve) => {

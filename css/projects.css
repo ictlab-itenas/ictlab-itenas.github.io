@@ -3,7 +3,7 @@
 .project-section {
   position: relative;
   z-index: 9;
-  padding: 60px 0;
+  padding: 120px 20px;
   background: #f6f3ef;
   min-height: 60vh;
 }
@@ -61,9 +61,10 @@
 .project-card:nth-child(4) { animation-delay: 0.55s; }
 
 .project-image {
+  padding: 1rem;
   width: 100%;
   aspect-ratio: 16/9;
-  object-fit: cover;
+  object-fit: contain;
   background: #e9eaf0;
 }
 

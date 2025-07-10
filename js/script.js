@@ -67,19 +67,27 @@ async function startSplash() {
 let loadedImages = 0;
 const totalImages = 16;
 
-// Update loading progress
+// Update loading progress (tambahkan custom bar)
 function updateLoadingProgress(loaded, total) {
   const percentage = Math.round((loaded / total) * 100);
-  const progressBar = document.getElementById('progressBar');
-  const loadingPercentage = document.getElementById('loadingPercentage');
-
-  if (progressBar) {
-    progressBar.style.width = `${percentage}%`;
-    progressBar.style.transition = 'width 0.3s ease';
+  const customBar = document.getElementById('customLoadingBar');
+  const lamp = document.getElementById('loadingLamp');
+  const barTrack = customBar ? customBar.parentElement : null;
+  // Bar track animasi width dan background
+  if (barTrack) {
+    if (percentage > 0) {
+      barTrack.classList.add('bar-visible');
+      barTrack.style.width = window.innerWidth < 768 ? '50vw' : '40vw';
+    } else {
+      barTrack.classList.remove('bar-visible');
+      barTrack.style.width = '0';
+    }
   }
-
-  if (loadingPercentage) {
-    loadingPercentage.textContent = `${percentage}%`;
+  if (customBar) {
+    customBar.style.width = `${percentage}%`;
+  }
+  if (lamp && barTrack) {
+    lamp.style.right = '0';
   }
 }
 
@@ -338,28 +346,96 @@ function initMemberCarousel() {
   updateCarousel();
 }
 
+let memberAutoplayInterval = null;
+let isMemberHovered = false;
+let nextBtn = null;
+
+function startMemberAutoplay() {
+  if (memberAutoplayInterval) return;
+  memberAutoplayInterval = setInterval(() => {
+    if (!isMemberHovered && nextBtn) {
+      nextBtn.click();
+    }
+  }, 3000);
+}
+function stopMemberAutoplay() {
+  clearInterval(memberAutoplayInterval);
+  memberAutoplayInterval = null;
+}
+
+const memberSection = document.querySelector('.member-section');
+if (memberSection) {
+  memberSection.addEventListener('mouseenter', () => {
+    isMemberHovered = true;
+    stopMemberAutoplay();
+  });
+  memberSection.addEventListener('mouseleave', () => {
+    isMemberHovered = false;
+    startMemberAutoplay();
+  });
+}
+
 // Initialize application
 document.addEventListener('DOMContentLoaded', () => {
   // Start loading screen first
   startLoadingSequence();
   // Init member carousel after DOM ready
   initMemberCarousel();
+  // Inisialisasi nextBtn setelah carousel siap
+  nextBtn = document.getElementById('memberNext');
+  // Autoplay logic
+  const memberSection = document.querySelector('.member-section');
+  if (memberSection) {
+    memberSection.addEventListener('mouseenter', () => {
+      isMemberHovered = true;
+      stopMemberAutoplay();
+    });
+    memberSection.addEventListener('mouseleave', () => {
+      isMemberHovered = false;
+      startMemberAutoplay();
+    });
+  }
+  startMemberAutoplay();
 });
 
 // Main loading sequence
 async function startLoadingSequence() {
-  // Loading screen is visible by default
-  // Start loading images immediately when loading screen is shown
+  // Sembunyikan top-scroll selama loading
+  const topScroll = document.getElementById('top-scroll');
+  if (topScroll) topScroll.classList.add('hidden');
+
   await preloadImages();
 
-  // Hide loading screen
-  const loadingScreen = document.getElementById('loadingScreen');
-  loadingScreen.classList.add('hidden');
-
-  // Wait for loading screen to fade out, then start splash
-  setTimeout(() => {
-    startSplash();
-  }, 500);
+  // Custom lamp animation
+  const lamp = document.getElementById('loadingLamp');
+  if (lamp) {
+    // Reset semua class animasi lampu
+    lamp.classList.remove('lamp-on', 'lamp-bounce', 'lamp-drop');
+    // Hapus semua event listener animationend sebelumnya
+    const newLamp = lamp.cloneNode(true);
+    lamp.parentNode.replaceChild(newLamp, lamp);
+    // Lampu menyala
+    setTimeout(() => {
+      newLamp.classList.add('lamp-on');
+      // Setelah lampu menyala, langsung ke splash
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) loadingScreen.classList.add('hidden');
+        if (topScroll) setTimeout(() => { topScroll.classList.remove('hidden'); }, 600);
+        setTimeout(() => {
+          startSplash();
+        }, 500);
+      }, 700); // Tampilkan lampu menyala sebentar
+    }, 10); // Pastikan reset class dulu
+  } else {
+    // Fallback: langsung splash
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) loadingScreen.classList.add('hidden');
+    setTimeout(() => {
+      if (topScroll) topScroll.classList.remove('hidden');
+      startSplash();
+    }, 500);
+  }
 }
 
 // Preload all images before showing splash

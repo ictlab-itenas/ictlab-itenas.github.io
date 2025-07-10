@@ -185,10 +185,165 @@ function setupParallaxScroll() {
   });
 }
 
+// Member Carousel Logic
+function initMemberCarousel() {
+  const cards = Array.from(document.querySelectorAll('.member-card'));
+  const count = document.getElementById('memberCount');
+  const countCurrent = count.querySelector('.member-count-current');
+  const countTotal = count.querySelector('.member-count-total');
+  const prevBtn = document.getElementById('memberPrev');
+  const nextBtn = document.getElementById('memberNext');
+  let current = 0;
+  const total = cards.length;
+
+  // Set total only once
+  countTotal.textContent = String(total).padStart(2, '0');
+
+  // --- Arrow marquee animation ---
+  function setupArrowMarquee(btn, dir) {
+    let timeout;
+    btn.addEventListener('mouseenter', () => {
+      btn.classList.remove(`marquee-${dir}-leave`);
+      void btn.offsetWidth;
+      btn.classList.add(`marquee-${dir}-hover`);
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.classList.remove(`marquee-${dir}-hover`);
+      btn.classList.add(`marquee-${dir}-leave`);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        btn.classList.remove(`marquee-${dir}-leave`);
+      }, 370);
+    });
+  }
+  setupArrowMarquee(nextBtn, 'right');
+  setupArrowMarquee(prevBtn, 'left');
+
+  function animateCount(newNum, direction = 'down') {
+    const oldNum = countCurrent.querySelector('.member-count-num.current');
+    // Remove any previous animating spans
+    countCurrent.innerHTML = '';
+    // Create out (old) and in (new) spans
+    const outSpan = document.createElement('span');
+    outSpan.className = 'member-count-num current ' + (direction === 'up' ? 'out-up' : 'out-down');
+    outSpan.textContent = oldNum ? oldNum.textContent : countCurrent.textContent;
+    const inSpan = document.createElement('span');
+    inSpan.className = 'member-count-num ' + (direction === 'up' ? 'in-up' : 'in-down');
+    inSpan.textContent = newNum;
+    countCurrent.appendChild(outSpan);
+    countCurrent.appendChild(inSpan);
+    // Trigger animation
+    countCurrent.classList.remove('animate-down', 'animate-up');
+    void countCurrent.offsetWidth;
+    countCurrent.classList.add(direction === 'up' ? 'animate-up' : 'animate-down');
+    setTimeout(() => {
+      // After animation, keep only the new number as .current
+      countCurrent.innerHTML = '';
+      const finalSpan = document.createElement('span');
+      finalSpan.className = 'member-count-num current';
+      finalSpan.textContent = newNum;
+      countCurrent.appendChild(finalSpan);
+      countCurrent.classList.remove('animate-down', 'animate-up');
+    }, 450);
+  }
+
+  // Daftar link portofolio member (index 0 = member 1)
+  const memberLinks = [
+    '#', // 1
+    '#', // 2
+    '#', // 3
+    'https://portfolio.seya.zip/', // 4
+    'https://afinmh.github.io/', // 5
+    '#', // 6
+    '#', // 7
+    '#', // 8
+    '#', // 9
+    '#', // 10
+    '#', // 11
+    '#', // 12
+    '#', // 13
+    '#', // 14
+    '#', // 15
+    '#', // 16
+    '#', // 17
+    '#', // 18
+    '#', // 19
+    '#', // 20
+    '#', // 21
+    '#', // 22
+    '#', // 23
+    '#', // 24
+    '#', // 25
+    '#', // 26
+    '#', // 27
+  ];
+
+  function updateChooseMemberBtn(idx) {
+    const btn = document.getElementById('chooseMemberBtn');
+    const link = memberLinks[idx] || '#';
+    btn.href = link;
+    if (link === '#' || !link) {
+      btn.classList.add('disabled');
+      btn.setAttribute('tabindex', '-1');
+      btn.setAttribute('aria-disabled', 'true');
+      btn.style.pointerEvents = 'none';
+      btn.style.opacity = '0.5';
+      btn.style.cursor = 'not-allowed';
+    } else {
+      btn.classList.remove('disabled');
+      btn.setAttribute('tabindex', '0');
+      btn.setAttribute('aria-disabled', 'false');
+      btn.style.pointerEvents = '';
+      btn.style.opacity = '';
+      btn.style.cursor = '';
+    }
+  }
+
+  function updateCarousel(dir = 'down') {
+    cards.forEach((card, i) => {
+      card.classList.remove('active', 'prev', 'next', 'pre-prev', 'post-next');
+      if (i === current) {
+        card.classList.add('active');
+      } else if (i === (current - 1 + total) % total) {
+        card.classList.add('prev');
+      } else if (i === (current + 1) % total) {
+        card.classList.add('next');
+      } else if (i === (current - 2 + total) % total) {
+        card.classList.add('pre-prev');
+      } else if (i === (current + 2) % total) {
+        card.classList.add('post-next');
+      }
+    });
+    const newNum = String(current + 1).padStart(2, '0');
+    animateCount(newNum, dir);
+    updateChooseMemberBtn(current);
+  }
+
+  prevBtn.addEventListener('click', () => {
+    current = (current - 1 + total) % total;
+    updateCarousel('up');
+  });
+  nextBtn.addEventListener('click', () => {
+    current = (current + 1) % total;
+    updateCarousel('down');
+  });
+
+  // Init with first number
+  countCurrent.innerHTML = '';
+  const firstSpan = document.createElement('span');
+  firstSpan.className = 'member-count-num current';
+  firstSpan.textContent = String(current + 1).padStart(2, '0');
+  countCurrent.appendChild(firstSpan);
+
+  updateCarousel();
+}
+
 // Initialize application
 document.addEventListener('DOMContentLoaded', () => {
   // Start loading screen first
   startLoadingSequence();
+  // Init member carousel after DOM ready
+  initMemberCarousel();
 });
 
 // Main loading sequence

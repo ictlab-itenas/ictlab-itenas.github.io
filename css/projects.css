@@ -34,6 +34,51 @@
   margin: 0 auto;
 }
 
+/* Wide project card that spans 3 columns but maintains same height */
+.project-card-wide {
+  grid-column: span 3;
+}
+
+.project-card-wide .project-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+
+.project-card-wide .project-image {
+  flex: 0 0 40%;
+  max-width: 300px;
+}
+
+.project-card-wide .project-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1200px) {
+  .project-card-wide {
+    grid-column: span 2;
+  }
+  
+  .project-card-wide .project-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .project-card-wide .project-image {
+    flex: none;
+    max-width: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .project-card-wide {
+    grid-column: span 1;
+  }
+}
+
 .project-card {
   background: #fffaf7;
   border-radius: 1.2rem;

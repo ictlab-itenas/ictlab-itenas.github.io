@@ -322,7 +322,7 @@ body {
 }
 
 .hero-left h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
   font-family: 'Zen Old Mincho', serif;
@@ -522,7 +522,7 @@ body {
 .hall-decor-1 {
   position: absolute;
   top: 120px;
-  left: -90px;
+  left: -100px;
   z-index: 10;
   opacity: 1;
 }
@@ -589,8 +589,7 @@ body {
   right: -180px;
   z-index: 5;
   opacity: 1;
-  transform: rotate(-15deg);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  rotate: -10deg;
 }
 
 .hall-decor-2 img {
@@ -605,14 +604,13 @@ body {
   right: 30px;
   z-index: 5;
   opacity: 1;
-  transform: rotate(30deg);
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .hall-decor-10 img {
   width: 150px;
   height: auto;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  rotate: 30deg;
 }
 
 
@@ -736,12 +734,11 @@ body {
 
 .hall-decor-8 {
   position: absolute;
-  bottom: -200px;
-  left: 270px;
+  bottom: -160px;
+  left: 250px;
   z-index: 5;
   opacity: 1;
-  transform: rotate(15deg);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  rotate: 25deg;
 }
 
 .hall-decor-8 img {
@@ -1084,7 +1081,7 @@ body {
 }
 
 .social-links a i {
-  font-size: 1.2rem;
+  font-size: 1rem;
   width: 20px;
   text-align: center;
   transition: transform 0.3s ease;
@@ -1094,397 +1091,4 @@ body {
 .social-links a:hover i {
   transform: scale(1.1);
   color: #232323;
-}
-
-@media (max-width: 768px) {
-  .splash h1 {
-    font-size: 2rem;
-    letter-spacing: 2px;
-  }
-
-  /* Hero Mobile */
-  .hero {
-    flex-direction: column;
-  }
-
-  .hero-left {
-    width: 100%;
-    height: 50lvh;
-    padding: 0 20px;
-  }
-
-  .hero-left h2 {
-    font-size: max(2rem, 5vw);
-    line-height: 1.3;
-    padding-left: 0;
-    margin-bottom: 20px;
-  }
-
-  .hero-left .hero-description {
-    padding-left: 0;
-    padding-right: 0;
-    transform: translateY(100%);
-    transition: transform 0.8s ease;
-  }
-
-  .hero.show-right .hero-left .hero-description {
-    transform: translateY(0);
-  }
-
-  .hero-left .hero-description p {
-    font-size: max(1rem, 2.5vw);
-    line-height: 1.5;
-    max-width: 100%;
-  }
-
-  .hero-right {
-    width: 100%;
-    height: 50lvh;
-    transform: translateY(100%);
-    transition: transform 0.8s ease;
-  }
-
-  .hero.show-right .hero-right {
-    transform: translateY(0);
-  }
-
-  .hero-right-content {
-    padding: 30px 20px;
-    min-height: 50lvh;
-  }
-
-  .hero-logo img {
-    padding: 0 50px;
-    width: 75vw;
-    height: auto;
-  }
-
-  .hero-description p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  /* Loading Screen Mobile */
-  .loading-progress {
-    width: 280px;
-    height: 6px;
-  }
-
-  .loading-percentage {
-    font-size: 1.6rem;
-  }
-
-  .spinner {
-    width: 60px;
-    height: 60px;
-    border-width: 4px;
-  }
-
-  .loading-spinner {
-    margin-bottom: 30px;
-  }
-
-  .hall-of-fame {
-    padding: 60px 0;
-  }
-
-  .hall-of-fame-container {
-    padding: 0 20px;
-  }
-
-  .hall-of-fame-header h2 {
-    font-size: 2.2rem;
-    letter-spacing: 1px;
-  }
-
-  .hall-of-fame-header p {
-    font-size: 1rem;
-  }
-
-  .hall-of-fame-content {
-    min-height: auto;
-    padding: 40px 0;
-  }
-
-  .hall-of-fame-item {
-    flex-direction: column;
-    gap: 25px;
-    text-align: center;
-    padding: 0 20px;
-  }
-
-  .hall-of-fame-item-reverse {
-    flex-direction: column-reverse;
-    margin-top: 40px;
-  }
-
-  .hall-of-fame-image {
-    flex: none;
-    width: 100%;
-    height: auto;
-    /* max-width: 350px; */
-    margin: 0 auto;
-    padding: 12px;
-  }
-
-  .hall-of-fame-info {
-    padding-left: 0;
-  }
-
-  .hall-of-fame-title {
-    font-size: 1.8rem;
-  }
-
-  .hall-of-fame-description {
-    font-size: 1rem;
-    max-width: 100%;
-  }
-
-  /* Hall of Fame Decorations Mobile */
-  .hall-decor-1 {
-    top: 10px;
-    left: 10px;
-  }
-
-  .hall-decor-1 img {
-    width: 60px;
-  }
-
-  .hall-decor-2 {
-    bottom: -15px;
-    right: -20px;
-    transform: rotate(-10deg);
-  }
-
-  .hall-decor-2 img {
-    width: 80px;
-  }
-
-  /* Layout terbalik mobile - tetap column untuk mobile */
-  .hall-of-fame-item-reverse {
-    flex-direction: column !important;
-    margin-top: 60px;
-  }
-
-  /* Reset order untuk mobile agar gambar tetap di atas */
-  .hall-of-fame-item-reverse .hall-of-fame-image {
-    order: 1 !important; /* Gambar di atas pada mobile */
-  }
-
-  .hall-of-fame-item-reverse .hall-of-fame-info {
-    order: 2 !important; /* Teks di bawah pada mobile */
-  }
-
-  .hall-of-fame-info-left {
-    padding-right: 0;
-  }
-
-  .hall-decor-3 {
-    top: 10px;
-    right: 10px;
-  }
-
-  .hall-decor-3 img {
-    width: 60px;
-  }
-
-  .hall-decor-4 {
-    top: 10px;
-    right: 10px;
-    transform: rotate(10deg);
-  }
-
-  .hall-decor-4 img {
-    width: 80px;
-  }
-
-  .hall-decor-5 {
-    top: 10px;
-    right: 10px;
-    transform: rotate(10deg);
-  }
-
-  .hall-decor-5 img {
-    width: 80px;
-  }
-
-  .hall-decor-7 {
-    top: -500px;
-    scale: 0.5;
-  }
-
-  /* Navbar Mobile */
-  .navbar {
-    padding: 10px 0;
-  }
-
-  .navbar-container {
-    padding: 0 20px;
-  }
-
-  .navbar-logo img {
-    height: 35px;
-  }
-
-  .navbar-menu {
-    gap: 20px;
-  }
-
-  .navbar-item {
-    font-size: 0.9rem;
-  }
-
-  /* About Mobile */
-  .about {
-    padding: 60px 0;
-  }
-
-  .about-container {
-    padding: 0 20px;
-  }
-
-  .about-header h2 {
-    font-size: 2.2rem;
-    letter-spacing: 1px;
-  }
-
-  .about-header p {
-    font-size: 1rem;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-top: 40px;
-  }
-
-  .about-card {
-    padding: 30px 25px;
-  }
-
-  .about-card h3 {
-    font-size: 1.5rem;
-  }
-
-  .about-card p {
-    font-size: 0.95rem;
-  }
-
-  /* Project Mobile */
-  .project {
-    padding: 60px 0;
-  }
-
-  .project-container {
-    padding: 0 20px;
-  }
-
-  .project-header h2 {
-    font-size: 2.2rem;
-    letter-spacing: 1px;
-  }
-
-  .project-header p {
-    font-size: 1rem;
-  }
-
-  .project-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-top: 40px;
-  }
-
-  .project-image {
-    height: 160px;
-  }
-
-  .project-placeholder {
-    font-size: 1.3rem;
-  }
-
-  .project-info {
-    padding: 25px;
-  }
-
-  .project-info h3 {
-    font-size: 1.4rem;
-  }
-
-  .project-info p {
-    font-size: 0.95rem;
-  }
-
-  /* Contact Mobile */
-  .contact {
-    padding: 60px 0;
-  }
-
-  .contact-container {
-    padding: 0 20px;
-  }
-
-  .contact-header h2 {
-    font-size: 2.2rem;
-    letter-spacing: 1px;
-  }
-
-  .contact-header p {
-    font-size: 1rem;
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 40px;
-  }
-
-  .contact-info {
-    gap: 20px;
-  }
-
-  .contact-item h3 {
-    font-size: 1.3rem;
-  }
-
-  .contact-item p {
-    font-size: 0.95rem;
-  }
-
-  .contact-form {
-    padding: 30px 25px;
-  }
-
-  .contact-form h3 {
-    font-size: 1.5rem;
-  }
-
-  .form-group input,
-  .form-group textarea {
-    padding: 12px;
-    font-size: 0.95rem;
-  }
-
-  .submit-btn {
-    padding: 12px 30px;
-    font-size: 0.95rem;
-  }
-
-  /* Social Media Mobile */
-  .social-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .social-links a {
-    font-size: 0.9rem;
-    padding: 6px 10px;
-    flex: 1;
-    min-width: calc(50% - 5px);
-    justify-content: center;
-  }
-
-  .social-links a i {
-    font-size: 1rem;
-  }
 }

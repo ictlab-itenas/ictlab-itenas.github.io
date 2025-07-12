@@ -65,14 +65,71 @@ async function startSplash() {
 
 // Image loading with progress tracking
 let loadedImages = 0;
-const totalImages = 16;
+let totalImages = 0;
 
-// Update loading progress (tambahkan custom bar)
+// Get all image sources from the website
+function getAllImageSources() {
+  const imageSources = [];
+  
+  // Marquee images (1-16)
+  const marqueeImages = Array.from({ length: 16 }, (_, i) => `img/landing/${i + 1}.webp`);
+  imageSources.push(...marqueeImages);
+  
+  // Member images - check for member-card img elements
+  const memberCards = document.querySelectorAll('.member-card img');
+  memberCards.forEach(img => {
+    if (img.src || img.dataset.src) {
+      imageSources.push(img.src || img.dataset.src);
+    }
+  });
+  
+  // Hero section images
+  const heroImages = document.querySelectorAll('#heroSection img');
+  heroImages.forEach(img => {
+    if (img.src || img.dataset.src) {
+      imageSources.push(img.src || img.dataset.src);
+    }
+  });
+  
+  // Hall of Fame images
+  const hofImages = document.querySelectorAll('#hallOfFame img');
+  hofImages.forEach(img => {
+    if (img.src || img.dataset.src) {
+      imageSources.push(img.src || img.dataset.src);
+    }
+  });
+  
+  // Project images
+  const projectImages = document.querySelectorAll('#project img');
+  projectImages.forEach(img => {
+    if (img.src || img.dataset.src) {
+      imageSources.push(img.src || img.dataset.src);
+    }
+  });
+  
+  // Navbar logo and other images
+  const otherImages = document.querySelectorAll('img:not(.member-card img):not(#heroSection img):not(#hallOfFame img):not(#project img)');
+  otherImages.forEach(img => {
+    if (img.src || img.dataset.src) {
+      const src = img.src || img.dataset.src;
+      // Skip if it's already in marquee images
+      if (!src.includes('img/landing/')) {
+        imageSources.push(src);
+      }
+    }
+  });
+  
+  // Remove duplicates and filter out empty sources
+  return [...new Set(imageSources)].filter(src => src && src.trim() !== '');
+}
+
+// Update loading progress with smooth animation
 function updateLoadingProgress(loaded, total) {
-  const percentage = Math.round((loaded / total) * 100);
+  const percentage = total > 0 ? Math.round((loaded / total) * 100) : 0;
   const customBar = document.getElementById('customLoadingBar');
   const lamp = document.getElementById('loadingLamp');
   const barTrack = customBar ? customBar.parentElement : null;
+  
   // Bar track animasi width dan background
   if (barTrack) {
     if (percentage > 0) {
@@ -83,31 +140,57 @@ function updateLoadingProgress(loaded, total) {
       barTrack.style.width = '0';
     }
   }
+  
+  // Smooth progress bar animation
   if (customBar) {
+    customBar.style.transition = 'width 0.3s ease-out';
     customBar.style.width = `${percentage}%`;
   }
+  
   if (lamp && barTrack) {
     lamp.style.right = '0';
   }
+  
+  // Show loading percentage text
+  const loadingText = document.getElementById('loadingText');
+  if (loadingText) {
+    loadingText.textContent = `${percentage}%`;
+  }
+  
+  // Log progress for debugging
+  console.log(`Loading progress: ${loaded}/${total} (${percentage}%)`);
 }
 
-// List gambar 1–16
-const imageList = Array.from({ length: 16 }, (_, i) => i + 1);
-
-// Check file extensions (.webp, .jpg, .JPG)
-function resolveImagePath(num) {
-  const pathWebp = `img/landing/${num}.webp`;
-
-  return new Promise(resolve => {
-    // Try WebP first (best compression)
-    const imgWebp = new Image();
-    imgWebp.src = pathWebp;
-    imgWebp.onload = () => {
+// Load a single image with promise and proper error handling
+function loadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    
+    const onComplete = () => {
       loadedImages++;
       updateLoadingProgress(loadedImages, totalImages);
-      resolve(pathWebp);
+      resolve(src);
     };
+    
+    img.onload = onComplete;
+    img.onerror = () => {
+      console.warn(`Failed to load image: ${src}`);
+      onComplete(); // Still count as complete to avoid stuck loading
+    };
+    
+    // Set crossOrigin if needed for external images
+    if (src.startsWith('http') && !src.includes(window.location.hostname)) {
+      img.crossOrigin = 'anonymous';
+    }
+    
+    img.src = src;
   });
+}
+
+// Check file extensions for marquee images
+function resolveImagePath(num) {
+  const pathWebp = `img/landing/${num}.webp`;
+  return loadImage(pathWebp);
 }
 
 // Load images and start marquee (use preloaded images)
@@ -438,17 +521,45 @@ async function startLoadingSequence() {
   }
 }
 
-// Preload all images before showing splash
+// Preload all images with proper progress tracking
 async function preloadImages() {
   // Reset counter
   loadedImages = 0;
+  
+  // Get all image sources from the website
+  const allImageSources = getAllImageSources();
+  totalImages = allImageSources.length;
+  
+  // Initialize progress bar with 0%
   updateLoadingProgress(0, totalImages);
-
-  const images = await Promise.all(imageList.map(resolveImagePath));
-
-  // Store loaded images for later use
-  window.preloadedImages = images;
-
-  // Wait a bit to show loading complete status
-  await new Promise(resolve => setTimeout(resolve, 800));
+  
+  console.log(`Starting preload of ${totalImages} images...`);
+  
+  // Create promises for all images
+  const loadPromises = allImageSources.map(src => {
+    // Convert relative paths to absolute paths
+    const absoluteSrc = src.startsWith('http') ? src : new URL(src, window.location.origin).href;
+    return loadImage(absoluteSrc);
+  });
+  
+  try {
+    // Load all images and wait for completion
+    const images = await Promise.all(loadPromises);
+    
+    // Store loaded marquee images for later use
+    window.preloadedImages = images.filter(src => src.includes('img/landing/'));
+    
+    console.log(`Successfully preloaded ${images.length} images`);
+    
+    // Ensure progress bar shows 100% before continuing
+    updateLoadingProgress(totalImages, totalImages);
+    
+    // Wait a bit to show loading complete status
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+  } catch (error) {
+    console.error('Error preloading images:', error);
+    // Ensure progress bar shows 100% even if there are errors
+    updateLoadingProgress(totalImages, totalImages);
+  }
 }

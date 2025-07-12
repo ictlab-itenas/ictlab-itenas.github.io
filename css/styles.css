@@ -600,7 +600,7 @@ body {
 
 .hall-decor-10 {
   position: absolute;
-  top: -30px;
+  top: -70px;
   right: 30px;
   z-index: 5;
   opacity: 1;
@@ -1685,12 +1685,13 @@ body {
   }
 
   .hall-decor-3 {
-    top: 280px;
-    right: -20px;
+    bottom: -100px;
+    left: 200px;
+    right: 0px;
   }
 
   .hall-decor-3 img {
-    width: 120px;
+    width: 150px;
   }
 
   .hall-decor-4 {
@@ -1704,8 +1705,8 @@ body {
   }
 
   .hall-decor-5 {
-    bottom: -100px;
-    left: -100px;
+    bottom: -110px;
+    left: 30px;
   }
 
   .hall-decor-5 img {
@@ -1713,13 +1714,13 @@ body {
   }
 
   .hall-decor-7 {
-    top: 200px;
-    left: 200px;
+    top: 350px;
+    left: 150px;
     right: 0px;
   }
 
   .hall-decor-7 img {
-    width: 250px;
+    width: 200px;
   }
 
   .hall-decor-10 img {
@@ -1727,13 +1728,13 @@ body {
   }
 
   .hall-decor-10 {
-    top: 280px;
-    right: 10px;
+    top: -40px;
+    right: -10px;
 
   }
 
   .hall-decor-6 img {
-    width: 120px;
+    width: 150px;
   }
 
   .hall-decor-12 img {

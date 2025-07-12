@@ -1706,7 +1706,7 @@ body {
 
   .hall-decor-5 {
     bottom: -110px;
-    left: 30px;
+    left: 190px;
   }
 
   .hall-decor-5 img {
@@ -1714,7 +1714,7 @@ body {
   }
 
   .hall-decor-7 {
-    top: 350px;
+    top: 320px;
     left: 150px;
     right: 0px;
   }
@@ -1728,8 +1728,10 @@ body {
   }
 
   .hall-decor-10 {
-    top: -40px;
-    right: -10px;
+    top: -20px;
+    right: 280px;
+    left: 0px;
+    rotate: -60deg;
 
   }
 
@@ -1743,7 +1745,7 @@ body {
 
   .hall-decor-12 {
     top: 0px;
-    left: -120px;
+    left: -130px;
   }
 
   .hall-decor-11 img {

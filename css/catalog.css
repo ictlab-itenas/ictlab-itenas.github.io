@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('./inter.css');
+@import url('./zen-old-mincho.css');
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-	font-family: "Poppins", sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
@@ -12,13 +13,92 @@ body {
     place-content: center;
     height: 100vh;
     width: 100vw;
-	overflow: hidden;
-	background: #f1c40f;
+    overflow: hidden;
+    background: rgba(240,235,222,255); /* About section background */
+    position: relative;
+}
+
+/* Simplified Catalog Navbar */
+.catalog-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 8;
+    height: 45px; /* Match bottom navigation height */
+    display: flex;
+    align-items: center;
+}
+
+.catalog-navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.catalog-navbar-logo img {
+    height: 30px; /* Adjusted for smaller navbar */
+    width: auto;
+    object-fit: contain;
+}
+
+.catalog-navbar-menu {
+    display: flex;
+    gap: 40px;
+}
+
+.catalog-navbar-item {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem; /* Slightly smaller for compact navbar */
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.catalog-navbar-item:hover {
+    color: #666;
+}
+
+.catalog-navbar-item::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #1a1a1a;
+    transition: width 0.3s ease;
+}
+
+.catalog-navbar-item:hover::after {
+    width: 100%;
+}
+
+/* Catalog Container */
+.catalog-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding: 65px 20px 65px 20px; /* Adjusted for equal top and bottom padding */
+    box-sizing: border-box;
 }
 
 .flipbook {
     width: 750px;  /* 2 pages of 500px each (5 units) */
     height: 525px;  /* 7 units - maintaining 5:7 ratio for each page */
+    transition: all 0.3s ease;
 }
 
 .flipbook .hard {
@@ -29,10 +109,10 @@ body {
 }
 
 .flipbook .hard small{
-	font-style: italic;
-	font-weight: lighter;
-	opacity: 0.7;
-	font-size: 14px;
+    font-style: italic;
+    font-weight: lighter;
+    opacity: 0.7;
+    font-size: 14px;
 }
 
 .flipbook .page {
@@ -57,7 +137,326 @@ body {
 }
 
 .flipbook .page small{
-	font-size: 14px;
+    font-size: 14px;
     margin-bottom: 10px;
+}
+
+/* Blank Pages */
+.blank-page {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    width: 500px;  /* 5 units */
+    height: 700px; /* 7 units */
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    height: 45px; /* Reduced from 60px */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    max-width: 700px; /* Increased for input field */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #1a1a1a;
+    font-size: 10px; /* Smaller for more buttons */
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 4px 8px; /* Reduced padding */
+    border-radius: 8px;
+    min-width: 60px; /* Smaller width */
+    font-family: inherit;
+}
+
+.nav-btn:hover:not(.disabled) {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px); /* Reduced movement */
+}
+
+.nav-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nav-btn i {
+    font-size: 14px; /* Smaller icons */
+    margin-bottom: 2px; /* Reduced margin */
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover:not(.disabled) i {
+    transform: scale(1.1);
+}
+
+.nav-btn span {
+    font-size: 8px; /* Smaller text */
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Page Info */
+.page-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px; /* Slightly smaller */
+    font-weight: 600;
+    color: #1a1a1a;
+    padding: 6px 16px; /* Reduced padding */
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    min-width: 80px;
+    justify-content: center;
+}
+
+.current-page {
+    color: #000;
+    font-weight: 700;
+}
+
+.page-separator {
+    color: #666;
+    font-weight: 400;
+}
+
+.total-pages {
+    color: #666;
+    font-weight: 500;
+}
+
+/* Page Input Container */
+.page-input-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    padding: 4px;
+    min-width: 120px;
+}
+
+.page-input {
+    width: 60px;
+    height: 28px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-family: inherit;
+    text-align: center;
+    background: white;
+    color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.page-input:focus {
+    border-color: #666;
+}
+
+.page-input::placeholder {
+    color: #999;
+    font-size: 10px;
+}
+
+.go-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: #1a1a1a;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 10px;
+}
+
+.go-btn:hover {
+    background: #666;
+    transform: scale(1.05);
+}
+
+.go-btn i {
+    font-size: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .catalog-container {
+        padding: 55px 10px 55px 10px; /* Adjusted for smaller navs */
+    }
+    
+    .flipbook {
+        width: 350px !important; /* Single page width on mobile */
+        height: 525px !important; /* Maintain aspect ratio */
+        max-width: 90vw;
+    }
+    
+    /* Mobile single page styling */
+    .flipbook .page,
+    .flipbook .hard,
+    .blank-page {
+        width: 350px !important; /* Single page width */
+        height: 525px !important; /* Maintain aspect ratio */
+    }
+    
+    .bottom-nav {
+        height: 40px; /* Even smaller on mobile */
+    }
+    
+    .catalog-navbar {
+        height: 40px; /* Match bottom nav on mobile */
+    }
+    
+    .bottom-nav-container {
+        padding: 0 15px;
+        max-width: 600px; /* Adjusted for mobile */
+    }
+    
+    .nav-btn {
+        font-size: 9px;
+        min-width: 50px;
+        padding: 3px 6px;
+    }
+    
+    .nav-btn i {
+        font-size: 12px;
+    }
+    
+    .nav-btn span {
+        font-size: 7px;
+    }
+    
+    .page-info {
+        font-size: 12px;
+        padding: 4px 12px;
+        min-width: 70px;
+    }
+    
+    .page-input-container {
+        min-width: 100px;
+    }
+    
+    .page-input {
+        width: 50px;
+        height: 24px;
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+    
+    .go-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 9px;
+    }
+    
+    .go-btn i {
+        font-size: 9px;
+    }
+    
+    .catalog-navbar-container {
+        padding: 0 20px;
+    }
+    
+    .catalog-navbar-logo img {
+        height: 25px;
+    }
+    
+    .catalog-navbar-item {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .flipbook {
+        width: 300px !important; /* Even smaller for very small screens */
+        height: 450px !important;
+    }
+    
+    .flipbook .page,
+    .flipbook .hard,
+    .blank-page {
+        width: 300px !important;
+        height: 450px !important;
+    }
+    
+    .nav-btn span {
+        display: none;
+    }
+    
+    .nav-btn {
+        min-width: 35px;
+        padding: 4px 4px;
+    }
+    
+    .nav-btn i {
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+    
+    .page-info {
+        font-size: 11px;
+        padding: 3px 6px;
+        min-width: 55px;
+    }
+    
+    .page-input-container {
+        min-width: 80px;
+    }
+    
+    .page-input {
+        width: 40px;
+        height: 22px;
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+    
+    .go-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 8px;
+    }
+    
+    .go-btn i {
+        font-size: 8px;
+    }
+    
+    .catalog-navbar-container {
+        padding: 0 15px;
+    }
+    
+    .catalog-navbar-logo img {
+        height: 22px;
+    }
+    
+    .catalog-navbar-item {
+        font-size: 0.75rem;
+    }
 }
 

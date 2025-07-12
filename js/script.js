@@ -346,20 +346,20 @@ function initMemberCarousel() {
     'https://portfolio.seya.zip/', // 4
     'https://afinmh.github.io/', // 5
     '#', // 6
-    '#', // 7
+    'https://www.linkedin.com/in/maulanaseno/', // 7
     '#', // 8
     '#', // 9
-    '#', // 10
-    '#', // 11
+    'https://www.linkedin.com/in/hanifaprl/', // 10
+    'https://dedrick.vercel.app/', // 11
     '#', // 12
     '#', // 13
     '#', // 14
-    '#', // 15
+    'https://portfolio-ashen-one-97.vercel.app/', // 15
     '#', // 16
     '#', // 17
     '#', // 18
-    '#', // 19
-    '#', // 20
+    'https://www.linkedin.com/in/ahmad-ripaii/', // 19
+    'https://www.linkedin.com/in/lifyana-na/', // 20
     '#', // 21
     '#', // 22
     '#', // 23

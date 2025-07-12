@@ -4,109 +4,353 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="img/logo-bg.png" type="image/png">
+  <title>CATALOG ICT</title>
+  <link rel="stylesheet" href="css/fa-brands.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/catalog.css" />
-  <title>Catalog ICT</title>
 </head>
 
 <body>
-  <div class="flipbook">
-    <div class="hard">
-      <img src="img/catalog/1.webp" alt="" />
+  <!-- Simplified Navbar -->
+  <nav class="catalog-navbar" id="catalogNavbar">
+    <div class="catalog-navbar-container">
+      <div class="catalog-navbar-logo">
+        <img src="img/logo-bg.png" alt="ICT Lab Logo" loading="lazy">
+      </div>
+      <div class="catalog-navbar-menu">
+        <a href="index.html" class="catalog-navbar-item">Home</a>
+      </div>
     </div>
-    <div class="hard"></div>
-    <div>
+  </nav>
+
+  <!-- Catalog Navigation Bar at Bottom -->
+  <div class="bottom-nav">
+    <div class="bottom-nav-container">
+      <button class="nav-btn first-btn" id="firstBtn" title="Go to first page">
+        <i class="fas fa-step-backward"></i>
+        <span>First</span>
+      </button>
+      
+      <button class="nav-btn prev-btn" id="prevBtn">
+        <i class="fas fa-chevron-left"></i>
+        <span>Previous</span>
+      </button>
+      
+      <div class="page-info">
+        <span class="current-page" id="currentPage">1</span>
+        <span class="page-separator">/</span>
+        <span class="total-pages" id="totalPages">32</span>
+      </div>
+      
+      <div class="page-input-container">
+        <input type="number" id="pageInput" class="page-input" placeholder="Go to page" min="1" max="32">
+        <button class="go-btn" id="goBtn" title="Go to page">
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      
+      <button class="nav-btn next-btn" id="nextBtn">
+        <i class="fas fa-chevron-right"></i>
+        <span>Next</span>
+      </button>
+      
+      <button class="nav-btn last-btn" id="lastBtn" title="Go to last page">
+        <i class="fas fa-step-forward"></i>
+        <span>Last</span>
+      </button>
     </div>
-    <div>
-      <img src="img/catalog/2.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/3.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/4.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/5.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/6.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/7.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/8.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/9.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/10.webp" alt="" />   
-    </div>
-    <div>
-      <img src="img/catalog/11.webp" alt="" />
-    </div>
-    <div>
-        <img src="img/catalog/12.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/13.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/14.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/15.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/16.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/17.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/18.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/19.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/20.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/21.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/22.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/23.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/24.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/25.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/26.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/27.webp" alt="" />
-    </div>
-    <div>
-      <img src="img/catalog/29.webp" alt="" />
-    </div>
-    <div class="hard"></div>
-    <div class="hard">
-      <img src="img/catalog/28.webp" alt="" />
+  </div>
+
+  <!-- Audio Elements -->
+  <audio id="pageFlipSound" preload="auto">
+    <source src="audio/page-flip.mp3" type="audio/mpeg">
+    <source src="audio/page-flip.wav" type="audio/wav">
+    <source src="audio/page-flip.ogg" type="audio/ogg">
+  </audio>
+
+  <!-- Catalog Container -->
+  <div class="catalog-container">
+    <div class="flipbook">
+      <!-- Front Cover -->
+      <div class="hard">
+        <img src="img/catalog/1.webp" alt="" />
+      </div>
+      
+      <div class="blank-page hard"></div>
+      <div class="blank-page"></div>
+      
+      <!-- Inside Front Cover -->
+      <div class="hard">
+        <img src="img/catalog/2.webp" alt="" />
+      </div>
+      
+      <!-- Content Pages -->
+      <div>
+        <img src="img/catalog/3.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/4.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/5.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/6.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/7.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/8.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/9.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/10.webp" alt="" />   
+      </div>
+      <div>
+        <img src="img/catalog/11.webp" alt="" />
+      </div>
+      <div>
+          <img src="img/catalog/12.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/13.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/14.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/15.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/16.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/17.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/18.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/19.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/20.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/21.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/22.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/23.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/24.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/25.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/26.webp" alt="" />
+      </div>
+      <div>
+        <img src="img/catalog/27.webp" alt="" />
+      </div>
+      
+      <!-- Blank Pages -->
+      <div class="blank-page"></div>
+      <div class="blank-page hard"></div>
+      
+      <!-- Back Cover (Hard) -->
+      <div class="hard">
+        <img src="img/catalog/28.webp" alt="" />
+      </div>
     </div>
   </div>
 
   <script src="js/jquery.js"></script>
   <script src="js/turn.js"></script>
   <script>
-    $(".flipbook").turn();
+    // Detect mobile device
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    // Audio functionality
+    function playPageFlipSound() {
+      const audio = document.getElementById('pageFlipSound');
+      if (audio) {
+        // Reset audio to beginning
+        audio.currentTime = 0;
+        // Play the sound
+        audio.play().catch(function(error) {
+          console.log('Audio play failed:', error);
+        });
+      }
+    }
+
+    // Custom page numbering function
+    // Custom page numbering function
+    function getCustomPageNumber(page) {
+      const totalPages = 32;
+      const isMobileDevice = isMobile();
+      
+      if (isMobileDevice) {
+        // Mobile: show single page number
+        return page.toString();
+      } else {
+        // Desktop: show page pairs
+        if (page === 1) {
+          return "1";
+        } else if (page === 2) {
+          return "2-3";
+        } else if (page === 30) {
+          return "30-31";
+        } else if (page === 32) {
+          return "32";
+        } else {
+          // For content pages, show pairs
+          if (page % 2 === 0) {
+            // Even pages show current and next
+            return page + "-" + (page + 1);
+          } else {
+            // Odd pages show previous and current
+            return (page - 1) + "-" + page;
+          }
+        }
+      }
+    }
+
+    // Function to go to specific page
+    function goToPage(pageNumber) {
+      if (pageNumber >= 1 && pageNumber <= 32) {
+        $('.flipbook').turn('page', pageNumber);
+        $('#pageInput').val(''); // Clear input after navigation
+      } else {
+        alert('Please enter a page number between 1 and 32');
+        $('#pageInput').val(''); // Clear invalid input
+      }
+    }
+
+    // Initialize flipbook with mobile detection
+    function initializeFlipbook() {
+      const isMobileDevice = isMobile();
+      
+      $(".flipbook").turn({
+        width: isMobileDevice ? 350 : 750,
+        height: isMobileDevice ? 525 : 525,
+        autoCenter: true,
+        gradients: true,
+        acceleration: true,
+        elevation: 50,
+        duration: 1000,
+        display: isMobileDevice ? 'single' : 'double', // Single page on mobile, double on desktop
+        when: {
+          turning: function(event, page, view) {
+            // Play page flip sound
+            playPageFlipSound();
+            
+            // Update page number display with custom formatting
+            var customPageNumber = getCustomPageNumber(page);
+            $('#currentPage').text(customPageNumber);
+            
+            // Update button states
+            if (page <= 1) {
+              $('#firstBtn').prop('disabled', true).addClass('disabled');
+              $('#prevBtn').prop('disabled', true).addClass('disabled');
+            } else {
+              $('#firstBtn').prop('disabled', false).removeClass('disabled');
+              $('#prevBtn').prop('disabled', false).removeClass('disabled');
+            }
+            
+            if (page >= 32) {
+              $('#nextBtn').prop('disabled', true).addClass('disabled');
+              $('#lastBtn').prop('disabled', true).addClass('disabled');
+            } else {
+              $('#nextBtn').prop('disabled', false).removeClass('disabled');
+              $('#lastBtn').prop('disabled', false).removeClass('disabled');
+            }
+          },
+          turned: function(event, page, view) {
+            // Additional smooth transition effects
+            $('.flipbook').css('transition', 'all 0.3s ease');
+          }
+        }
+      });
+    }
+
+    // Initialize on page load
+    $(document).ready(function() {
+      initializeFlipbook();
+    });
+
+    // Reinitialize on window resize
+    $(window).resize(function() {
+      const currentIsMobile = isMobile();
+      const flipbook = $('.flipbook');
+      
+      if (flipbook.data('turn')) {
+        flipbook.turn('destroy');
+      }
+      
+      setTimeout(function() {
+        initializeFlipbook();
+      }, 100);
+    });
+    
+    // Navigation button handlers
+    $('#firstBtn').click(function() {
+      $('.flipbook').turn('page', 1);
+    });
+    
+    $('#prevBtn').click(function() {
+      $('.flipbook').turn('previous');
+    });
+    
+    $('#nextBtn').click(function() {
+      $('.flipbook').turn('next');
+    });
+    
+    $('#lastBtn').click(function() {
+      $('.flipbook').turn('page', 32);
+    });
+    
+    // Page input handlers
+    $('#goBtn').click(function() {
+      var pageNumber = parseInt($('#pageInput').val());
+      goToPage(pageNumber);
+    });
+    
+    $('#pageInput').keypress(function(e) {
+      if (e.which === 13) { // Enter key
+        var pageNumber = parseInt($(this).val());
+        goToPage(pageNumber);
+      }
+    });
+    
+    // Keyboard navigation
+    $(document).keydown(function(e) {
+      switch(e.keyCode) {
+        case 37: // left arrow
+          $('.flipbook').turn('previous');
+          break;
+        case 39: // right arrow
+          $('.flipbook').turn('next');
+          break;
+        case 36: // home key
+          $('.flipbook').turn('page', 1);
+          break;
+        case 35: // end key
+          $('.flipbook').turn('page', 32);
+          break;
+      }
+    });
   </script>
 </body>
 

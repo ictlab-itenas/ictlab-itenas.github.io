@@ -344,8 +344,8 @@ function initMemberCarousel() {
     '#', // 2
     '#', // 3
     'https://portfolio.seya.zip/', // 4
-    'https://afinmh.github.io/', // 5
-    '#', // 6
+    'https://afinmh.vercel.app/', // 5
+    'https://vanporto.vercel.app/', // 6
     'https://www.linkedin.com/in/maulanaseno/', // 7
     '#', // 8
     '#', // 9
@@ -362,7 +362,7 @@ function initMemberCarousel() {
     'https://www.linkedin.com/in/lifyana-na/', // 20
     '#', // 21
     '#', // 22
-    '#', // 23
+    'https://www.linkedin.com/in/fathurrahman-pratama-putra/', // 23
     '#', // 24
     '#', // 25
     '#', // 26

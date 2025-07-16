@@ -16,13 +16,13 @@ fi
 TMP_DIR=$(mktemp -d)
 
 echo "Cloning $REPO_URL into $TMP_DIR..."
-git clone "$REPO_URL" "$TMP_DIR/repo"
+git clone "$REPO_URL" "$TMP_DIR/repo" --depth 1
 
-echo "Copying files to $DEST_DIR..."
+echo "Copying files (including dotfiles) to $DEST_DIR..."
 mkdir -p "$DEST_DIR"
-cp -r "$TMP_DIR/repo/"* "$DEST_DIR/"
+cp -rfv "$TMP_DIR/repo/." "$DEST_DIR/"
 
 echo "Cleaning up..."
-rm -rf "$TMP_DIR"
+rm -rfv "$TMP_DIR"
 
 echo "Deployment complete! Files are now in $DEST_DIR"

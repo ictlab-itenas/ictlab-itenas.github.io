@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOY_PATH=/home/labictitenasac/public_html/
-    - /bin/cp -r * DEPLOY_PATH
+    - export DEPLOYPATH=/home/labictitenasac/public_html/
+    - /bin/cp -r * $DEPLOYPATH

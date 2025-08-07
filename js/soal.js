@@ -65,7 +65,7 @@
             mataKuliah: mk.nama,
             tahun: tahun,
             jenisUjian: ujian,
-            fileName: `${mk.kode}_${tahun}_${ujian}.webp`
+            fileName: `${mk.kode}_${tahun}_${ujian}.pdf`
           });
         });
       });
@@ -304,15 +304,12 @@
         const availableYears = [...new Set(items.map(item => item.tahun))].sort();
         const availableUjian = [...new Set(items.map(item => item.jenisUjian))];
 
-        // Hitung jumlah soal/gambar yang tersedia (file benar-benar ada)
+        // Hitung jumlah soal/PDF yang tersedia (file benar-benar ada)
         let soalTersedia = 0;
         const soalPromises = items.map(item => {
-          return new Promise(resolve => {
-            const img = new Image();
-            img.onload = () => resolve(true);
-            img.onerror = () => resolve(false);
-            img.src = `img/soal/${item.fileName}`;
-          });
+          return fetch(`documents/soal/${item.fileName}`, { method: 'HEAD' })
+            .then(response => response.ok)
+            .catch(() => false);
         });
 
         // Karena map di sini synchronous, tampilkan placeholder dulu, update jumlah soal setelah pengecekan file
@@ -512,22 +509,30 @@
           item.jenisUjian === selectedUjian
         );
         if (soalItem) {
-          // Check if file exists in img/soal folder
-          const imageUrl = `img/soal/${soalItem.fileName}`;
-          const testImage = new Image();
-          testImage.onload = function() {
-            previewBtn.disabled = false;
-            downloadBtn.disabled = false;
-            previewBtn.style.opacity = '1';
-            downloadBtn.style.opacity = '1';
-          };
-          testImage.onerror = function() {
-            previewBtn.disabled = true;
-            downloadBtn.disabled = true;
-            previewBtn.style.opacity = '0.5';
-            downloadBtn.style.opacity = '0.5';
-          };
-          testImage.src = imageUrl;
+          // Check if PDF file exists in documents/soal folder
+          const pdfUrl = `documents/soal/${soalItem.fileName}`;
+          
+          // Use fetch to check if PDF file exists
+          fetch(pdfUrl, { method: 'HEAD' })
+            .then(response => {
+              if (response.ok) {
+                previewBtn.disabled = false;
+                downloadBtn.disabled = false;
+                previewBtn.style.opacity = '1';
+                downloadBtn.style.opacity = '1';
+              } else {
+                previewBtn.disabled = true;
+                downloadBtn.disabled = true;
+                previewBtn.style.opacity = '0.5';
+                downloadBtn.style.opacity = '0.5';
+              }
+            })
+            .catch(() => {
+              previewBtn.disabled = true;
+              downloadBtn.disabled = true;
+              previewBtn.style.opacity = '0.5';
+              downloadBtn.style.opacity = '0.5';
+            });
           return;
         }
       }
@@ -614,67 +619,93 @@
       }
     }
 
-    // Preview soal function
+    // Preview soal function - Updated for PDF
     function previewSoal(soalId) {
       const soal = soalData.find(item => item.id === soalId);
       if (!soal) return;
 
       currentPreviewData = soal;
+      const pdfUrl = `documents/soal/${soal.fileName}`;
+      const isMobile = window.innerWidth <= 768;
       
-      // Set modal content
-      document.getElementById('previewTitle').textContent = `${soal.mataKuliah} - ${soal.jenisUjian} ${soal.tahun}`;
-      
-      const previewImage = document.getElementById('previewImage');
-      const imageUrl = `img/soal/${soal.fileName}`;
-      
-      // Hide any existing unavailable message
-      const messageDiv = document.getElementById('unavailableMessage');
-      if (messageDiv) {
-        messageDiv.style.display = 'none';
-      }
-      
-      // Show image initially
-      previewImage.style.display = 'block';
-      previewImage.src = imageUrl;
-      
-      // Handle image load error
-      previewImage.onerror = function() {
-        // Hide image and show "soal belum tersedia" message
-        this.style.display = 'none';
-        
-        // Create or update message
-        let messageDiv = document.getElementById('unavailableMessage');
-        if (!messageDiv) {
-          messageDiv = document.createElement('div');
-          messageDiv.id = 'unavailableMessage';
-          messageDiv.style.cssText = `
-            padding: 60px 20px;
-            text-align: center;
-            color: #999;
-            font-size: 1.2rem;
-            font-family: 'Inter', sans-serif;
-          `;
-          this.parentNode.appendChild(messageDiv);
+      // Check if file exists first
+      checkFileExists(pdfUrl).then(exists => {
+        if (exists) {
+          if (isMobile) {
+            // Mobile: Open in new tab
+            window.open(pdfUrl, '_blank');
+          } else {
+            // Desktop: Show PDF in modal
+            showPDFModal(pdfUrl, soal);
+          }
+        } else {
+          // File not found - show error
+          Swal.fire({
+            icon: 'warning',
+            title: 'Soal Tidak Tersedia',
+            text: `Soal ${soal.mataKuliah} ${soal.jenisUjian} ${soal.tahun} belum tersedia.`,
+            confirmButtonColor: '#4285F4',
+            customClass: {
+              popup: 'swal-popup',
+              title: 'swal-title',
+              content: 'swal-content'
+            }
+          });
         }
-        messageDiv.innerHTML = `
-          <i class="fas fa-file-alt" style="font-size: 3rem; margin-bottom: 20px; display: block; color: #ddd;"></i>
-          <p style="margin: 0; font-weight: 500;">Soal belum tersedia</p>
-          <p style="margin: 10px 0 0; font-size: 0.9rem;">File soal untuk mata kuliah ini belum diupload</p>
-        `;
-        messageDiv.style.display = 'block';
-      };
-      
-      // Handle successful image load
-      previewImage.onload = function() {
-        this.style.display = 'block';
-        const messageDiv = document.getElementById('unavailableMessage');
-        if (messageDiv) {
-          messageDiv.style.display = 'none';
+      }).catch(() => {
+        // Network error
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Tidak dapat mengakses file soal. Periksa koneksi internet Anda.',
+          confirmButtonColor: '#4285F4'
+        });
+      });
+    }
+
+    // Check if file exists
+    function checkFileExists(url) {
+      return fetch(url, { method: 'HEAD' })
+        .then(response => response.ok)
+        .catch(() => false);
+    }
+
+    // Show PDF Modal for desktop
+    function showPDFModal(pdfUrl, soalData) {
+      Swal.fire({
+        title: `${soalData.mataKuliah} - ${soalData.jenisUjian} ${soalData.tahun}`,
+        html: `
+          <div class="pdf-viewer-container" style="margin-top: 20px;">
+            <div class="pdf-actions" style="margin-bottom: 15px; display: flex; gap: 10px; justify-content: center;">
+              <button onclick="window.open('${pdfUrl}', '_blank')" 
+                      style="padding: 8px 16px; background: #4285F4; color: white; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.9rem;">
+                <i class="fas fa-external-link-alt"></i> Buka di Tab Baru
+              </button>
+            </div>
+            <iframe src="${pdfUrl}" 
+                    width="100%" 
+                    height="600px" 
+                    style="border: 1px solid #ddd; border-radius: 8px; background: white;">
+              <p>Browser Anda tidak mendukung tampilan PDF. 
+                 <a href="${pdfUrl}" target="_blank">Klik di sini untuk membuka file</a>
+              </p>
+            </iframe>
+          </div>
+        `,
+        width: '90%',
+        showCloseButton: true,
+        showConfirmButton: true,
+        confirmButtonText: '<i class="fas fa-download"></i> Download PDF',
+        confirmButtonColor: '#34A853',
+        customClass: {
+          popup: 'swal-popup',
+          title: 'swal-title',
+          content: 'swal-content'
+        },
+        preConfirm: () => {
+          downloadSoalFile(soalData.fileName);
         }
-      };
-      
-      // Show modal
-      document.getElementById('previewModal').style.display = 'block';
+      });
     }
 
     // Close preview modal
@@ -691,56 +722,70 @@
     }
 
     function downloadSoalFile(fileName) {
-      // Check if file exists by trying to create the download link
-      const imageUrl = `img/soal/${fileName}`;
+      // PDF file URL
+      const pdfUrl = `documents/soal/${fileName}`;
       
-      // Create a temporary image to check if file exists
-      const testImage = new Image();
-      
-      testImage.onload = function() {
-        // File exists, proceed with download
-        const link = document.createElement('a');
-        link.href = imageUrl;
-        link.download = fileName;
-        link.style.display = 'none';
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // Show success message
-        Swal.fire({
-          title: 'Download Berhasil!',
-          text: `File ${fileName} sedang didownload`,
-          icon: 'success',
-          timer: 2000,
-          showConfirmButton: false,
-          customClass: {
-            popup: 'swal-popup',
-            title: 'swal-title',
-            content: 'swal-content'
+      // Check if PDF file exists using fetch
+      fetch(pdfUrl, { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            // File exists, proceed with download
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = fileName;
+            link.style.display = 'none';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show success message
+            Swal.fire({
+              title: 'Download Berhasil!',
+              text: `File ${fileName} sedang didownload`,
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false,
+              customClass: {
+                popup: 'swal-popup',
+                title: 'swal-title',
+                content: 'swal-content'
+              }
+            });
+          } else {
+            // File doesn't exist
+            showFileNotFoundAlert(fileName);
           }
+        })
+        .catch(() => {
+          // Network error or file access error
+          Swal.fire({
+            title: 'Error Download',
+            text: 'Terjadi error saat mengakses file. Periksa koneksi internet Anda.',
+            icon: 'error',
+            confirmButtonColor: '#d33',
+            customClass: {
+              popup: 'swal-popup',
+              title: 'swal-title',
+              content: 'swal-content'
+            }
+          });
         });
-      };
-      
-      testImage.onerror = function() {
-        // File doesn't exist, show alert
-        Swal.fire({
-          title: 'Soal Belum Tersedia',
-          text: 'Maaf, soal untuk mata kuliah ini belum tersedia untuk didownload',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#f39c12',
-          customClass: {
-            popup: 'swal-popup',
-            title: 'swal-title',
-            content: 'swal-content'
-          }
-        });
-      };
-      
-      // Start checking if image exists
-      testImage.src = imageUrl;
+    }
+
+    function showFileNotFoundAlert(fileName) {
+      Swal.fire({
+        title: 'Soal Belum Tersedia',
+        text: `Maaf, file soal ${fileName} belum tersedia untuk didownload`,
+        icon: 'warning',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#f39c12',
+        customClass: {
+          popup: 'swal-popup',
+          title: 'swal-title',
+          content: 'swal-content'
+        }
+      });
     }
 
     // Close modal when clicking outside

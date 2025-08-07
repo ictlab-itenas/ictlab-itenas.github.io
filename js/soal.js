@@ -284,7 +284,7 @@
       const endIndex = startIndex + itemsPerPage;
       const paginatedMataKuliah = allMataKuliah.slice(startIndex, endIndex);
       
-      totalCount.textContent = `Total: ${totalMataKuliah} mata kuliah`;
+      totalCount.textContent = `Total: ${totalMataKuliah} Mata Kuliah`;
 
       if (totalMataKuliah === 0) {
         cardsContainer.innerHTML = `

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Google Sheets Database</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        
+        button {
+            background: #4285F4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #3367d6;
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .status.error {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .status.testing {
+            background: #ffc107;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Google Sheets Database API</h1>
+        
+        <div class="test-section">
+            <h3>📊 Apps Script Status</h3>
+            <p>Menguji koneksi ke Google Apps Script API</p>
+            <button onclick="testConnection()">Test Connection</button>
+            <div id="connectionResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>👤 Test Save User</h3>
+            <p>Menguji fungsi penyimpanan user ke Google Sheets</p>
+            <button onclick="testSaveUser()">Save Test User</button>
+            <div id="saveResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔍 Test Get User</h3>
+            <p>Menguji fungsi mengambil data user dari Google Sheets</p>
+            <button onclick="testGetUser()">Get Test User</button>
+            <div id="getResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>⏰ Test Update Last Active</h3>
+            <p>Menguji fungsi update waktu aktif terakhir</p>
+            <button onclick="testUpdateLastActive()">Update Last Active</button>
+            <div id="updateResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🏃‍♂️ Run All Tests</h3>
+            <p>Menjalankan semua test secara berurutan</p>
+            <button onclick="runAllTests()">Run All Tests</button>
+            <div id="allTestsResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📝 Test Summary</h3>
+            <div id="testSummary">
+                <p>Status: <span class="status testing">Ready to Test</span></p>
+                <p>Apps Script URL: <code>https://script.google.com/macros/s/AKfycbxpH3tbEZ_C9jWvXZQhefCIhCps1aKZm01TQURPxyvCbIKb0Jw6yyMuoUyWzCARZVMs-w/exec</code></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpH3tbEZ_C9jWvXZQhefCIhCps1aKZm01TQURPxyvCbIKb0Jw6yyMuoUyWzCARZVMs-w/exec';
+        
+        let testResults = {
+            connection: false,
+            saveUser: false,
+            getUser: false,
+            updateLastActive: false
+        };
+
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.className = `result ${type}`;
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        async function testConnection() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Testing...';
+            
+            try {
+                showResult('connectionResult', 'Menghubungi Apps Script...', 'info');
+                
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const text = await response.text();
+                    testResults.connection = true;
+                    showResult('connectionResult', `✅ Koneksi berhasil!\nResponse: ${text}`, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                testResults.connection = false;
+                showResult('connectionResult', `❌ Koneksi gagal!\nError: ${error.message}`, 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Test Connection';
+                updateTestSummary();
+            }
+        }
+
+        async function testSaveUser() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Testing...';
+            
+            try {
+                showResult('saveResult', 'Menyimpan test user...', 'info');
+                
+                const testData = {
+                    action: 'saveUser',
+                    email: 'test@itenas.ac.id',
+                    name: 'Test User ICT Lab',
+                    picture: '',
+                    loginTime: new Date().toISOString()
+                };
+                
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData),
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        testResults.saveUser = true;
+                        showResult('saveResult', `✅ User berhasil disimpan!\nResponse: ${JSON.stringify(result, null, 2)}`, 'success');
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                testResults.saveUser = false;
+                showResult('saveResult', `❌ Gagal menyimpan user!\nError: ${error.message}`, 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Save Test User';
+                updateTestSummary();
+            }
+        }
+
+        async function testGetUser() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Testing...';
+            
+            try {
+                showResult('getResult', 'Mengambil data test user...', 'info');
+                
+                const testData = {
+                    action: 'getUser',
+                    email: 'test@itenas.ac.id'
+                };
+                
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData),
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        testResults.getUser = true;
+                        showResult('getResult', `✅ Data user berhasil diambil!\nUser Data: ${JSON.stringify(result.user, null, 2)}`, 'success');
+                    } else {
+                        showResult('getResult', `⚠️ User tidak ditemukan (normal jika belum pernah save)\nResponse: ${JSON.stringify(result, null, 2)}`, 'info');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                testResults.getUser = false;
+                showResult('getResult', `❌ Gagal mengambil data user!\nError: ${error.message}`, 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Get Test User';
+                updateTestSummary();
+            }
+        }
+
+        async function testUpdateLastActive() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Testing...';
+            
+            try {
+                showResult('updateResult', 'Update last active time...', 'info');
+                
+                const testData = {
+                    action: 'updateLastActive',
+                    email: 'test@itenas.ac.id'
+                };
+                
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData),
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        testResults.updateLastActive = true;
+                        showResult('updateResult', `✅ Last active berhasil diupdate!\nResponse: ${JSON.stringify(result, null, 2)}`, 'success');
+                    } else {
+                        showResult('updateResult', `⚠️ User tidak ditemukan untuk update\nResponse: ${JSON.stringify(result, null, 2)}`, 'info');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                testResults.updateLastActive = false;
+                showResult('updateResult', `❌ Gagal update last active!\nError: ${error.message}`, 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Update Last Active';
+                updateTestSummary();
+            }
+        }
+
+        async function runAllTests() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Running Tests...';
+            
+            showResult('allTestsResult', 'Menjalankan semua test...\n', 'info');
+            
+            // Reset results
+            Object.keys(testResults).forEach(key => testResults[key] = false);
+            
+            // Run tests sequentially
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Test 1: Connection
+            showResult('allTestsResult', 'Menjalankan semua test...\n\n1. Testing connection...', 'info');
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, { method: 'GET', mode: 'cors' });
+                if (response.ok) {
+                    testResults.connection = true;
+                    showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ✅ Connection OK', 'info');
+                } else {
+                    showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ❌ Connection Failed', 'info');
+                }
+            } catch (error) {
+                showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ❌ Connection Error: ' + error.message, 'info');
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Test 2: Save User
+            showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n\n2. Testing save user...', 'info');
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'saveUser',
+                        email: 'test@itenas.ac.id',
+                        name: 'Test User ICT Lab',
+                        picture: '',
+                        loginTime: new Date().toISOString()
+                    }),
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        testResults.saveUser = true;
+                        showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ✅ Save User OK', 'info');
+                    } else {
+                        showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ❌ Save User Failed: ' + result.message, 'info');
+                    }
+                } else {
+                    showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ❌ Save User HTTP Error', 'info');
+                }
+            } catch (error) {
+                showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ❌ Save User Error: ' + error.message, 'info');
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Test 3: Get User
+            showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n\n3. Testing get user...', 'info');
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'getUser',
+                        email: 'test@itenas.ac.id'
+                    }),
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        testResults.getUser = true;
+                        showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ✅ Get User OK', 'info');
+                    } else {
+                        showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ⚠️ Get User: ' + result.message, 'info');
+                    }
+                } else {
+                    showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ❌ Get User HTTP Error', 'info');
+                }
+            } catch (error) {
+                showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n   ❌ Get User Error: ' + error.message, 'info');
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Final result
+            const passedTests = Object.values(testResults).filter(Boolean).length;
+            const totalTests = Object.keys(testResults).length;
+            
+            if (passedTests === totalTests) {
+                showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n\n🎉 Semua test berhasil! Database siap digunakan.', 'success');
+            } else if (passedTests > 0) {
+                showResult('allTestsResult', document.getElementById('allTestsResult').textContent + `\n\n⚠️ ${passedTests}/${totalTests} test berhasil. Periksa konfigurasi.`, 'info');
+            } else {
+                showResult('allTestsResult', document.getElementById('allTestsResult').textContent + '\n\n❌ Semua test gagal. Periksa Apps Script dan permission.', 'error');
+            }
+            
+            button.disabled = false;
+            button.textContent = 'Run All Tests';
+            updateTestSummary();
+        }
+
+        function updateTestSummary() {
+            const passedTests = Object.values(testResults).filter(Boolean).length;
+            const totalTests = Object.keys(testResults).length;
+            
+            let status = '';
+            let statusClass = '';
+            
+            if (passedTests === totalTests && totalTests > 0) {
+                status = 'All Tests Passed';
+                statusClass = 'success';
+            } else if (passedTests > 0) {
+                status = `${passedTests}/${totalTests} Tests Passed`;
+                statusClass = 'testing';
+            } else if (Object.values(testResults).some(result => result !== false)) {
+                status = 'Testing in Progress';
+                statusClass = 'testing';
+            } else {
+                status = 'Ready to Test';
+                statusClass = 'testing';
+            }
+            
+            document.getElementById('testSummary').innerHTML = `
+                <p>Status: <span class="status ${statusClass}">${status}</span></p>
+                <p>Apps Script URL: <code>https://script.google.com/macros/s/AKfycbxpH3tbEZ_C9jWvXZQhefCIhCps1aKZm01TQURPxyvCbIKb0Jw6yyMuoUyWzCARZVMs-w/exec</code></p>
+                <p>Tests Status:</p>
+                <ul>
+                    <li>Connection: ${testResults.connection ? '✅' : '❌'}</li>
+                    <li>Save User: ${testResults.saveUser ? '✅' : '❌'}</li>
+                    <li>Get User: ${testResults.getUser ? '✅' : '❌'}</li>
+                    <li>Update Last Active: ${testResults.updateLastActive ? '✅' : '❌'}</li>
+                </ul>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -28,9 +28,9 @@ body {
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     z-index: 8;
-    height: 45px; /* Match bottom navigation height */
     display: flex;
     align-items: center;
+    padding: 15px 0; /* Match index navbar padding */
 }
 
 .catalog-navbar-container {
@@ -41,11 +41,10 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 100%;
 }
 
 .catalog-navbar-logo img {
-    height: 30px; /* Adjusted for smaller navbar */
+    height: 40px; /* Match index navbar logo height */
     width: auto;
     object-fit: contain;
 }
@@ -60,7 +59,7 @@ body {
     color: #1a1a1a;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 0.9rem; /* Slightly smaller for compact navbar */
+    font-size: 1rem; /* Match index navbar font size */
     transition: color 0.3s ease;
     position: relative;
 }
@@ -91,7 +90,7 @@ body {
     align-items: center;
     height: 100vh;
     width: 100vw;
-    padding: 65px 20px 65px 20px; /* Adjusted for equal top and bottom padding */
+    padding: 85px 20px 65px 20px; /* Adjusted top padding for taller navbar */
     box-sizing: border-box;
 }
 

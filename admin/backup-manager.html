@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Backup Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        button.danger { background: #dc3545; }
+        button.danger:hover { background: #c82333; }
+        button.success { background: #28a745; }
+        button.success:hover { background: #1e7e34; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        .sync-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .synced { background: #d4edda; color: #155724; }
+        .not-synced { background: #f8d7da; color: #721c24; }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🗄️ Database Backup Manager</h1>
+    
+    <div class="container">
+        <h2>📊 Backup Status</h2>
+        <div id="backupStatus"></div>
+        <button onclick="checkBackupStatus()">Refresh Status</button>
+        <button onclick="exportBackup()" class="success">📥 Export Backup</button>
+        <button onclick="clearBackup()" class="danger">🗑️ Clear All Backup</button>
+    </div>
+
+    <div class="container">
+        <h2>👥 Stored User Data</h2>
+        <div id="userData"></div>
+    </div>
+
+    <div class="container">
+        <h2>📋 Backup Data Table</h2>
+        <div id="backupTable"></div>
+    </div>
+
+    <div class="container">
+        <h2>🔄 Sync Operations</h2>
+        <div id="syncStatus"></div>
+        <button onclick="syncAllData()" class="success">🚀 Sync All to Database</button>
+        <button onclick="testDatabaseConnection()">🔗 Test Database Connection</button>
+    </div>
+
+    <div class="container">
+        <h2>🛠️ Manual Data Entry</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <input type="email" id="manualEmail" placeholder="Email (@mhs.itenas.ac.id)" required>
+            <input type="text" id="manualName" placeholder="Full Name" required>
+        </div>
+        <button onclick="addManualEntry()" class="success">➕ Add Entry</button>
+    </div>
+
+    <div class="container">
+        <h2>📊 Statistics</h2>
+        <div id="statistics"></div>
+    </div>
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpH3tbEZ_C9jWvXZQhefCIhCps1aKZm01TQURPxyvCbIKb0Jw6yyMuoUyWzCARZVMs-w/exec';
+
+        function showStatus(elementId, message, type) {
+            document.getElementById(elementId).innerHTML = `<div class="${type}">${message}</div>`;
+        }
+
+        function checkBackupStatus() {
+            const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            let statusHtml = '';
+            
+            if (isLoggedIn && userInfo.email) {
+                statusHtml += `<div class="success">✅ Current User: ${userInfo.email} (${userInfo.name || 'Unknown'})</div>`;
+            } else {
+                statusHtml += `<div class="warning">⚠️ No user currently logged in</div>`;
+            }
+            
+            statusHtml += `<div class="info">📦 Total Backup Entries: ${backups.length}</div>`;
+            
+            const unsyncedCount = backups.filter(b => !b.synced).length;
+            if (unsyncedCount > 0) {
+                statusHtml += `<div class="error">🔄 Unsynced Entries: ${unsyncedCount}</div>`;
+            } else if (backups.length > 0) {
+                statusHtml += `<div class="success">✅ All entries synced</div>`;
+            }
+            
+            showStatus('backupStatus', statusHtml, '');
+            displayUserData();
+            displayBackupTable();
+            displayStatistics();
+        }
+
+        function displayUserData() {
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+            const loginTime = localStorage.getItem('loginTime');
+            const loginMethod = localStorage.getItem('loginMethod');
+            
+            if (Object.keys(userInfo).length === 0) {
+                showStatus('userData', '<div class="warning">No user data found in localStorage</div>', '');
+                return;
+            }
+            
+            const userData = `
+                <div class="code-block">
+                    <strong>Email:</strong> ${userInfo.email || 'N/A'}<br>
+                    <strong>Name:</strong> ${userInfo.name || 'N/A'}<br>
+                    <strong>Given Name:</strong> ${userInfo.given_name || 'N/A'}<br>
+                    <strong>Family Name:</strong> ${userInfo.family_name || 'N/A'}<br>
+                    <strong>Picture:</strong> ${userInfo.picture ? `<img src="${userInfo.picture}" width="50" height="50" style="border-radius: 50%;">` : 'N/A'}<br>
+                    <strong>Login Time:</strong> ${loginTime || 'N/A'}<br>
+                    <strong>Login Method:</strong> ${loginMethod || 'N/A'}<br>
+                    <strong>Email Verified:</strong> ${userInfo.email_verified ? '✅ Yes' : '❌ No'}
+                </div>
+            `;
+            
+            document.getElementById('userData').innerHTML = userData;
+        }
+
+        function displayBackupTable() {
+            const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
+            
+            if (backups.length === 0) {
+                document.getElementById('backupTable').innerHTML = '<div class="info">No backup data found</div>';
+                return;
+            }
+            
+            let tableHtml = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Login Time</th>
+                            <th>Backup Time</th>
+                            <th>Sync Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            backups.forEach((backup, index) => {
+                const syncStatus = backup.synced ? 
+                    '<span class="sync-status synced">Synced</span>' : 
+                    '<span class="sync-status not-synced">Not Synced</span>';
+                
+                tableHtml += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${backup.email}</td>
+                        <td>${backup.name || 'N/A'}</td>
+                        <td>${new Date(backup.loginTime).toLocaleString()}</td>
+                        <td>${new Date(backup.timestamp).toLocaleString()}</td>
+                        <td>${syncStatus}</td>
+                        <td>
+                            ${!backup.synced ? `<button onclick="syncEntry(${index})" class="success">Sync</button>` : ''}
+                            <button onclick="deleteEntry(${index})" class="danger">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableHtml += '</tbody></table>';
+            document.getElementById('backupTable').innerHTML = tableHtml;
+        }
+
+        function displayStatistics() {
+            const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
+            
+            if (backups.length === 0) {
+                document.getElementById('statistics').innerHTML = '<div class="info">No data for statistics</div>';
+                return;
+            }
+            
+            const uniqueEmails = [...new Set(backups.map(b => b.email))];
+            const syncedCount = backups.filter(b => b.synced).length;
+            const unsyncedCount = backups.length - syncedCount;
+            const domains = backups.map(b => b.email.split('@')[1]);
+            const domainCounts = {};
+            domains.forEach(domain => {
+                domainCounts[domain] = (domainCounts[domain] || 0) + 1;
+            });
+            
+            let statsHtml = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div class="info">👥 Unique Users: ${uniqueEmails.length}</div>
+                    <div class="info">📊 Total Entries: ${backups.length}</div>
+                    <div class="success">✅ Synced: ${syncedCount}</div>
+                    <div class="error">🔄 Unsynced: ${unsyncedCount}</div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong>Domain Distribution:</strong><br>
+                    ${Object.entries(domainCounts).map(([domain, count]) => 
+                        `<span style="background: #e9ecef; padding: 2px 6px; border-radius: 3px; margin: 2px;">${domain}: ${count}</span>`
+                    ).join(' ')}
+                </div>
+            `;
+            
+            document.getElementById('statistics').innerHTML = statsHtml;
+        }
+
+        async function syncEntry(index) {
+            const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
+            
+            if (index < 0 || index >= backups.length) {
+                alert('Invalid entry index');
+                return;
+            }
+            
+            const entry = backups[index];
+            
+            try {
+                showStatus('syncStatus', '<div class="warning">⏳ Syncing entry...</div>', '');
+                
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'saveUser',
+                        email: entry.email,
+                        name: entry.name,
+                        picture: entry.picture || '',
+                        loginTime: entry.loginTime
+                    }),
+                    mode: 'no-cors'
+                });
+                
+                // Mark as synced
+                backups[index].synced = true;
+                localStorage.setItem('userDataBackups', JSON.stringify(backups));
+                
+                showStatus('syncStatus', '<div class="success">✅ Entry synced successfully</div>', '');
+                checkBackupStatus();
+                
+            } catch (error) {
+                showStatus('syncStatus', `<div class="error">❌ Sync failed: ${error.message}</div>`, '');
+            }
+        }
+
+        async function syncAllData() {
+            const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
+            const unsyncedEntries = backups.filter(b => !b.synced);
+            
+            if (unsyncedEntries.length === 0) {
+                showStatus('syncStatus', '<div class="info">No entries to sync</div>', '');
+                return;
+            }
+            
+            showStatus('syncStatus', `<div class="warning">⏳ Syncing ${unsyncedEntries.length} entries...</div>`, '');
+            
+            let successCount = 0;
+            let failCount = 0;
+            
+            for (let i = 0; i < backups.length; i++) {
+                if (!backups[i].synced) {
+                    try {
+                        await fetch(APPS_SCRIPT_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                action: 'saveUser',
+                                email: backups[i].email,
+                                name: backups[i].name,
+                                picture: backups[i].picture || '',
+                                loginTime: backups[i].loginTime
+                            }),
+                            mode: 'no-cors'
+                        });
+                        
+                        backups[i].synced = true;
+                        successCount++;
+                        
+                        // Small delay to avoid overwhelming the server
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                        
+                    } catch (error) {
+                        console.error(`Failed to sync entry ${i}:`, error);
+                        failCount++;
+                    }
+                }
+            }
+            
+            localStorage.setItem('userDataBackups', JSON.stringify(backups));
+            
+            showStatus('syncStatus', 
+                `<div class="success">✅ Sync completed: ${successCount} success, ${failCount} failed</div>`, '');
+            checkBackupStatus();
+        }
+
+        async function testDatabaseConnection() {
+            try {
+                showStatus('syncStatus', '<div class="warning">⏳ Testing database connection...</div>', '');
+                
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+                
+                showStatus('syncStatus', '<div class="success">✅ Database connection test completed</div>', '');
+                
+            } catch (error) {
+                showStatus('syncStatus', `<div class="error">❌ Database test failed: ${error.message}</div>`, '');
+            }
+        }
+
+        function deleteEntry(index) {
+            if (!confirm('Are you sure you want to delete this entry?')) return;
+            
+            const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
+            backups.splice(index, 1);
+            localStorage.setItem('userDataBackups', JSON.stringify(backups));
+            
+            checkBackupStatus();
+        }
+
+        function clearBackup() {
+            if (!confirm('Are you sure you want to clear all backup data? This cannot be undone.')) return;
+            
+            localStorage.removeItem('userDataBackups');
+            checkBackupStatus();
+        }
+
+        function exportBackup() {
+            const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+            
+            const exportData = {
+                currentUser: userInfo,
+                backupData: backups,
+                exportTime: new Date().toISOString(),
+                totalEntries: backups.length
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ict-lab-backup-${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function addManualEntry() {
+            const email = document.getElementById('manualEmail').value.trim();
+            const name = document.getElementById('manualName').value.trim();
+            
+            if (!email || !name) {
+                alert('Please fill in both email and name');
+                return;
+            }
+            
+            if (!email.endsWith('@mhs.itenas.ac.id')) {
+                alert('Email must be from @mhs.itenas.ac.id domain');
+                return;
+            }
+            
+            const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
+            
+            const newEntry = {
+                action: 'saveUser',
+                email: email,
+                name: name,
+                picture: '',
+                loginTime: new Date().toISOString(),
+                timestamp: new Date().toISOString(),
+                synced: false
+            };
+            
+            backups.push(newEntry);
+            localStorage.setItem('userDataBackups', JSON.stringify(backups));
+            
+            document.getElementById('manualEmail').value = '';
+            document.getElementById('manualName').value = '';
+            
+            checkBackupStatus();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkBackupStatus();
+        });
+    </script>
+</body>
+</html>

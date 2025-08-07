@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="img/logo-bg.png" type="image/png">
+  <title>Login - ICT LAB</title>
+  <link rel="stylesheet" href="css/fa-brands.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/login.css">
+  
+  <!-- Google OAuth -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body>
+  <!-- Simplified Navbar -->
+  <nav class="catalog-navbar" id="loginNavbar">
+    <div class="catalog-navbar-container">
+      <div class="catalog-navbar-logo">
+        <img src="img/logo-bg.png" alt="ICT Lab Logo" loading="lazy">
+      </div>
+      <div class="catalog-navbar-menu">
+        <a href="index.html" class="catalog-navbar-item">Home</a>
+        <a href="catalog.html" class="catalog-navbar-item">Catalog</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Login Container -->
+  <div class="login-container">
+    <div class="login-content">
+      <!-- Login Card -->
+      <div class="login-card">
+        <div class="login-header">
+          <div class="login-logo">
+            <img src="img/logo-bg.png" alt="ICT Lab Logo" loading="lazy">
+          </div>
+          <h1>Welcome to ICT Laboratory</h1>
+          <p>Silakan login menggunakan akun ITENAS Anda untuk mengakses sistem.</p>
+        </div>
+
+        <div class="login-form">
+          <!-- Google Sign-In Button Container -->
+          <div class="google-signin-container">
+            <div id="g_id_onload"
+                 data-client_id="932373464615-f07kgcbiulom1g59nrs5i6k696m5lq3t.apps.googleusercontent.com"
+                 data-context="signin"
+                 data-ux_mode="popup"
+                 data-callback="handleCredentialResponse"
+                 data-auto_prompt="false">
+            </div>
+            
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="rectangular"
+                 data-theme="filled_blue"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="left"
+                 data-width="100%">
+            </div>
+          </div>
+        </div>
+
+        <div class="login-footer">
+          <p>Dengan login, Anda menyetujui <a href="#" onclick="showModal('termsModal')">Terms of Service</a> dan <a href="#" onclick="showModal('privacyModal')">Privacy Policy</a> kami</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background decoration -->
+    <div class="login-background">
+      <div class="bg-circle circle-1"></div>
+      <div class="bg-circle circle-2"></div>
+      <div class="bg-circle circle-3"></div>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner">
+      <div class="spinner-circle"></div>
+      <p>Signing you in...</p>
+    </div>
+  </div>
+
+  <!-- Success modal -->
+  <div class="success-modal" id="successModal">
+    <div class="modal-content">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>Welcome!</h3>
+      <p>You have successfully signed in.</p>
+      <button class="continue-btn" onclick="redirectToHome()">Continue</button>
+    </div>
+  </div>
+
+  <!-- Terms of Service Modal -->
+  <div class="info-modal" id="termsModal">
+    <div class="modal-content">
+      <h3>Terms of Service</h3>
+      <div class="modal-body">
+        <p>Dengan menggunakan layanan ICT Laboratory, Anda menyetujui:</p>
+        <ul>
+          <li>Menggunakan akun email resmi mahasiswa ITENAS (@mhs.itenas.ac.id)</li>
+          <li>Tidak menyalahgunakan sistem dan fasilitas yang tersedia</li>
+          <li>Menjaga kerahasiaan informasi yang diperoleh</li>
+          <li>Mengikuti aturan dan regulasi yang berlaku di ITENAS</li>
+          <li>Bertanggung jawab atas aktivitas yang dilakukan dengan akun Anda</li>
+        </ul>
+        <p>Pelanggaran terhadap ketentuan ini dapat mengakibatkan pembatasan akses.</p>
+      </div>
+      <button onclick="closeModal('termsModal')" class="modal-btn">Tutup</button>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div class="info-modal" id="privacyModal">
+    <div class="modal-content">
+      <h3>Privacy Policy</h3>
+      <div class="modal-body">
+        <p>ICT Laboratory berkomitmen melindungi privasi Anda:</p>
+        <ul>
+          <li><strong>Data yang dikumpulkan:</strong> Email, nama, dan informasi profil Google</li>
+          <li><strong>Penggunaan data:</strong> Autentikasi, personalisasi, dan administrasi sistem</li>
+          <li><strong>Penyimpanan:</strong> Data disimpan dengan aman di Google Sheets</li>
+          <li><strong>Pembagian:</strong> Data tidak dibagikan kepada pihak ketiga</li>
+          <li><strong>Keamanan:</strong> Enkripsi dan proteksi sesuai standar Google</li>
+          <li><strong>Hak Anda:</strong> Dapat meminta penghapusan data kapan saja</li>
+        </ul>
+        <p>Untuk pertanyaan tentang privasi, hubungi admin ICT Laboratory.</p>
+      </div>
+      <button onclick="closeModal('privacyModal')" class="modal-btn">Tutup</button>
+    </div>
+  </div>
+
+  <!-- Load JavaScript -->
+  <script src="js/login.js"></script>
+</body>
+
+</html>

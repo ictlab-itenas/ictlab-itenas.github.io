@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/catalog.css" />
+  <script src="js/login-manager.js" defer></script>
 </head>
 
 <body>
@@ -21,6 +22,8 @@
       </div>
       <div class="catalog-navbar-menu">
         <a href="index.html" class="catalog-navbar-item">Home</a>
+        <a href="catalog.html" class="catalog-navbar-item">Catalog</a>
+        <a href="login.html" class="catalog-navbar-item">Login</a>
       </div>
     </div>
   </nav>
@@ -349,6 +352,14 @@
         case 35: // end key
           $('.flipbook').turn('page', 32);
           break;
+      }
+    });
+    
+    // Initialize Login Manager
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof LoginManager !== 'undefined') {
+        const loginManager = new LoginManager();
+        console.log('Login Manager initialized for catalog page');
       }
     });
   </script>

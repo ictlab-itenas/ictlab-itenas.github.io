@@ -184,9 +184,11 @@
           <div class="file-upload-area" id="fileUploadArea">
             <input type="file" id="fileUpload" name="fileUpload" accept="application/pdf,image/jpeg,image/jpg,image/png,.pdf,.jpg,.jpeg,.png" required>
             <div class="file-upload-content">
-              <i class="fas fa-cloud-upload-alt"></i>
-              <h4>Drag & Drop file atau klik untuk memilih</h4>
-              <p>Format yang didukung: PDF, JPG, JPEG, PNG (Max. 10MB)</p>
+              <div class="desktop-upload-content">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h4>Drag & Drop file atau klik untuk memilih</h4>
+                <p>Format yang didukung: PDF, JPG, JPEG, PNG (Max. 10MB)</p>
+              </div>
               <!-- Mobile fallback button -->
               <button type="button" class="mobile-file-btn" onclick="document.getElementById('fileUpload').click()">
                 <i class="fas fa-folder-open"></i> Pilih File

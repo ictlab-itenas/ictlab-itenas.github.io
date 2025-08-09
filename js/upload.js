@@ -398,37 +398,37 @@ function initializeUploadPage() {
   const fileUpload = document.getElementById('fileUpload');
 
   if (fileUploadArea && fileUpload) {
-    // Click handler for desktop and mobile
-    fileUploadArea.addEventListener('click', (e) => {
-      // Make sure we're not clicking on the file input itself
-      if (e.target !== fileUpload) {
-        fileUpload.click();
-      }
-    });
+    // Check if mobile device
+    const isMobile = window.innerWidth <= 768;
+    
+    if (!isMobile) {
+      // Desktop: Click handler and drag & drop
+      fileUploadArea.addEventListener('click', (e) => {
+        // Make sure we're not clicking on the file input itself
+        if (e.target !== fileUpload) {
+          fileUpload.click();
+        }
+      });
 
-    // Touch event for better mobile support
-    fileUploadArea.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      fileUpload.click();
-    });
+      fileUploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        fileUploadArea.classList.add('drag-over');
+      });
 
-    fileUploadArea.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      fileUploadArea.classList.add('drag-over');
-    });
+      fileUploadArea.addEventListener('dragleave', () => {
+        fileUploadArea.classList.remove('drag-over');
+      });
 
-    fileUploadArea.addEventListener('dragleave', () => {
-      fileUploadArea.classList.remove('drag-over');
-    });
-
-    fileUploadArea.addEventListener('drop', (e) => {
-      e.preventDefault();
-      fileUploadArea.classList.remove('drag-over');
-      const files = e.dataTransfer.files;
-      if (files.length > 0) {
-        handleFileSelect(files[0]);
-      }
-    });
+      fileUploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileUploadArea.classList.remove('drag-over');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          handleFileSelect(files[0]);
+        }
+      });
+    }
+    // Mobile: Only the button will handle file selection, no other event listeners
 
     fileUpload.addEventListener('change', (e) => {
       if (e.target.files.length > 0) {

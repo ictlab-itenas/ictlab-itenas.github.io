@@ -795,16 +795,27 @@ body {
     /* Better mobile touch targets */
     min-height: 120px;
     -webkit-tap-highlight-color: transparent;
+    /* Disable pointer events on mobile to prevent double-click */
+    pointer-events: none;
   }
 
   .file-upload-area input[type="file"] {
     /* Ensure input is properly accessible on mobile */
     -webkit-tap-highlight-color: transparent;
+    /* Disable the hidden input on mobile */
+    pointer-events: none;
+  }
+
+  /* Hide desktop upload content on mobile */
+  .desktop-upload-content {
+    display: none;
   }
 
   /* Show mobile file button on smaller screens */
   .mobile-file-btn {
     display: inline-block;
+    /* Re-enable pointer events for the button */
+    pointer-events: auto;
   }
 
   .file-upload-content i {
@@ -978,5 +989,24 @@ body {
 
   .info-card p {
     font-size: 0.85rem;
+  }
+}
+
+/* Desktop styles - show desktop upload content and hide mobile button */
+@media (min-width: 769px) {
+  .desktop-upload-content {
+    display: block !important;
+  }
+  
+  .mobile-file-btn {
+    display: none !important;
+  }
+  
+  .file-upload-area {
+    pointer-events: auto !important;
+  }
+  
+  .file-upload-area input[type="file"] {
+    pointer-events: auto !important;
   }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch GAS dari GitHub Pages</title>
+</head>
+<body>
+  <h1>Data dari Google Apps Script:</h1>
+  <pre id="output"></pre>
+
+  <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbw36M4k0mPZ_9B3O_J-lepoY7I_0hcZAYVt6SEQ20m5RWstXorEM59CJIGQGd_SNxOW/exec";
+
+    // Gunakan JSONP
+    const script = document.createElement("script");
+    const callbackName = "handleResponse";
+    window[callbackName] = function(data) {
+      document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+    };
+    script.src = `${GAS_URL}?callback=${callbackName}`;
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>

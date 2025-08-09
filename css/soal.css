@@ -1115,58 +1115,51 @@
       }
       
       .cards-header {
-        padding: 18px 25px; /* Enhanced padding */
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5a67d8 100%);
-        border-bottom: none;
+        padding: 18px 25px;
+        background: transparent; /* Transparent background like desktop */
+        border-bottom: 1px solid #e9ecef; /* Match desktop border */
         flex-direction: row;
         gap: 12px;
         align-items: center;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: none; /* Remove box shadow */
       }
 
       .cards-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain-tablet" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.8" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="0.8" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain-tablet)"/></svg>');
-        pointer-events: none;
+        display: none; /* Remove background pattern */
       }
 
       .cards-header h3 {
         font-size: 1.25rem;
         margin: 0;
-        color: white;
-        font-weight: 800;
+        color: #1a1a1a; /* Match desktop dark color */
+        font-weight: 600; /* Match desktop weight */
         display: flex;
         align-items: center;
         gap: 10px;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        text-shadow: none; /* Remove text shadow */
         position: relative;
         z-index: 1;
       }
 
       .cards-header h3 i {
         font-size: 1.1rem;
-        color: rgba(255, 255, 255, 0.9);
-        background: rgba(255, 255, 255, 0.2);
-        padding: 8px;
-        border-radius: 10px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #4285F4; /* Blue color like desktop cards */
+        background: none; /* Remove background */
+        padding: 0; /* Remove padding */
+        border-radius: 0; /* Remove border radius */
+        backdrop-filter: none; /* Remove backdrop filter */
+        border: none; /* Remove border */
       }
 
       .cards-stats {
         font-size: 0.85rem;
-        color: white;
-        font-weight: 700;
-        background: rgba(255, 255, 255, 0.25);
-        padding: 6px 12px;
-        border-radius: 12px;
+        color: #666; /* Match desktop gray color */
+        font-weight: 500; /* Match desktop weight */
+        background: none; /* Remove background */
+        padding: 0; /* Remove padding */
+        border-radius: 0; /* Remove border radius */
         white-space: nowrap;
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1215,106 +1208,99 @@
       }
       
       .pagination-section {
-        padding: 18px 25px; /* Enhanced padding */
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5a67d8 100%);
-        border-top: none;
+        padding: 15px 20px; /* Smaller padding */
+        background: transparent; /* Transparent background */
+        border-top: 1px solid rgba(233, 236, 239, 0.3);
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 12px; /* Smaller gap */
         position: relative;
         overflow: hidden;
-        box-shadow: 0 -4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: none; /* Remove shadow */
       }
 
       .pagination-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain-tablet-pagination" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.8" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="0.8" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain-tablet-pagination)"/></svg>');
-        pointer-events: none;
+        display: none; /* Remove background pattern */
       }
 
       .pagination-info {
-        font-size: 0.9rem;
-        color: white;
-        font-weight: 700;
+        font-size: 0.8rem; /* Smaller font */
+        color: #666; /* Darker color for better visibility */
+        font-weight: 500; /* Less bold */
         text-align: center;
-        background: rgba(255, 255, 255, 0.25);
-        padding: 8px 16px;
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        background: rgba(248, 249, 250, 0.8); /* Light background */
+        padding: 6px 12px; /* Smaller padding */
+        border-radius: 12px; /* Smaller radius */
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(233, 236, 239, 0.5);
+        text-shadow: none; /* Remove text shadow */
         position: relative;
         z-index: 1;
       }
       
       .pagination-controls {
         justify-content: center;
-        gap: 12px;
+        gap: 8px; /* Smaller gap */
         position: relative;
         z-index: 1;
       }
       
       .pagination-btn {
-        padding: 10px 16px;
-        font-size: 0.9rem;
-        font-weight: 700;
-        border-radius: 12px;
+        padding: 8px 12px; /* Smaller padding */
+        font-size: 0.8rem; /* Smaller font */
+        font-weight: 600; /* Less bold */
+        border-radius: 8px; /* Smaller radius */
         background: rgba(255, 255, 255, 0.9);
-        border: 2px solid rgba(255, 255, 255, 0.5);
-        color: #667eea;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(233, 236, 239, 0.8); /* Thinner border */
+        color: #4285F4; /* Blue color */
+        transition: all 0.3s ease; /* Simpler transition */
+        backdrop-filter: blur(5px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Smaller shadow */
       }
 
       .pagination-btn:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 1);
-        color: #5a67d8;
-        border-color: rgba(255, 255, 255, 0.8);
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        background: rgba(66, 133, 244, 0.1);
+        color: #4285F4;
+        border-color: #4285F4;
+        transform: translateY(-1px); /* Smaller transform */
+        box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2); /* Smaller shadow */
       }
 
       .pagination-btn:disabled {
         opacity: 0.4;
         cursor: not-allowed;
-        background: rgba(255, 255, 255, 0.3);
-        color: rgba(255, 255, 255, 0.6);
+        background: rgba(248, 249, 250, 0.8);
+        color: rgba(102, 102, 102, 0.6);
       }
       
       .pagination-number {
-        width: 38px;
-        height: 38px;
-        font-size: 0.9rem;
-        font-weight: 700;
-        border-radius: 12px;
+        width: 32px; /* Smaller size */
+        height: 32px; /* Smaller size */
+        font-size: 0.8rem; /* Smaller font */
+        font-weight: 600; /* Less bold */
+        border-radius: 8px; /* Smaller radius */
         background: rgba(255, 255, 255, 0.9);
-        border: 2px solid rgba(255, 255, 255, 0.5);
-        color: #667eea;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(233, 236, 239, 0.8); /* Thinner border */
+        color: #4285F4; /* Blue color */
+        transition: all 0.3s ease; /* Simpler transition */
+        backdrop-filter: blur(5px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Smaller shadow */
       }
 
       .pagination-number:hover {
-        background: rgba(255, 255, 255, 1);
-        border-color: rgba(255, 255, 255, 0.8);
-        color: #5a67d8;
-        transform: translateY(-2px) scale(1.1);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        background: rgba(66, 133, 244, 0.1);
+        border-color: #4285F4;
+        color: #4285F4;
+        transform: translateY(-1px); /* Smaller transform */
+        box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2); /* Smaller shadow */
       }
 
       .pagination-number.active {
-        background: linear-gradient(135deg, #34A853 0%, #4285F4 100%);
-        border-color: rgba(255, 255, 255, 0.8);
+        background: #4285F4; /* Solid blue background */
+        border-color: #4285F4;
         color: white;
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(52, 168, 83, 0.4);
+        transform: none; /* No scale transform */
+        box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3); /* Blue shadow */
       }
 
       /* Upload CTA Mobile Styles */
@@ -1538,9 +1524,9 @@
       }
 
       .cards-header {
-        padding: 18px 25px; /* Enhanced padding */
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5a67d8 100%);
-        border-bottom: none; /* Remove border for cleaner look */
+        padding: 18px 25px;
+        border-bottom: 1px solid #e9ecef; /* Match desktop border */
+        background: transparent; /* Transparent background like desktop */
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1548,54 +1534,47 @@
         gap: 12px;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: none; /* Remove box shadow */
       }
 
       .cards-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain-mobile" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.8" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="0.8" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.4" fill="white" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23grain-mobile)"/></svg>');
-        pointer-events: none;
+        display: none; /* Remove background pattern */
       }
 
       .cards-header h3 {
         font-size: 1.2rem;
         margin: 0;
-        color: white;
-        font-weight: 800;
+        color: #1a1a1a; /* Match desktop dark color */
+        font-weight: 600; /* Match desktop weight */
         display: flex;
         align-items: center;
         gap: 10px;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        text-shadow: none; /* Remove text shadow */
         position: relative;
         z-index: 1;
       }
 
       .cards-header h3 i {
         font-size: 1.1rem;
-        color: rgba(255, 255, 255, 0.9);
-        background: rgba(255, 255, 255, 0.2);
-        padding: 8px;
-        border-radius: 10px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #4285F4; /* Blue color like desktop cards */
+        background: none; /* Remove background */
+        padding: 0; /* Remove padding */
+        border-radius: 0; /* Remove border radius */
+        backdrop-filter: none; /* Remove backdrop filter */
+        border: none; /* Remove border */
       }
 
       .cards-stats {
         font-size: 0.8rem;
-        color: white;
-        font-weight: 700;
-        background: rgba(255, 255, 255, 0.25);
-        padding: 6px 12px;
-        border-radius: 12px;
+        color: #666; /* Match desktop gray color */
+        font-weight: 500; /* Match desktop weight */
+        background: none; /* Remove background */
+        padding: 0; /* Remove padding */
+        border-radius: 0; /* Remove border radius */
         white-space: nowrap;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        backdrop-filter: none; /* Remove backdrop filter */
+        border: none; /* Remove border */
+        text-shadow: none; /* Remove text shadow */
         position: relative;
         z-index: 1;
       }
@@ -1719,40 +1698,32 @@
 
       /* Enhanced Pagination for Small Mobile */
       .pagination-section {
-        padding: 20px 25px; /* Enhanced padding */
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5a67d8 100%);
-        border-top: none; /* Remove border for cleaner look */
+        padding: 12px 15px; /* Smaller padding */
+        border-top: 1px solid rgba(233, 236, 239, 0.3);
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 10px; /* Smaller gap */
         position: relative;
         overflow: hidden;
-        box-shadow: 0 -4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: none; /* Remove shadow */
       }
 
       .pagination-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain-pagination" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.8" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="0.8" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.4" fill="white" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23grain-pagination)"/></svg>');
-        pointer-events: none;
+        display: none; /* Remove background pattern */
       }
 
       .pagination-info {
-        font-size: 0.85rem;
-        color: white;
-        font-weight: 700;
+        font-size: 0.75rem; /* Smaller font */
+        color: #666; /* Darker color for better visibility */
+        font-weight: 500; /* Less bold */
         text-align: center;
-        background: rgba(255, 255, 255, 0.25);
-        padding: 8px 16px;
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        background: rgba(248, 249, 250, 0.8); /* Light background */
+        padding: 5px 10px; /* Smaller padding */
+        border-radius: 10px; /* Smaller radius */
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(233, 236, 239, 0.5);
+        text-shadow: none; /* Remove text shadow */
         position: relative;
         z-index: 1;
       }
@@ -1761,97 +1732,97 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        gap: 6px; /* Smaller gap */
         flex-wrap: wrap;
         position: relative;
         z-index: 1;
       }
 
       .pagination-btn {
-        padding: 12px;
+        padding: 8px; /* Smaller padding */
         font-size: 0;
-        font-weight: 700;
-        border-radius: 12px;
+        font-weight: 600; /* Less bold */
+        border-radius: 8px; /* Smaller radius */
         background: rgba(255, 255, 255, 0.9);
-        border: 2px solid rgba(255, 255, 255, 0.5);
-        color: #667eea;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(233, 236, 239, 0.8); /* Thinner border */
+        color: #4285F4; /* Blue color */
+        transition: all 0.3s ease; /* Simpler transition */
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 0;
-        min-width: 44px;
-        min-height: 44px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        min-width: 36px; /* Smaller size */
+        min-height: 36px; /* Smaller size */
+        backdrop-filter: blur(5px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Smaller shadow */
       }
 
       .pagination-btn i {
-        font-size: 1rem !important;
+        font-size: 0.9rem !important; /* Smaller icon */
         margin: 0;
         color: inherit;
       }
 
       .pagination-btn:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 1);
-        color: #5a67d8;
-        border-color: rgba(255, 255, 255, 0.8);
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        background: rgba(66, 133, 244, 0.1);
+        color: #4285F4;
+        border-color: #4285F4;
+        transform: translateY(-1px); /* Smaller transform */
+        box-shadow: 0 4px 10px rgba(66, 133, 244, 0.2); /* Smaller shadow */
       }
 
       .pagination-btn:disabled {
         opacity: 0.4;
         cursor: not-allowed;
-        background: rgba(255, 255, 255, 0.3);
-        color: rgba(255, 255, 255, 0.6);
+        background: rgba(248, 249, 250, 0.8);
+        color: rgba(102, 102, 102, 0.6);
       }
 
       .pagination-numbers {
         display: flex;
-        gap: 6px;
+        gap: 4px; /* Smaller gap */
         align-items: center;
       }
 
       .pagination-number {
-        width: 36px;
-        height: 36px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        border-radius: 12px;
+        width: 30px; /* Smaller size */
+        height: 30px; /* Smaller size */
+        font-size: 0.75rem; /* Smaller font */
+        font-weight: 600; /* Less bold */
+        border-radius: 8px; /* Smaller radius */
         background: rgba(255, 255, 255, 0.9);
-        border: 2px solid rgba(255, 255, 255, 0.5);
-        color: #667eea;
+        border: 1px solid rgba(233, 236, 239, 0.8); /* Thinner border */
+        color: #4285F4; /* Blue color */
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease; /* Simpler transition */
+        backdrop-filter: blur(5px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Smaller shadow */
       }
 
       .pagination-number:hover {
-        background: rgba(255, 255, 255, 1);
-        border-color: rgba(255, 255, 255, 0.8);
-        color: #5a67d8;
-        transform: translateY(-2px) scale(1.1);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        background: rgba(66, 133, 244, 0.1);
+        border-color: #4285F4;
+        color: #4285F4;
+        transform: translateY(-1px); /* Smaller transform */
+        box-shadow: 0 4px 10px rgba(66, 133, 244, 0.2); /* Smaller shadow */
       }
 
       .pagination-number.active {
-        background: linear-gradient(135deg, #34A853 0%, #4285F4 100%);
-        border-color: rgba(255, 255, 255, 0.8);
+        background: #4285F4; /* Solid blue background */
+        border-color: #4285F4;
         color: white;
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(52, 168, 83, 0.4);
+        transform: none; /* No scale transform */
+        box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3); /* Blue shadow */
       }
 
       .pagination-ellipsis {
-        color: rgba(255, 255, 255, 0.8);
-        font-weight: 700;
-        padding: 0 6px;
-        font-size: 0.9rem;
+        color: #999; /* Darker color for better visibility */
+        font-weight: 500; /* Less bold */
+        padding: 0 4px; /* Smaller padding */
+        font-size: 0.8rem; /* Smaller font */
       }
 
       /* Upload CTA Small Mobile Styles */

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="img/logo-bg.png" type="image/png">
+  <title>ITENAS ICT LAB - UPLOAD SOAL</title>
+  <link rel="stylesheet" href="css/fa-brands.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/login-manager.js" defer></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="css/upload.css">
+</head>
+
+<body>
+  <!-- Simplified Navbar -->
+  <nav class="catalog-navbar">
+    <div class="catalog-navbar-container">
+      <div class="catalog-navbar-logo">
+        <img src="img/logo-bg.png" alt="ICT Lab Logo" loading="lazy">
+      </div>
+      <div class="catalog-navbar-menu">
+        <a href="index.html" class="catalog-navbar-item">Home</a>
+        <a href="catalog.html" class="catalog-navbar-item">Catalog</a>
+        <a href="soal.html" class="catalog-navbar-item">Bank</a>
+        <a href="login.html" class="catalog-navbar-item catalog-navbar-login">Login</a>
+        <button class="catalog-navbar-item catalog-navbar-logout" onclick="handleLogout()" style="display: none;">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="upload-container">
+    <!-- Header Section -->
+    <div class="upload-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="fas fa-cloud-upload-alt"></i>
+        </div>
+        <h1>Upload Soal ICT Laboratory</h1>
+        <p>Bantu mahasiswa lain dengan berbagi soal ujian yang kamu miliki. Kontribusi kamu akan sangat bermanfaat!</p>
+        <div class="header-features">
+          <div class="feature-item">
+            <i class="fas fa-upload"></i>
+            <span>Upload Mudah</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-users"></i>
+            <span>Bantu Mahasiswa</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Verifikasi Tim</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-star"></i>
+            <span>Kontribusi Positif</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Form Section -->
+    <div class="upload-form-section">
+      <div class="form-header">
+        <h3><i class="fas fa-file-upload"></i> Form Upload Soal</h3>
+        <p>Isi form berikut untuk mengunggah soal ujian</p>
+      </div>
+
+      <!-- Info Alert -->
+      <div class="info-alert">
+        <div class="info-alert-content">
+          <i class="fas fa-info-circle"></i>
+          <div class="info-text">
+            <strong>Informasi Penting:</strong>
+            <span>Soal akan diverifikasi tim dalam 1-3 hari kerja. Format yang didukung: PDF, JPG, JPEG, PNG (Max. 10MB). Kontributor aktif akan mendapat penghargaan khusus.</span>
+          </div>
+        </div>
+      </div>
+      
+      <form class="upload-form" id="uploadForm">
+        <!-- Mata Kuliah, Jenis Ujian & Tahun dalam satu baris -->
+        <div class="form-row-three">
+          <div class="form-group">
+            <label for="mataKuliah">
+              <i class="fas fa-book"></i>
+              Mata Kuliah <span class="required">*</span>
+            </label>
+            <select id="mataKuliah" name="mataKuliah" required>
+              <option value="">Pilih Mata Kuliah</option>
+              <option value="PENGANTAR IOT">PENGANTAR IOT</option>
+              <option value="KEWARGANEGARAAN">KEWARGANEGARAAN</option>
+              <option value="BASIS DATA">BASIS DATA</option>
+              <option value="PROBABILITAS DAN STATISTIKA">PROBABILITAS DAN STATISTIKA</option>
+              <option value="MATEMATIKA LANJUT">MATEMATIKA LANJUT</option>
+              <option value="PENGANTAR SAINS KOMPUTER">PENGANTAR SAINS KOMPUTER</option>
+              <option value="ALGORITMA LANJUT">ALGORITMA LANJUT</option>
+              <option value="ALGORITMA DASAR">ALGORITMA DASAR</option>
+              <option value="PENGANTAR SAINS DATA">PENGANTAR SAINS DATA</option>
+              <option value="MATEMATIKA">MATEMATIKA</option>
+              <option value="ORGANISASI DAN ARSITEKTUR KOMPUTER">ORGANISASI DAN ARSITEKTUR KOMPUTER</option>
+              <option value="MATEMATIKA KOMPUTER">MATEMATIKA KOMPUTER</option>
+              <option value="PENGANTAR TRANSFORMASI DIGITAL">PENGANTAR TRANSFORMASI DIGITAL</option>
+              <option value="GRAFIKA KOMPUTER TERAPAN">GRAFIKA KOMPUTER TERAPAN</option>
+              <option value="PEMROGRAMAN BERORIENTASI OBJEK">PEMROGRAMAN BERORIENTASI OBJEK</option>
+              <option value="INTERAKSI MANUSIA DAN KOMPUTER">INTERAKSI MANUSIA DAN KOMPUTER</option>
+              <option value="JARINGAN KOMPUTER">JARINGAN KOMPUTER</option>
+              <option value="PEMROGRAMAN BASIS DATA">PEMROGRAMAN BASIS DATA</option>
+              <option value="KOMPUTASI PARALEL & SISTEM TERDISTRIBUSI">KOMPUTASI PARALEL & SISTEM TERDISTRIBUSI</option>
+              <option value="PEMROGRAMAN DASAR">PEMROGRAMAN DASAR</option>
+              <option value="PENGOLAHAN CITRA DIGITAL">PENGOLAHAN CITRA DIGITAL</option>
+              <option value="SISTEM OPERASI">SISTEM OPERASI</option>
+              <option value="PEMROGRAMAN WEB LANJUT">PEMROGRAMAN WEB LANJUT</option>
+              <option value="PEMROGRAMAN WEB">PEMROGRAMAN WEB</option>
+              <option value="REKAYASA PERANGKAT LUNAK">REKAYASA PERANGKAT LUNAK</option>
+              <option value="COMPUTER VISION">COMPUTER VISION</option>
+              <option value="KEAMANAN JARINGAN">KEAMANAN JARINGAN</option>
+              <option value="TEKNIK MULTIMEDIA">TEKNIK MULTIMEDIA</option>
+              <option value="SISTEM PAKAR DAN BAHASA ALAMIAH">SISTEM PAKAR DAN BAHASA ALAMIAH</option>
+              <option value="KECERDASAN BUATAN">KECERDASAN BUATAN</option>
+              <option value="PENGENALAN UCAPAN DAN TEKS KE UCAPAN">PENGENALAN UCAPAN DAN TEKS KE UCAPAN</option>
+              <option value="DATA MINING DAN INFORMATION RETRIEVAL">DATA MINING DAN INFORMATION RETRIEVAL</option>
+              <option value="PEMROGRAMAN ROBOTIKA">PEMROGRAMAN ROBOTIKA</option>
+              <option value="PEMROGRAMAN IOT">PEMROGRAMAN IOT</option>
+              <option value="MACHINE LEARNING">MACHINE LEARNING</option>
+              <option value="BAHASA INGGRIS I">BAHASA INGGRIS I</option>
+              <option value="PEMROGRAMAN GAME">PEMROGRAMAN GAME</option>
+              <option value="JARINGAN SYARAF TIRUAN">JARINGAN SYARAF TIRUAN</option>
+              <option value="TRANSAKSI ELEKTRONIK">TRANSAKSI ELEKTRONIK</option>
+              <option value="BASIS DATA LANJUT">BASIS DATA LANJUT</option>
+              <option value="BISNIS INTELIJEN">BISNIS INTELIJEN</option>
+              <option value="PEMROGRAMAN MOBILE">PEMROGRAMAN MOBILE</option>
+              <option value="SISTEM OPERASI LANJUT">SISTEM OPERASI LANJUT</option>
+              <option value="BAHASA INGGRIS III">BAHASA INGGRIS III</option>
+              <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
+              <option value="AGAMA">AGAMA</option>
+              <option value="BAHASA INGGRIS II">BAHASA INGGRIS II</option>
+              <option value="KEWIRAUSAHAAN">KEWIRAUSAHAAN</option>
+              <option value="MANAJEMEN PROYEK">MANAJEMEN PROYEK</option>
+              <option value="BIG DATA">BIG DATA</option>
+              <option value="KOMPUTASI AWAN">KOMPUTASI AWAN</option>
+              <option value="JARINGAN KOMPUTER LANJUT">JARINGAN KOMPUTER LANJUT</option>
+              <option value="DEEP LEARNING">DEEP LEARNING</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="jenisUjian">
+              <i class="fas fa-calendar-check"></i>
+              Jenis Ujian <span class="required">*</span>
+            </label>
+            <select id="jenisUjian" name="jenisUjian" required>
+              <option value="">Pilih Jenis Ujian</option>
+              <option value="UTS">UTS</option>
+              <option value="UAS">UAS</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="tahun">
+              <i class="fas fa-calendar-alt"></i>
+              Tahun <span class="required">*</span>
+            </label>
+            <select id="tahun" name="tahun" required>
+              <option value="">Pilih Tahun</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- File Upload -->
+        <div class="form-group">
+          <label for="fileUpload">
+            <i class="fas fa-file-pdf"></i>
+            File Soal <span class="required">*</span>
+          </label>
+          <div class="file-upload-area" id="fileUploadArea">
+            <input type="file" id="fileUpload" name="fileUpload" accept=".pdf,.jpg,.jpeg,.png" required>
+            <div class="file-upload-content">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <h4>Drag & Drop file atau klik untuk memilih</h4>
+              <p>Format yang didukung: PDF, JPG, JPEG, PNG (Max. 10MB)</p>
+            </div>
+            <div class="file-preview" id="filePreview" style="display: none;">
+              <div class="file-info">
+                <i class="fas fa-file"></i>
+                <div class="file-details">
+                  <span class="file-name"></span>
+                  <span class="file-size"></span>
+                </div>
+                <button type="button" class="remove-file" onclick="removeFile()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-paper-plane"></i>
+            Submit Upload
+          </button>
+          <button type="button" class="reset-btn" onclick="resetForm()">
+            <i class="fas fa-refresh"></i>
+            Reset Form
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Login validation functions
+    function isValidLogin() {
+      const email = localStorage.getItem('userEmail');
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      const loginTime = localStorage.getItem('loginTime');
+      const sessionValid = localStorage.getItem('sessionValid');
+      
+      console.log('Checking login validity:', { 
+        isLoggedIn, 
+        email, 
+        loginTime, 
+        sessionValid,
+        emailDomain: email ? email.split('@')[1] : 'none'
+      });
+      
+      // Check basic login status
+      if (isLoggedIn !== 'true' || !email || !email.endsWith('@mhs.itenas.ac.id') || sessionValid !== 'true') {
+        console.log('Invalid login status, email domain, or session');
+        return false;
+      }
+      
+      // Check if login is not expired (24 hours)
+      if (loginTime) {
+        const loginDate = new Date(loginTime);
+        const now = new Date();
+        const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
+        
+        console.log('Session age (hours):', hoursDiff.toFixed(2));
+        
+        if (hoursDiff > 24) {
+          console.log('Login session expired (>24 hours)');
+          // Clear expired session
+          clearUserSession();
+          return false;
+        }
+      }
+      
+      console.log('Login validation passed');
+      return true;
+    }
+
+    function clearUserSession() {
+      console.log('Clearing user session...');
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userInfo');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('loginMethod');
+      localStorage.removeItem('loginTime');
+      localStorage.removeItem('lastActiveTime');
+      localStorage.removeItem('sessionValid');
+    }
+
+    // Check login status when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Upload page loading...');
+      
+      // Add small delay to prevent redirect loops
+      setTimeout(() => {
+        // Check if user is logged in
+        if (!isValidLogin()) {
+          console.log('User not logged in or session expired, redirecting to login...');
+          if (!document.body.classList.contains('redirecting')) {
+            document.body.classList.add('redirecting');
+            window.location.href = 'login.html';
+          }
+          return;
+        }
+        
+        console.log('Valid login found, initializing upload page...');
+        // Update last active time
+        localStorage.setItem('lastActiveTime', new Date().toISOString());
+      }, 200);
+    });
+
+    // Handle logout functionality
+    function handleLogout() {
+      if (typeof logout === 'function') {
+        logout();
+      } else {
+        // Fallback logout functionality
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+      }
+    }
+
+    // File upload handling
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileUpload = document.getElementById('fileUpload');
+    const filePreview = document.getElementById('filePreview');
+
+    fileUploadArea.addEventListener('click', () => {
+      fileUpload.click();
+    });
+
+    fileUploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileUploadArea.classList.add('drag-over');
+    });
+
+    fileUploadArea.addEventListener('dragleave', () => {
+      fileUploadArea.classList.remove('drag-over');
+    });
+
+    fileUploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileUploadArea.classList.remove('drag-over');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFileSelect(files[0]);
+      }
+    });
+
+    fileUpload.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
+
+    function handleFileSelect(file) {
+      // Validate file type
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+      if (!allowedTypes.includes(file.type)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Format File Tidak Didukung',
+          text: 'Silakan pilih file dengan format PDF, JPG, JPEG, atau PNG.'
+        });
+        return;
+      }
+
+      // Validate file size (10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        Swal.fire({
+          icon: 'error',
+          title: 'File Terlalu Besar',
+          text: 'Ukuran file maksimal adalah 10MB.'
+        });
+        return;
+      }
+
+      // Show file preview
+      const fileName = file.name;
+      const fileSize = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+      
+      document.querySelector('.file-name').textContent = fileName;
+      document.querySelector('.file-size').textContent = fileSize;
+      
+      document.querySelector('.file-upload-content').style.display = 'none';
+      filePreview.style.display = 'block';
+    }
+
+    function removeFile() {
+      fileUpload.value = '';
+      document.querySelector('.file-upload-content').style.display = 'block';
+      filePreview.style.display = 'none';
+      fileUploadArea.classList.remove('drag-over');
+    }
+
+    function resetForm() {
+      document.getElementById('uploadForm').reset();
+      removeFile();
+    }
+
+    // Handle form submission
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Show loading
+      Swal.fire({
+        title: 'Mengunggah Soal...',
+        text: 'Mohon tunggu sebentar',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      // Simulate upload process
+      setTimeout(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Upload Berhasil!',
+          text: 'Soal berhasil diunggah dan akan segera diverifikasi oleh tim. Terima kasih atas kontribusinya!',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          resetForm();
+        });
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

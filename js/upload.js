@@ -58,9 +58,22 @@ function handleLogout() {
 
 // File upload handling functions
 function handleFileSelect(file) {
-  // Validate file type
-  const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
-  if (!allowedTypes.includes(file.type)) {
+  // Validate file type - more comprehensive for mobile compatibility
+  const allowedTypes = [
+    'application/pdf', 
+    'image/jpeg', 
+    'image/jpg', 
+    'image/png',
+    'image/pjpeg', // IE compatibility
+    'image/x-png'  // Some browsers use this
+  ];
+  
+  // Also check file extension as fallback for mobile
+  const fileNameLower = file.name.toLowerCase();
+  const validExtensions = ['.pdf', '.jpg', '.jpeg', '.png'];
+  const hasValidExtension = validExtensions.some(ext => fileNameLower.endsWith(ext));
+  
+  if (!allowedTypes.includes(file.type) && !hasValidExtension) {
     Swal.fire({
       icon: 'error',
       title: 'Format File Tidak Didukung',
@@ -385,7 +398,17 @@ function initializeUploadPage() {
   const fileUpload = document.getElementById('fileUpload');
 
   if (fileUploadArea && fileUpload) {
-    fileUploadArea.addEventListener('click', () => {
+    // Click handler for desktop and mobile
+    fileUploadArea.addEventListener('click', (e) => {
+      // Make sure we're not clicking on the file input itself
+      if (e.target !== fileUpload) {
+        fileUpload.click();
+      }
+    });
+
+    // Touch event for better mobile support
+    fileUploadArea.addEventListener('touchstart', (e) => {
+      e.preventDefault();
       fileUpload.click();
     });
 

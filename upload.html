@@ -182,11 +182,15 @@
             File Soal <span class="required">*</span>
           </label>
           <div class="file-upload-area" id="fileUploadArea">
-            <input type="file" id="fileUpload" name="fileUpload" accept=".pdf,.jpg,.jpeg,.png" required>
+            <input type="file" id="fileUpload" name="fileUpload" accept="application/pdf,image/jpeg,image/jpg,image/png,.pdf,.jpg,.jpeg,.png" required>
             <div class="file-upload-content">
               <i class="fas fa-cloud-upload-alt"></i>
               <h4>Drag & Drop file atau klik untuk memilih</h4>
               <p>Format yang didukung: PDF, JPG, JPEG, PNG (Max. 10MB)</p>
+              <!-- Mobile fallback button -->
+              <button type="button" class="mobile-file-btn" onclick="document.getElementById('fileUpload').click()">
+                <i class="fas fa-folder-open"></i> Pilih File
+              </button>
             </div>
             <div class="file-preview" id="filePreview" style="display: none;">
               <div class="file-info">

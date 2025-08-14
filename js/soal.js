@@ -104,6 +104,7 @@
         
         console.log('Valid login found, initializing page...');
         initializePage();
+        initializeFilters(); // Initialize filter dropdowns
         displaySoalCardsWithPagination();
         setupEventListeners();
         
@@ -139,6 +140,51 @@
       }, 200);
     });
 
+    // Initialize filter dropdowns
+    function initializeFilters() {
+      const mataKuliahFilter = document.getElementById('mataKuliahFilter');
+      const tahunFilter = document.getElementById('tahunFilter');
+      const ujianFilter = document.getElementById('ujianFilter');
+
+      // Populate mata kuliah filter
+      if (mataKuliahFilter) {
+        // Get unique mata kuliah from soal data
+        const uniqueMataKuliah = [...new Set(soalData.map(item => item.mataKuliah))].sort();
+        
+        // Clear existing options except the first one
+        mataKuliahFilter.innerHTML = '<option value="">Semua Mata Kuliah</option>';
+        
+        uniqueMataKuliah.forEach(mk => {
+          const option = document.createElement('option');
+          option.value = mk;
+          option.textContent = mk;
+          mataKuliahFilter.appendChild(option);
+        });
+      }
+
+      // Populate tahun filter
+      if (tahunFilter) {
+        tahunFilter.innerHTML = '<option value="">Semua Tahun</option>';
+        ['2022', '2023', '2024'].forEach(year => {
+          const option = document.createElement('option');
+          option.value = year;
+          option.textContent = year;
+          tahunFilter.appendChild(option);
+        });
+      }
+
+      // Populate ujian filter
+      if (ujianFilter) {
+        ujianFilter.innerHTML = '<option value="">Semua Ujian</option>';
+        ['UTS', 'UAS'].forEach(ujian => {
+          const option = document.createElement('option');
+          option.value = ujian;
+          option.textContent = ujian;
+          ujianFilter.appendChild(option);
+        });
+      }
+    }
+
     // Setup event listeners for search and filters
     function setupEventListeners() {
       const searchInput = document.getElementById('searchInput');
@@ -152,6 +198,133 @@
       ujianFilter.addEventListener('change', filterAndDisplayCards);
     }
 
+    // Get available files for a specific mata kuliah
+    async function getAvailableFiles(mataKuliah) {
+      const items = soalData.filter(item => item.mataKuliah === mataKuliah);
+      const availableFiles = {};
+
+      for (const item of items) {
+        try {
+          const response = await fetch(`documents/soal/${item.fileName}`, { method: 'HEAD' });
+          if (response.ok) {
+            if (!availableFiles[item.tahun]) {
+              availableFiles[item.tahun] = [];
+            }
+            availableFiles[item.tahun].push(item.jenisUjian);
+          }
+        } catch (error) {
+          // File not available
+        }
+      }
+
+      return availableFiles;
+    }
+
+    // Initialize card dropdowns with available files only
+    async function initializeCardDropdowns(mataKuliah) {
+      const card = document.querySelector(`[data-mata-kuliah="${mataKuliah}"]`);
+      if (!card) return;
+
+      const yearSelector = card.querySelector('.year-selector');
+      const availableFiles = await getAvailableFiles(mataKuliah);
+      const allYears = ['2022', '2023', '2024']; // All possible years
+      const allUjian = ['UTS', 'UAS']; // All possible ujian types
+
+      // Count total available files
+      let totalFiles = 0;
+      Object.values(availableFiles).forEach(ujianList => {
+        totalFiles += ujianList.length;
+      });
+
+      // Update file count
+      const subtitle = card.querySelector('.card-subtitle');
+      if (subtitle) {
+        subtitle.textContent = `${totalFiles} soal tersedia`;
+      }
+
+      // Clear and populate year dropdown with all years, disable unavailable ones
+      yearSelector.innerHTML = '<option value="">Pilih Tahun</option>';
+      allYears.forEach(year => {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        
+        // Disable if no files available for this year
+        if (!availableFiles[year] || availableFiles[year].length === 0) {
+          option.disabled = true;
+          option.textContent = `${year} (-)`;
+          option.style.color = '#bbb';
+        }
+        
+        yearSelector.appendChild(option);
+      });
+
+      // Store available files data for later use
+      card.dataset.availableFiles = JSON.stringify(availableFiles);
+      card.dataset.allUjian = JSON.stringify(allUjian);
+
+      // Initialize ujian selector with all options disabled initially
+      const ujianSelector = card.querySelector('.ujian-selector');
+      ujianSelector.innerHTML = '<option value="">Pilih Ujian</option>';
+      allUjian.forEach(ujian => {
+        const option = document.createElement('option');
+        option.value = ujian;
+        option.textContent = `${ujian} (pilih tahun)`;
+        option.disabled = true;
+        option.style.color = '#bbb';
+        ujianSelector.appendChild(option);
+      });
+    }
+
+    // Update ujian options based on selected year
+    function updateUjianOptions(mataKuliah) {
+      const card = document.querySelector(`[data-mata-kuliah="${mataKuliah}"]`);
+      if (!card) return;
+
+      const yearSelector = card.querySelector('.year-selector');
+      const ujianSelector = card.querySelector('.ujian-selector');
+      const selectedYear = yearSelector.value;
+
+      // Clear ujian selector
+      ujianSelector.innerHTML = '<option value="">Pilih Ujian</option>';
+
+      if (selectedYear) {
+        const availableFiles = JSON.parse(card.dataset.availableFiles || '{}');
+        const allUjian = JSON.parse(card.dataset.allUjian || '["UTS", "UAS"]');
+        const availableUjianForYear = availableFiles[selectedYear] || [];
+
+        // Populate ujian dropdown with all options, disable unavailable ones
+        allUjian.forEach(ujian => {
+          const option = document.createElement('option');
+          option.value = ujian;
+          option.textContent = ujian;
+          
+          // Disable if not available for selected year
+          if (!availableUjianForYear.includes(ujian)) {
+            option.disabled = true;
+            option.textContent = `${ujian} (-)`;
+            option.style.color = '#bbb';
+          }
+          
+          ujianSelector.appendChild(option);
+        });
+      } else {
+        // If no year selected, show all ujian options but disabled
+        const allUjian = JSON.parse(card.dataset.allUjian || '["UTS", "UAS"]');
+        allUjian.forEach(ujian => {
+          const option = document.createElement('option');
+          option.value = ujian;
+          option.textContent = `${ujian} (pilih tahun)`;
+          option.disabled = true;
+          option.style.color = '#bbb';
+          ujianSelector.appendChild(option);
+        });
+      }
+
+      // Update card actions after changing year
+      updateCardActions(mataKuliah);
+    }
+
     // Filter and display cards
     function filterAndDisplayCards() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
@@ -159,15 +332,20 @@
       const tahun = document.getElementById('tahunFilter').value;
       const ujian = document.getElementById('ujianFilter').value;
 
+      console.log('Filtering with:', { searchTerm, mataKuliah, tahun, ujian });
+
       // Filter the raw data first
       filteredSoal = soalData.filter(item => {
-        const matchSearch = item.mataKuliah.toLowerCase().includes(searchTerm);
+        const matchSearch = item.mataKuliah.toLowerCase().includes(searchTerm) || 
+                           item.kode.toLowerCase().includes(searchTerm);
         const matchMataKuliah = !mataKuliah || item.mataKuliah === mataKuliah;
         const matchTahun = !tahun || item.tahun === tahun;
         const matchUjian = !ujian || item.jenisUjian === ujian;
         
         return matchSearch && matchMataKuliah && matchTahun && matchUjian;
       });
+
+      console.log('Filtered results:', filteredSoal.length, 'items');
 
       // Reset to first page when filtering
       currentPage = 1;
@@ -310,25 +488,6 @@
       // Generate cards HTML for current page only
       cardsContainer.innerHTML = paginatedMataKuliah.map(mataKuliah => {
         const items = groupedData[mataKuliah];
-        const availableYears = [...new Set(items.map(item => item.tahun))].sort();
-        const availableUjian = [...new Set(items.map(item => item.jenisUjian))];
-
-        // Hitung jumlah soal/PDF yang tersedia (file benar-benar ada)
-        let soalTersedia = 0;
-        const soalPromises = items.map(item => {
-          return fetch(`documents/soal/${item.fileName}`, { method: 'HEAD' })
-            .then(response => response.ok)
-            .catch(() => false);
-        });
-
-        // Karena map di sini synchronous, tampilkan placeholder dulu, update jumlah soal setelah pengecekan file
-        setTimeout(() => {
-          Promise.all(soalPromises).then(results => {
-            const count = results.filter(Boolean).length;
-            const card = document.querySelector(`[data-mata-kuliah="${mataKuliah}"] .card-subtitle`);
-            if (card) card.textContent = `${count} soal tersedia`;
-          });
-        }, 0);
 
         // Get icons for different subjects
         const getSubjectIcon = (subject) => {
@@ -364,16 +523,15 @@
               </div>
               <div class="card-title">
                 <h4>${mataKuliah}</h4>
-                <p class="card-subtitle">0 soal tersedia</p>
+                <p class="card-subtitle">Memuat...</p>
               </div>
             </div>
             
             <div class="card-selectors">
               <div class="selector-group">
                 <label>Tahun:</label>
-                <select class="year-selector" onchange="updateCardActions('${mataKuliah}')">
+                <select class="year-selector" onchange="updateUjianOptions('${mataKuliah}')">
                   <option value="">Pilih Tahun</option>
-                  ${availableYears.map(year => `<option value="${year}">${year}</option>`).join('')}
                 </select>
               </div>
               
@@ -381,7 +539,6 @@
                 <label>Jenis Ujian:</label>
                 <select class="ujian-selector" onchange="updateCardActions('${mataKuliah}')">
                   <option value="">Pilih Ujian</option>
-                  ${availableUjian.map(ujian => `<option value="${ujian}">${ujian}</option>`).join('')}
                 </select>
               </div>
             </div>
@@ -397,6 +554,13 @@
           </div>
         `;
       }).join('');
+
+      // Initialize dropdowns with available files after cards are created
+      setTimeout(() => {
+        paginatedMataKuliah.forEach(mataKuliah => {
+          initializeCardDropdowns(mataKuliah);
+        });
+      }, 100);
       
       // Render pagination
       renderPagination();

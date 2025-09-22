@@ -1,84 +1,177 @@
-    // Initialize login manager
-    let loginManager;
-    let currentPreviewData = null;
+// Minimal login interaction in this file — UI and avatar/menu are handled by `login-manager.js`.
 
-    // Soal data with exam files
-    // Mata kuliah list
-    const mataKuliahList = [
-      { kode: "IFB-102", nama: "PENGANTAR IOT" },
-      { kode: "IFB-103", nama: "KEWARGANEGARAAN" },
-      { kode: "IFB-104", nama: "BASIS DATA" },
-      { kode: "IFB-105", nama: "PROBABILITAS DAN STATISTIKA" },
-      { kode: "IFB-106", nama: "MATEMATIKA LANJUT" },
-      { kode: "IFB-107", nama: "PENGANTAR SAINS KOMPUTER" },
-      { kode: "IFB-108", nama: "ALGORITMA LANJUT" },
-      { kode: "IFB-109", nama: "ALGORITMA DASAR" },
-      { kode: "IFB-110", nama: "PENGANTAR SAINS DATA" },
-      { kode: "IFB-111", nama: "MATEMATIKA" },
-      { kode: "IFB-112", nama: "ORGANISASI DAN ARSITEKTUR KOMPUTER" },
-      { kode: "IFB-113", nama: "MATEMATIKA KOMPUTER" },
-      { kode: "IFB-114", nama: "PENGANTAR TRANSFORMASI DIGITAL" },
-      { kode: "IFB-201", nama: "GRAFIKA KOMPUTER TERAPAN" },
-      { kode: "IFB-202", nama: "PEMROGRAMAN BERORIENTASI OBJEK" },
-      { kode: "IFB-203", nama: "INTERAKSI MANUSIA DAN KOMPUTER" },
-      { kode: "IFB-204", nama: "JARINGAN KOMPUTER" },
-      { kode: "IFB-205", nama: "PEMROGRAMAN BASIS DATA" },
-      { kode: "IFB-206", nama: "KOMPUTASI PARALEL & SISTEM TERDISTRIBUSI" },
-      { kode: "IFB-207", nama: "PEMROGRAMAN DASAR" },
-      { kode: "IFB-208", nama: "PENGOLAHAN CITRA DIGITAL" },
-      { kode: "IFB-209", nama: "SISTEM OPERASI" },
-      { kode: "IFB-210", nama: "PEMROGRAMAN WEB LANJUT" },
-      { kode: "IFB-211", nama: "PEMROGRAMAN WEB" },
-      { kode: "IFB-213", nama: "REKAYASA PERANGKAT LUNAK" },
-      { kode: "IFB-301", nama: "COMPUTER VISION" },
-      { kode: "IFB-302", nama: "KEAMANAN JARINGAN" },
-      { kode: "IFB-303", nama: "TEKNIK MULTIMEDIA" },
-      { kode: "IFB-304", nama: "SISTEM PAKAR DAN BAHASA ALAMIAH" },
-      { kode: "IFB-305", nama: "KECERDASAN BUATAN" },
-      { kode: "IFB-306", nama: "PENGENALAN UCAPAN DAN TEKS KE UCAPAN" },
-      { kode: "IFB-307", nama: "DATA MINING DAN INFORMATION RETRIEVAL" },
-      { kode: "IFB-308", nama: "PEMROGRAMAN ROBOTIKA" },
-      { kode: "IFB-309", nama: "PEMROGRAMAN IOT" },
-      { kode: "IFB-310", nama: "MACHINE LEARNING" },
-      { kode: "IFB-312", nama: "PEMROGRAMAN GAME" },
-      { kode: "IFB-351", nama: "JARINGAN SYARAF TIRUAN" },
-      { kode: "IFB-352", nama: "TRANSAKSI ELEKTRONIK" },
-      { kode: "IFB-353", nama: "BASIS DATA LANJUT" },
-      { kode: "IFB-354", nama: "BISNIS INTELIJEN" },
-      { kode: "IFB-355", nama: "PEMROGRAMAN MOBILE" },
-      { kode: "IFB-356", nama: "SISTEM OPERASI LANJUT" },
-      { kode: "IFB-401", nama: "MANAJEMEN PROYEK" },
-      { kode: "IFB-451", nama: "BIG DATA" },
-      { kode: "IFB-452", nama: "KOMPUTASI AWAN" },
-      { kode: "IFB-453", nama: "JARINGAN KOMPUTER LANJUT" },
-      { kode: "IFB-454", nama: "DEEP LEARNING" },
-      { kode: "IFB-311", nama: "BAHASA INGGRIS I" },
-      { kode: "IFB-407", nama: "BAHASA INGGRIS II" },
-      { kode: "IFB-402", nama: "BAHASA INGGRIS III" },
-      { kode: "IFB-404", nama: "BAHASA INDONESIA" },
-      { kode: "IFB-405", nama: "AGAMA" },
-      { kode: "IFB-409", nama: "KEWIRAUSAHAAN" }
-    ];
+  // Soal page — Mata Kuliah list (default/fallback)
+let mataKuliahList = [
+  { kode: "IFB-102", nama: "PENGANTAR IOT" },
+  { kode: "IFB-103", nama: "KEWARGANEGARAAN" },
+  { kode: "IFB-104", nama: "BASIS DATA" },
+  { kode: "IFB-105", nama: "PROBABILITAS DAN STATISTIKA" },
+  { kode: "IFB-106", nama: "MATEMATIKA LANJUT" },
+  { kode: "IFB-107", nama: "PENGANTAR SAINS KOMPUTER" },
+  { kode: "IFB-108", nama: "ALGORITMA LANJUT" },
+  { kode: "IFB-109", nama: "ALGORITMA DASAR" },
+  { kode: "IFB-110", nama: "PENGANTAR SAINS DATA" },
+  { kode: "IFB-111", nama: "MATEMATIKA" },
+  { kode: "IFB-112", nama: "ORGANISASI DAN ARSITEKTUR KOMPUTER" },
+  { kode: "IFB-113", nama: "MATEMATIKA KOMPUTER" },
+  { kode: "IFB-114", nama: "PENGANTAR TRANSFORMASI DIGITAL" },
+  { kode: "IFB-201", nama: "GRAFIKA KOMPUTER TERAPAN" },
+  { kode: "IFB-202", nama: "PEMROGRAMAN BERORIENTASI OBJEK" },
+  { kode: "IFB-203", nama: "INTERAKSI MANUSIA DAN KOMPUTER" },
+  { kode: "IFB-204", nama: "JARINGAN KOMPUTER" },
+  { kode: "IFB-205", nama: "PEMROGRAMAN BASIS DATA" },
+  { kode: "IFB-206", nama: "KOMPUTASI PARALEL & SISTEM TERDISTRIBUSI" },
+  { kode: "IFB-207", nama: "PEMROGRAMAN DASAR" },
+  { kode: "IFB-208", nama: "PENGOLAHAN CITRA DIGITAL" },
+  { kode: "IFB-209", nama: "SISTEM OPERASI" },
+  { kode: "IFB-210", nama: "PEMROGRAMAN WEB LANJUT" },
+  { kode: "IFB-211", nama: "PEMROGRAMAN WEB" },
+  { kode: "IFB-213", nama: "REKAYASA PERANGKAT LUNAK" },
+  { kode: "IFB-301", nama: "COMPUTER VISION" },
+  { kode: "IFB-302", nama: "KEAMANAN JARINGAN" },
+  { kode: "IFB-303", nama: "TEKNIK MULTIMEDIA" },
+  { kode: "IFB-304", nama: "SISTEM PAKAR DAN BAHASA ALAMIAH" },
+  { kode: "IFB-305", nama: "KECERDASAN BUATAN" },
+  { kode: "IFB-306", nama: "PENGENALAN UCAPAN DAN TEKS KE UCAPAN" },
+  { kode: "IFB-307", nama: "DATA MINING DAN INFORMATION RETRIEVAL" },
+  { kode: "IFB-308", nama: "PEMROGRAMAN ROBOTIKA" },
+  { kode: "IFB-309", nama: "PEMROGRAMAN IOT" },
+  { kode: "IFB-310", nama: "MACHINE LEARNING" },
+  { kode: "IFB-312", nama: "PEMROGRAMAN GAME" },
+  { kode: "IFB-351", nama: "JARINGAN SYARAF TIRUAN" },
+  { kode: "IFB-352", nama: "TRANSAKSI ELEKTRONIK" },
+  { kode: "IFB-353", nama: "BASIS DATA LANJUT" },
+  { kode: "IFB-354", nama: "BISNIS INTELIJEN" },
+  { kode: "IFB-355", nama: "PEMROGRAMAN MOBILE" },
+  { kode: "IFB-356", nama: "SISTEM OPERASI LANJUT" },
+  { kode: "IFB-401", nama: "MANAJEMEN PROYEK" },
+  { kode: "IFB-451", nama: "BIG DATA" },
+  { kode: "IFB-452", nama: "KOMPUTASI AWAN" },
+  { kode: "IFB-453", nama: "JARINGAN KOMPUTER LANJUT" },
+  { kode: "IFB-454", nama: "DEEP LEARNING" },
+  { kode: "IFB-311", nama: "BAHASA INGGRIS I" },
+  { kode: "IFB-407", nama: "BAHASA INGGRIS II" },
+  { kode: "IFB-402", nama: "BAHASA INGGRIS III" },
+  { kode: "IFB-404", nama: "BAHASA INDONESIA" },
+  { kode: "IFB-405", nama: "AGAMA" },
+  { kode: "IFB-409", nama: "KEWIRAUSAHAAN" }
+];
 
-    const tahunList = ["2022", "2023", "2024"];
-    const ujianList = ["UTS", "UAS"];
+  const tahunList = ["2022", "2023", "2024"];
+  const ujianList = ["UTS", "UAS"];
 
-    let soalData = [];
-    let idCounter = 1;
-    mataKuliahList.forEach(mk => {
-      tahunList.forEach(tahun => {
-        ujianList.forEach(ujian => {
-          soalData.push({
-            id: idCounter++,
-            kode: mk.kode,
-            mataKuliah: mk.nama,
-            tahun: tahun,
-            jenisUjian: ujian,
-            fileName: `${mk.kode}_${tahun}_${ujian}.pdf`
+  let soalData = [];
+
+    // Supabase loader for dokumen_soal
+    let soalSupabaseModule;
+    let soalGetAllDokumen;
+
+    async function loadSoalSupabase() {
+      try {
+        if (!soalSupabaseModule) {
+          soalSupabaseModule = await import('./supabase.js');
+          soalGetAllDokumen = soalSupabaseModule.getAllDokumenSoal;
+        }
+      } catch (err) {
+        console.warn('Failed to load supabase in soal.js:', err);
+      }
+    }
+
+    async function loadDokumenSoal() {
+      await loadSoalSupabase();
+
+      if (typeof soalGetAllDokumen === 'function') {
+        const res = await soalGetAllDokumen();
+        if (res && res.success && Array.isArray(res.data)) {
+          soalData = res.data.map((doc, idx) => {
+            const fileUrl = doc.file_url || null;
+            let fileName = '';
+            if (fileUrl) {
+              try { fileName = new URL(fileUrl).pathname.split('/').pop(); } catch(e) { fileName = fileUrl; }
+            }
+
+            // Robust mapping for mata kuliah relation which may come in different shapes
+            const mkRel = doc.mata_kuliah || doc.mata_kuliah_id || doc.mata_kuliah_data || null;
+            const kodeMk = mkRel?.kode_mk || mkRel?.kode || doc.kode_mk || doc.mk_id || doc.mk || '';
+            const namaMk = mkRel?.nama_mk || mkRel?.nama || doc.nama_mk || doc.nama || '';
+            const mataKuliahDisplay = (namaMk || kodeMk || '').toString().trim();
+
+            const mapped = {
+              id: doc.dokumen_id || (`remote-${idx}`),
+              kode: kodeMk || '',
+              mataKuliah: mataKuliahDisplay,
+              tahun: String(doc.tahun || ''),
+              jenisUjian: doc.jenis_ujian || doc.jenis || '',
+              fileUrl: fileUrl,
+              fileName: fileName,
+              raw: doc
+            };
+
+            if (!mapped.mataKuliah) {
+              console.warn('dokumen_soal row missing mata_kuliah mapping:', doc);
+            }
+
+            return mapped;
           });
-        });
-      });
-    });
+          console.log('Loaded dokumen_soal from Supabase, count:', soalData.length);
+          // If Supabase returned zero dokumen, we'll fall through to try loading mata_kuliah
+          if (soalData.length > 0) return;
+        }
+      }
+      // If we have no dokumen from Supabase, try to load mata_kuliah list from Supabase
+      try {
+        if (soalSupabaseModule && typeof soalSupabaseModule.supabase !== 'undefined') {
+          // Attempt to fetch mata_kuliah table
+          const { data: mkData, error: mkError } = await soalSupabaseModule.supabase
+            .from('mata_kuliah')
+            .select('kode_mk, nama_mk')
+            .order('kode_mk', { ascending: true });
+
+          if (!mkError && Array.isArray(mkData) && mkData.length > 0) {
+            // Map mata_kuliah rows to mataKuliahList; do NOT generate fake dokumen
+            mataKuliahList = mkData.map(m => ({ kode: m.kode_mk || m.kode, nama: m.nama_mk || m.nama }));
+            console.log('Loaded mata_kuliah list from Supabase for cards, count:', mataKuliahList.length);
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Error loading mata_kuliah from Supabase fallback:', e);
+      }
+
+      // No dokumen and unable to load mata_kuliah from Supabase; keep soalData empty
+      console.log('No dokumen found and no mata_kuliah fetched; rendering with local fallback subject list only.');
+    }
+
+    // Helper: load mata_kuliah list from Supabase (returns array of {kode, nama})
+    async function loadMataKuliahListFromSupabase() {
+      await loadSoalSupabase();
+      try {
+        if (soalSupabaseModule && typeof soalSupabaseModule.supabase !== 'undefined') {
+          const { data, error } = await soalSupabaseModule.supabase
+            .from('mata_kuliah')
+            .select('kode_mk, nama_mk')
+            .order('kode_mk', { ascending: true });
+          if (!error && Array.isArray(data)) {
+            return data.map(m => ({ kode: m.kode_mk || m.kode || '', nama: m.nama_mk || m.nama || '' }));
+          }
+        }
+      } catch (e) {
+        console.warn('Failed to load mata_kuliah from Supabase:', e);
+      }
+      return [];
+    }
+
+    // Ensure mataKuliahList is loaded from Supabase when available
+    async function ensureMataKuliahListLoaded() {
+      try {
+        const mkRows = await loadMataKuliahListFromSupabase();
+        if (Array.isArray(mkRows) && mkRows.length > 0) {
+          mataKuliahList = mkRows;
+        }
+      } catch (e) {
+        // keep fallback list
+      }
+    }
 
     // Pagination variables
     let allSoal = [...soalData];
@@ -86,12 +179,12 @@
     const itemsPerPage = 12;
     let filteredSoal = [...soalData];
 
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize page — load dokumen from Supabase first
+    document.addEventListener('DOMContentLoaded', async function() {
       console.log('Bank Soal page loading...');
       
       // Add small delay to prevent redirect loops
-      setTimeout(() => {
+      setTimeout(async () => {
         // Check if user is logged in
         if (!isValidLogin()) {
           console.log('User not logged in or session expired, redirecting to login...');
@@ -103,10 +196,21 @@
         }
         
         console.log('Valid login found, initializing page...');
-        initializePage();
+  initializePage();
+  // Load documents from Supabase (or fallback) before rendering
+  await loadDokumenSoal();
+  // Also load the full mata_kuliah list for rendering cards
+  await ensureMataKuliahListLoaded();
+  // Ensure the derived lists used for filtering/pagination reflect the newly loaded data
+  allSoal = [...soalData];
+  filteredSoal = [...soalData];
+  currentPage = 1;
+  console.log('soalData sample:', soalData[0] || null, 'allSoal length:', allSoal.length);
         initializeFilters(); // Initialize filter dropdowns
         displaySoalCardsWithPagination();
         setupEventListeners();
+    // Render leaderboard after initial load
+    try { await renderLeaderboardTopContributors(); } catch(e) { console.warn('Leaderboard render error:', e); }
         
         // Additional check to ensure Login Manager updates the UI
         setTimeout(() => {
@@ -148,18 +252,29 @@
 
       // Populate mata kuliah filter
       if (mataKuliahFilter) {
-        // Get unique mata kuliah from soal data
-        const uniqueMataKuliah = [...new Set(soalData.map(item => item.mataKuliah))].sort();
-        
-        // Clear existing options except the first one
-        mataKuliahFilter.innerHTML = '<option value="">Semua Mata Kuliah</option>';
-        
-        uniqueMataKuliah.forEach(mk => {
-          const option = document.createElement('option');
-          option.value = mk;
-          option.textContent = mk;
-          mataKuliahFilter.appendChild(option);
-        });
+        const names = (Array.isArray(mataKuliahList) ? mataKuliahList : [])
+          .map(m => m.nama || m.kode)
+          .filter(Boolean)
+          .sort();
+
+        if (names.length === 0) {
+          // Load async as fallback
+          loadMataKuliahListFromSupabase().then(mkRows => {
+            if (Array.isArray(mkRows) && mkRows.length > 0) {
+              mataKuliahList = mkRows;
+              const opts = mkRows.map(m => `<option value="${m.nama || m.kode}">${m.nama || m.kode}</option>`).join('');
+              mataKuliahFilter.innerHTML = '<option value="">Semua Mata Kuliah</option>' + opts;
+            }
+          }).catch(() => {});
+        } else {
+          mataKuliahFilter.innerHTML = '<option value="">Semua Mata Kuliah</option>';
+          names.forEach(nm => {
+            const option = document.createElement('option');
+            option.value = nm;
+            option.textContent = nm;
+            mataKuliahFilter.appendChild(option);
+          });
+        }
       }
 
       // Populate tahun filter
@@ -185,39 +300,35 @@
       }
     }
 
+    // Helpers to derive current subject list (cards) from mataKuliahList
+    function getSubjectNamesFromList() {
+      return (Array.isArray(mataKuliahList) ? mataKuliahList : [])
+        .map(m => m.nama || m.kode)
+        .filter(Boolean);
+    }
+
+    function getFilteredSubjectNames() {
+      const searchTerm = (document.getElementById('searchInput')?.value || '').toLowerCase();
+      const names = getSubjectNamesFromList();
+      const filtered = names.filter(nm => !searchTerm || nm.toLowerCase().includes(searchTerm));
+      return filtered.sort();
+    }
+
     // Setup event listeners for search and filters
     function setupEventListeners() {
       const searchInput = document.getElementById('searchInput');
-      const mataKuliahFilter = document.getElementById('mataKuliahFilter');
-      const tahunFilter = document.getElementById('tahunFilter');
-      const ujianFilter = document.getElementById('ujianFilter');
-
-      searchInput.addEventListener('input', filterAndDisplayCards);
-      mataKuliahFilter.addEventListener('change', filterAndDisplayCards);
-      tahunFilter.addEventListener('change', filterAndDisplayCards);
-      ujianFilter.addEventListener('change', filterAndDisplayCards);
+  searchInput.addEventListener('input', filterAndDisplayCards);
     }
 
-    // Get available files for a specific mata kuliah
-    async function getAvailableFiles(mataKuliah) {
-      const items = soalData.filter(item => item.mataKuliah === mataKuliah);
-      const availableFiles = {};
-
-      for (const item of items) {
-        try {
-          const response = await fetch(`documents/soal/${item.fileName}`, { method: 'HEAD' });
-          if (response.ok) {
-            if (!availableFiles[item.tahun]) {
-              availableFiles[item.tahun] = [];
-            }
-            availableFiles[item.tahun].push(item.jenisUjian);
-          }
-        } catch (error) {
-          // File not available
-        }
+    // Get available files for a specific mata kuliah — based on Supabase dokumen (no HEAD fetch)
+    function getAvailableFiles(mataKuliahName) {
+      const items = soalData.filter(item => item.mataKuliah === mataKuliahName);
+      const available = {};
+      for (const it of items) {
+        if (!available[it.tahun]) available[it.tahun] = [];
+        if (!available[it.tahun].includes(it.jenisUjian)) available[it.tahun].push(it.jenisUjian);
       }
-
-      return availableFiles;
+      return available;
     }
 
     // Initialize card dropdowns with available files only
@@ -226,14 +337,21 @@
       if (!card) return;
 
       const yearSelector = card.querySelector('.year-selector');
-      const availableFiles = await getAvailableFiles(mataKuliah);
+      const availableFiles = getAvailableFiles(mataKuliah);
       const allYears = ['2022', '2023', '2024']; // All possible years
       const allUjian = ['UTS', 'UAS']; // All possible ujian types
 
       // Count total available files
+      const globalYearFilter = document.getElementById('tahunFilter')?.value || '';
+      const globalUjianFilter = document.getElementById('ujianFilter')?.value || '';
       let totalFiles = 0;
-      Object.values(availableFiles).forEach(ujianList => {
-        totalFiles += ujianList.length;
+      Object.entries(availableFiles).forEach(([year, ujianList]) => {
+        if (globalYearFilter && year !== globalYearFilter) return;
+        if (globalUjianFilter) {
+          totalFiles += ujianList.filter(u => u === globalUjianFilter).length;
+        } else {
+          totalFiles += ujianList.length;
+        }
       });
 
       // Update file count
@@ -274,6 +392,19 @@
         option.style.color = '#bbb';
         ujianSelector.appendChild(option);
       });
+
+      // Preselect global filters if available and valid
+      if (globalYearFilter && allYears.includes(globalYearFilter) && !yearSelector.querySelector(`option[value="${globalYearFilter}"]`)?.disabled) {
+        yearSelector.value = globalYearFilter;
+        updateUjianOptions(mataKuliah);
+        if (globalUjianFilter) {
+          const hasUjian = (availableFiles[globalYearFilter] || []).includes(globalUjianFilter);
+          if (hasUjian) {
+            ujianSelector.value = globalUjianFilter;
+          }
+        }
+        updateCardActions(mataKuliah);
+      }
     }
 
     // Update ujian options based on selected year
@@ -325,45 +456,19 @@
       updateCardActions(mataKuliah);
     }
 
-    // Filter and display cards
+    // Filter and display cards — cards are driven by mataKuliah list (not dokumen)
     function filterAndDisplayCards() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const mataKuliah = document.getElementById('mataKuliahFilter').value;
-      const tahun = document.getElementById('tahunFilter').value;
-      const ujian = document.getElementById('ujianFilter').value;
-
-      console.log('Filtering with:', { searchTerm, mataKuliah, tahun, ujian });
-
-      // Filter the raw data first
-      filteredSoal = soalData.filter(item => {
-        const matchSearch = item.mataKuliah.toLowerCase().includes(searchTerm) || 
-                           item.kode.toLowerCase().includes(searchTerm);
-        const matchMataKuliah = !mataKuliah || item.mataKuliah === mataKuliah;
-        const matchTahun = !tahun || item.tahun === tahun;
-        const matchUjian = !ujian || item.jenisUjian === ujian;
-        
-        return matchSearch && matchMataKuliah && matchTahun && matchUjian;
-      });
-
-      console.log('Filtered results:', filteredSoal.length, 'items');
-
-      // Reset to first page when filtering
+      // Only search is used now; grouped rendering reads it directly
+      filteredSoal = soalData;
       currentPage = 1;
-      
-      // Display with pagination
       displaySoalCardsWithPagination();
     }
 
     // Pagination functions
     function renderPagination() {
-      // Perbaiki pagination agar berdasarkan jumlah mata kuliah (card)
-      const groupedData = {};
-      filteredSoal.forEach(item => {
-        if (!groupedData[item.mataKuliah]) groupedData[item.mataKuliah] = [];
-        groupedData[item.mataKuliah].push(item);
-      });
-      const mataKuliahList = Object.keys(groupedData);
-      const totalMataKuliah = mataKuliahList.length;
+      // Pagination is based on subject (mata kuliah) count
+      const subjectNames = getFilteredSubjectNames();
+      const totalMataKuliah = subjectNames.length;
       const totalPages = Math.ceil(totalMataKuliah / itemsPerPage);
       const paginationContainer = document.querySelector('.pagination-numbers');
       const pageInfo = document.querySelector('.pagination-info');
@@ -399,8 +504,8 @@
       }
 
       // Update prev/next buttons
-      document.querySelector('.pagination-prev').disabled = currentPage === 1;
-      document.querySelector('.pagination-next').disabled = currentPage === totalPages;
+  document.querySelector('.pagination-prev').disabled = currentPage === 1;
+  document.querySelector('.pagination-next').disabled = currentPage === totalPages || totalPages === 0;
 
       // Hide pagination if only one page
       document.querySelector('.pagination-section').style.display = 
@@ -420,7 +525,7 @@
     }
 
     function nextPage() {
-      const totalPages = Math.ceil(filteredSoal.length / itemsPerPage);
+      const totalPages = Math.ceil(getFilteredSubjectNames().length / itemsPerPage);
       if (currentPage < totalPages) {
         goToPage(currentPage + 1);
       }
@@ -451,19 +556,8 @@
       const cardsContainer = document.getElementById('cardsContainer');
       const totalCount = document.getElementById('totalMataKuliahCount');
       
-      // Group data by mata kuliah if not already filtered
-      let groupedData = filteredGroups;
-      if (!groupedData) {
-        groupedData = {};
-        filteredSoal.forEach(item => {
-          if (!groupedData[item.mataKuliah]) {
-            groupedData[item.mataKuliah] = [];
-          }
-          groupedData[item.mataKuliah].push(item);
-        });
-      }
-      
-      const allMataKuliah = Object.keys(groupedData);
+      // Derive subject names from mataKuliahList, filtered by search/mk filter
+      const allMataKuliah = getFilteredSubjectNames();
       const totalMataKuliah = allMataKuliah.length;
       
       // Calculate pagination
@@ -487,7 +581,7 @@
 
       // Generate cards HTML for current page only
       cardsContainer.innerHTML = paginatedMataKuliah.map(mataKuliah => {
-        const items = groupedData[mataKuliah];
+        const items = soalData.filter(it => it.mataKuliah === mataKuliah);
 
         // Get icons for different subjects
         const getSubjectIcon = (subject) => {
@@ -523,7 +617,7 @@
               </div>
               <div class="card-title">
                 <h4>${mataKuliah}</h4>
-                <p class="card-subtitle">Memuat...</p>
+                <p class="card-subtitle">${items.length} soal tersedia</p>
               </div>
             </div>
             
@@ -557,8 +651,8 @@
 
       // Initialize dropdowns with available files after cards are created
       setTimeout(() => {
-        paginatedMataKuliah.forEach(mataKuliah => {
-          initializeCardDropdowns(mataKuliah);
+        paginatedMataKuliah.forEach(mkName => {
+          initializeCardDropdowns(mkName);
         });
       }, 100);
       
@@ -674,7 +768,6 @@
       const selectedUjian = ujianSelector.value;
 
       // Enable/disable buttons based on selections and file availability
-      let fileAvailable = false;
       if (selectedYear && selectedUjian) {
         const soalItem = soalData.find(item => 
           item.mataKuliah === mataKuliah && 
@@ -682,30 +775,36 @@
           item.jenisUjian === selectedUjian
         );
         if (soalItem) {
-          // Check if PDF file exists in documents/soal folder
-          const pdfUrl = `documents/soal/${soalItem.fileName}`;
-          
-          // Use fetch to check if PDF file exists
-          fetch(pdfUrl, { method: 'HEAD' })
-            .then(response => {
-              if (response.ok) {
-                previewBtn.disabled = false;
-                downloadBtn.disabled = false;
-                previewBtn.style.opacity = '1';
-                downloadBtn.style.opacity = '1';
-              } else {
+          const pdfUrl = soalItem.fileUrl || `documents/soal/${soalItem.fileName}`;
+          if (soalItem.fileUrl) {
+            // If Supabase URL present, consider it available
+            previewBtn.disabled = false;
+            downloadBtn.disabled = false;
+            previewBtn.style.opacity = '1';
+            downloadBtn.style.opacity = '1';
+          } else {
+            // Fallback to local file existence check
+            fetch(pdfUrl, { method: 'HEAD' })
+              .then(response => {
+                if (response.ok) {
+                  previewBtn.disabled = false;
+                  downloadBtn.disabled = false;
+                  previewBtn.style.opacity = '1';
+                  downloadBtn.style.opacity = '1';
+                } else {
+                  previewBtn.disabled = true;
+                  downloadBtn.disabled = true;
+                  previewBtn.style.opacity = '0.5';
+                  downloadBtn.style.opacity = '0.5';
+                }
+              })
+              .catch(() => {
                 previewBtn.disabled = true;
                 downloadBtn.disabled = true;
                 previewBtn.style.opacity = '0.5';
                 downloadBtn.style.opacity = '0.5';
-              }
-            })
-            .catch(() => {
-              previewBtn.disabled = true;
-              downloadBtn.disabled = true;
-              previewBtn.style.opacity = '0.5';
-              downloadBtn.style.opacity = '0.5';
-            });
+              });
+          }
           return;
         }
       }
@@ -788,7 +887,7 @@
       );
 
       if (soalItem) {
-        downloadSoalFile(soalItem.fileName);
+        downloadSoalItem(soalItem);
       }
     }
 
@@ -798,21 +897,28 @@
       if (!soal) return;
 
       currentPreviewData = soal;
-      const pdfUrl = `documents/soal/${soal.fileName}`;
+      const pdfUrl = soal.fileUrl || `documents/soal/${soal.fileName}`;
       const isMobile = window.innerWidth <= 768;
       
-      // Check if file exists first
+      // If using Supabase URL, skip HEAD check to avoid CORS issues
+      if (soal.fileUrl) {
+        if (isMobile) {
+          window.open(pdfUrl, '_blank');
+        } else {
+          showPDFModal(pdfUrl, soal);
+        }
+        return;
+      }
+
+      // Fallback: local file existence check
       checkFileExists(pdfUrl).then(exists => {
         if (exists) {
           if (isMobile) {
-            // Mobile: Open in new tab
             window.open(pdfUrl, '_blank');
           } else {
-            // Desktop: Show PDF in modal
             showPDFModal(pdfUrl, soal);
           }
         } else {
-          // File not found - show error
           Swal.fire({
             icon: 'warning',
             title: 'Soal Tidak Tersedia',
@@ -826,7 +932,6 @@
           });
         }
       }).catch(() => {
-        // Network error
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -876,7 +981,7 @@
           content: 'swal-content'
         },
         preConfirm: () => {
-          downloadSoalFile(soalData.fileName);
+          downloadSoalItem(soalData);
         }
       });
     }
@@ -890,7 +995,43 @@
     // Download soal function
     function downloadSoal() {
       if (currentPreviewData) {
-        downloadSoalFile(currentPreviewData.fileName);
+        downloadSoalItem(currentPreviewData);
+      }
+    }
+
+    function downloadSoalItem(soal) {
+      if (!soal) return;
+      if (soal.fileUrl) {
+        downloadSoalFileDirect(soal.fileUrl, soal.fileName || `${soal.mataKuliah}_${soal.tahun}_${soal.jenisUjian}.pdf`);
+      } else if (soal.fileName) {
+        downloadSoalFile(soal.fileName);
+      }
+    }
+
+    function downloadSoalFileDirect(url, suggestedName) {
+      try {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = suggestedName || '';
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        Swal.fire({
+          title: 'Download Dimulai',
+          text: 'File sedang didownload',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+          customClass: { popup: 'swal-popup', title: 'swal-title', content: 'swal-content' }
+        });
+      } catch (e) {
+        Swal.fire({
+          title: 'Error Download',
+          text: 'Tidak dapat memulai download file ini.',
+          icon: 'error',
+          confirmButtonColor: '#d33'
+        });
       }
     }
 
@@ -976,103 +1117,30 @@
       }
     });
 
-    // Fallback logout menu function
+    // Delegate logout menu showing to LoginManager (no local DOM/styling here)
     function showLogoutMenu(event) {
-      // Remove existing menu if any
-      const existingMenu = document.querySelector('.simple-logout-menu');
-      if (existingMenu) {
-        existingMenu.remove();
+      if (window.loginManager && typeof window.loginManager.showUserMenu === 'function') {
+        window.loginManager.showUserMenu(event);
+      } else {
+        // Fallback: simple confirm and logout
+        if (confirm('Logout?')) {
+          performLogout();
+        }
       }
-
-      const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-      const userEmail = localStorage.getItem('userEmail') || '';
-      
-      // Create simple logout menu
-      const menu = document.createElement('div');
-      menu.className = 'simple-logout-menu';
-      menu.innerHTML = `
-        <div class="user-info">
-          <img src="${userInfo?.picture || 'img/logo-bg.png'}" alt="Profile" class="user-avatar">
-          <div class="user-details">
-            <div class="user-name">${userInfo?.name || userInfo?.given_name || 'User'}</div>
-            <div class="user-email">${userEmail}</div>
-            <div class="login-method">Via Google</div>
-          </div>
-        </div>
-        <div class="menu-divider"></div>
-        <button class="menu-item" onclick="performLogout()">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-      `;
-
-      // Position menu
-      const rect = event.target.getBoundingClientRect();
-      menu.style.position = 'fixed';
-      menu.style.top = (rect.bottom + 10) + 'px';
-      menu.style.right = (window.innerWidth - rect.right) + 'px';
-      menu.style.zIndex = '10000';
-
-      document.body.appendChild(menu);
-
-      // Close menu when clicking outside
-      setTimeout(() => {
-        document.addEventListener('click', function closeMenu(e) {
-          if (!menu.contains(e.target) && e.target !== event.target) {
-            menu.remove();
-            document.removeEventListener('click', closeMenu);
-          }
-        });
-      }, 100);
     }
 
-    // Logout function
+    // Logout function — delegate to LoginManager if available
     function performLogout() {
-      Swal.fire({
-        title: 'Konfirmasi Logout',
-        text: 'Apakah Anda yakin ingin logout?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, Logout',
-        cancelButtonText: 'Batal',
-        background: '#fff',
-        customClass: {
-          popup: 'swal-popup',
-          title: 'swal-title',
-          content: 'swal-content'
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          console.log('User logging out...');
-          
-          // Show loading alert
-          Swal.fire({
-            title: 'Logging out...',
-            text: 'Mohon tunggu sebentar',
-            icon: 'info',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-              Swal.showLoading();
-            }
-          });
-          
-          if (loginManager && loginManager.logout) {
-            loginManager.logout();
-          } else {
-            // Fallback logout
-            clearUserSession();
-            
-            if (!document.body.classList.contains('redirecting')) {
-              document.body.classList.add('redirecting');
-              setTimeout(() => {
-                window.location.href = 'login.html';
-              }, 500);
-            }
-          }
-        }
-      });
+      if (window.loginManager && typeof window.loginManager.logout === 'function') {
+        window.loginManager.logout();
+        return;
+      }
+
+      // Fallback: confirm and clear session
+      if (confirm('Apakah Anda yakin ingin logout?')) {
+        clearUserSession();
+        window.location.href = '/login.html';
+      }
     }
 
     function isValidLogin() {
@@ -1132,12 +1200,12 @@
       // Initialize login manager with a small delay to ensure it's loaded
       setTimeout(() => {
         if (typeof LoginManager !== 'undefined') {
-          loginManager = new LoginManager();
+          window.loginManager = new LoginManager();
           console.log('Login Manager initialized');
           
           // Force update the navbar UI
-          if (loginManager.updateLoginUI) {
-            loginManager.updateLoginUI();
+          if (window.loginManager.updateLoginUI) {
+            window.loginManager.updateLoginUI();
           }
         } else {
           console.warn('LoginManager class not available');
@@ -1154,30 +1222,69 @@
       localStorage.setItem('lastActiveTime', new Date().toISOString());
     }
 
-    function initializePage() {
-      console.log('Initializing Bank Soal ICT page...');
-      
-      // Initialize login manager with a small delay to ensure it's loaded
-      setTimeout(() => {
-        if (typeof LoginManager !== 'undefined') {
-          loginManager = new LoginManager();
-          console.log('Login Manager initialized');
-          
-          // Force update the navbar UI
-          if (loginManager.updateLoginUI) {
-            loginManager.updateLoginUI();
-          }
-        } else {
-          console.warn('LoginManager class not available');
+    // Leaderboard: Top 5 contributors by uploaded_by
+    async function renderLeaderboardTopContributors() {
+      try {
+        // Ensure we have access to Supabase
+        await loadSoalSupabase();
+        const listEl = document.getElementById('leaderboardList');
+        if (!listEl || !soalSupabaseModule?.supabase) return;
+
+        // Fetch all dokumen with uploader names
+        const { data, error } = await soalSupabaseModule.supabase
+          .from('dokumen_soal')
+          .select('uploaded_by, profiles!dokumen_soal_uploaded_by_fkey(name)');
+        if (error) {
+          console.warn('Failed to fetch dokumen for leaderboard:', error);
+          return;
         }
-      }, 100);
-      
-      // Load user info for display (optional)
-      const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-      const email = localStorage.getItem('userEmail') || '';
-      
-      console.log('User info loaded:', { email, name: userInfo.name });
-      
-      // Update last active time
-      localStorage.setItem('lastActiveTime', new Date().toISOString());
+
+        // Count by uploaded_by
+        const counts = new Map();
+        (data || []).forEach(row => {
+          const key = row.uploaded_by || 'unknown';
+          const name = row.profiles?.name || 'Anonim';
+          const prev = counts.get(key) || { name, count: 0 };
+          counts.set(key, { name: prev.name || name, count: prev.count + 1 });
+        });
+
+        const topRaw = Array.from(counts.values()).sort((a, b) => b.count - a.count);
+        const top = topRaw.slice(0, 5);
+        const placeholders = Math.max(0, 5 - top.length);
+
+        // Render
+        const rows = top.map((item, idx) => {
+          const rank = idx + 1;
+          return `
+            <li class="leaderboard-item rank-${rank}">
+              <div class="leaderboard-rank">${rank}</div>
+              <div class="leaderboard-user">
+                <div class="leaderboard-avatar"><i class="fas fa-user"></i></div>
+                <div class="leaderboard-name">${item.name || 'Anonim'}</div>
+              </div>
+              <div class="leaderboard-count">${item.count} dokumen</div>
+            </li>
+          `;
+        });
+
+        // Add placeholders if less than 5
+        for (let i = 0; i < placeholders; i++) {
+          const rank = top.length + i + 1;
+          rows.push(`
+            <li class="leaderboard-item placeholder rank-${rank}">
+              <div class="leaderboard-rank">${rank}</div>
+              <div class="leaderboard-user">
+                <div class="leaderboard-avatar"><i class="fas fa-user"></i></div>
+                <div class="leaderboard-name">-</div>
+              </div>
+              <div class="leaderboard-count">-</div>
+            </li>
+          `);
+        }
+
+        listEl.innerHTML = rows.join('');
+      } catch (e) {
+        console.warn('Error rendering leaderboard:', e);
+      }
     }
+    

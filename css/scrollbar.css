@@ -1,0 +1,43 @@
+/* Minimal, elegant scrollbars across the site */
+/* WebKit-based browsers */
+:root {
+  --scrollbar-track: rgba(0,0,0,0.06);
+  --scrollbar-thumb: rgba(0,0,0,0.28);
+  --scrollbar-thumb-hover: rgba(0,0,0,0.38);
+  --scrollbar-corner: transparent;
+}
+
+* {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin; /* Firefox */
+}
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--scrollbar-thumb), rgba(0,0,0,0.22));
+  border-radius: 8px;
+  border: 2px solid var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--scrollbar-thumb-hover), rgba(0,0,0,0.3));
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--scrollbar-corner);
+}
+
+/* Subtle shadow for containers with overflow */
+.overflow-auto, .table-container, .cards-container {
+  scrollbar-gutter: stable both-edges;
+}

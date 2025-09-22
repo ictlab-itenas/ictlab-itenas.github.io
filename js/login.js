@@ -1,6 +1,25 @@
 // Configuration
 const GOOGLE_CLIENT_ID = '932373464615-f07kgcbiulom1g59nrs5i6k696m5lq3t.apps.googleusercontent.com';
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpH3tbEZ_C9jWvXZQhefCIhCps1aKZm01TQURPxyvCbIKb0Jw6yyMuoUyWzCARZVMs-w/exec';
+
+// Import Supabase functions
+let loginSupabaseModule;
+let saveUserProfile;
+let getUserProfile;
+
+// Dynamically import Supabase module
+async function loadLoginSupabase() {
+  try {
+    if (!loginSupabaseModule) {
+      loginSupabaseModule = await import('./supabase.js');
+      saveUserProfile = loginSupabaseModule.saveUserProfile;
+      getUserProfile = loginSupabaseModule.getUserProfile;
+      console.log('Login Supabase module loaded successfully');
+    }
+  } catch (error) {
+    console.error('Failed to load Login Supabase module:', error);
+    showAlert('Terjadi kesalahan saat memuat sistem login. Silakan coba lagi.', 'error');
+  }
+}
 
 // Core login functionality
 function initializeGoogleSignIn() {
@@ -27,7 +46,7 @@ function initializeGoogleSignIn() {
   }
 }
 
-function handleCredentialResponse(response) {
+async function handleCredentialResponse(response) {
   console.log("Processing login credentials...");
   showLoading();
   
@@ -51,24 +70,35 @@ function handleCredentialResponse(response) {
     return;
   }
   
-  saveUserToDatabase(userInfo)
-    .then(() => {
-      saveUserSession(userInfo);
-      hideLoading();
-      showSuccessModal();
-    })
-    .catch(error => {
-      console.error('Database save failed:', error);
-      saveUserSession(userInfo); // Still allow login
-      hideLoading();
-      showSuccessModal();
-    });
+  // Load Supabase module if not already loaded
+  if (!loginSupabaseModule) {
+    await loadLoginSupabase();
+  }
+  
+  // Save user to Supabase profiles table
+  if (saveUserProfile) {
+    try {
+      const result = await saveUserProfile(userInfo);
+      if (!result.success) {
+        console.warn('Failed to save user to Supabase:', result.error);
+        // We'll still allow login even if Supabase save fails
+      }
+    } catch (error) {
+      console.error('Unexpected error saving user to Supabase:', error);
+      // We'll still allow login even if Supabase save fails
+    }
+  }
+  
+  saveUserSession(userInfo);
+  hideLoading();
+  showSuccessModal();
 }
 
 function saveUserSession(userInfo) {
   const sessionData = {
     userInfo: JSON.stringify(userInfo),
     userEmail: userInfo.email,
+    userId: userInfo.sub, // Save user ID for profile lookup
     isLoggedIn: 'true',
     loginMethod: 'google',
     loginTime: new Date().toISOString(),
@@ -83,49 +113,9 @@ function saveUserSession(userInfo) {
   console.log('User session saved successfully');
 }
 
-async function saveUserToDatabase(userInfo) {
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-    console.warn('Apps Script URL not configured. Skipping database save.');
-    return Promise.resolve();
-  }
-  
-  const data = {
-    action: 'saveUser',
-    email: userInfo.email,
-    name: userInfo.name,
-    picture: userInfo.picture || '',
-    loginTime: new Date().toISOString()
-  };
-  
-  try {
-    const response = await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-      mode: 'no-cors'
-    });
-    
-    console.log('User data saved to database');
-    return { success: true };
-  } catch (error) {
-    console.error('Database save failed:', error);
-    storeLocalBackup(data);
-    throw error;
-  }
-}
 
-function storeLocalBackup(data) {
-  try {
-    const backups = JSON.parse(localStorage.getItem('userDataBackups') || '[]');
-    backups.push({ ...data, timestamp: new Date().toISOString(), synced: false });
-    localStorage.setItem('userDataBackups', JSON.stringify(backups));
-    console.log('Data stored locally as backup');
-  } catch (error) {
-    console.error('Failed to store local backup:', error);
-  }
-}
 
-function checkLoginStatus() {
+async function checkLoginStatus() {
   const { isLoggedIn, userEmail, loginTime, sessionValid } = {
     isLoggedIn: localStorage.getItem('isLoggedIn'),
     userEmail: localStorage.getItem('userEmail'),
@@ -148,7 +138,38 @@ function checkLoginStatus() {
     
     if (!document.body.classList.contains('redirecting')) {
       document.body.classList.add('redirecting');
-      console.log('Valid session found, redirecting to bank soal...');
+      console.log('Valid session found, redirecting based on role...');
+      
+      // Load Supabase module if not already loaded
+      if (!loginSupabaseModule) {
+        await loadLoginSupabase();
+      }
+      
+      // Get user ID from localStorage
+      const userId = localStorage.getItem('userId');
+      
+      if (userId && getUserProfile) {
+        try {
+          // Get user profile to check role
+          const profileResult = await getUserProfile(userId);
+          if (profileResult.success && profileResult.data) {
+            const userRole = profileResult.data.role;
+            console.log('User role:', userRole);
+            
+            // Redirect based on role
+            if (userRole === 'admin') {
+              console.log('Redirecting admin to dashboard...');
+              setTimeout(() => window.location.href = 'admin/dashboard.html', 800);
+              return;
+            }
+          }
+        } catch (error) {
+          console.error('Error checking user role:', error);
+        }
+      }
+      
+      // Default redirect to soal.html for non-admin users
+      console.log('Redirecting to bank soal...');
       setTimeout(() => window.location.href = 'soal.html', 800);
     }
   }
@@ -175,12 +196,49 @@ function showSuccessModal() {
   modal.querySelector('h3').textContent = `Selamat datang, ${userInfo.given_name || userInfo.name || 'User'}!`;
   modal.querySelector('p').textContent = 'Anda berhasil login dengan akun ITENAS.';
   modal.classList.add('active');
+  
+  // Add click event to the continue button
+  const continueBtn = modal.querySelector('.continue-btn');
+  continueBtn.onclick = function() {
+    redirectToHome();
+  };
 }
 
-function redirectToHome() {
-  console.log('Redirecting to bank soal...');
+async function redirectToHome() {
+  console.log('Redirecting based on user role...');
   if (!document.body.classList.contains('redirecting')) {
     document.body.classList.add('redirecting');
+    
+    // Load Supabase module if not already loaded
+    if (!loginSupabaseModule) {
+      await loadLoginSupabase();
+    }
+    
+    // Get user ID from localStorage
+    const userId = localStorage.getItem('userId');
+    
+    if (userId && getUserProfile) {
+      try {
+        // Get user profile to check role
+        const profileResult = await getUserProfile(userId);
+        if (profileResult.success && profileResult.data) {
+          const userRole = profileResult.data.role;
+          console.log('User role:', userRole);
+          
+          // Redirect based on role
+          if (userRole === 'admin') {
+            console.log('Redirecting admin to dashboard...');
+            setTimeout(() => window.location.href = 'admin/dashboard.html', 1000);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error('Error checking user role:', error);
+      }
+    }
+    
+    // Default redirect to soal.html for non-admin users
+    console.log('Redirecting to bank soal...');
     setTimeout(() => window.location.href = 'soal.html', 1000);
   }
 }

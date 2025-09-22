@@ -1,9 +1,69 @@
 /**
  * Upload functionality for ICT Lab Website
- * Handles file upload to Google Drive via Apps Script
+ * Handles file upload to Supabase Storage
  */
 
+// Import Supabase functions
+let uploadSupabaseModule;
+let uploadGetUserProfile;
+let uploadSaveUploadData;
+let uploadGetMataKuliahByKode;
+
+// Dynamically import Supabase module
+async function loadUploadSupabase() {
+  try {
+    if (!uploadSupabaseModule) {
+      uploadSupabaseModule = await import('./supabase.js');
+      uploadGetUserProfile = uploadSupabaseModule.getUserProfile;
+      uploadSaveUploadData = uploadSupabaseModule.saveUploadData;
+      uploadGetMataKuliahByKode = uploadSupabaseModule.getMataKuliahByKode;
+      console.log('Upload Supabase module loaded successfully');
+    }
+  } catch (error) {
+    console.error('Failed to load Upload Supabase module:', error);
+  }
+}
+
+// Populate mata kuliah select from Supabase
+async function populateMataKuliahSelect() {
+  try {
+    if (!uploadSupabaseModule) {
+      await loadUploadSupabase();
+    }
+    const selectEl = document.getElementById('mataKuliah');
+    if (!selectEl || !uploadSupabaseModule?.supabase) return;
+
+    // Show loading placeholder
+    selectEl.innerHTML = '<option value="">Memuat daftar mata kuliah...</option>';
+
+    const { data, error } = await uploadSupabaseModule.supabase
+      .from('mata_kuliah')
+      .select('kode_mk, nama_mk')
+      .order('kode_mk', { ascending: true });
+
+    if (error) {
+      console.warn('Failed loading mata_kuliah:', error);
+      // Fallback: leave existing static options if any
+      return;
+    }
+
+    const optionsHtml = ['<option value="">Pilih Mata Kuliah</option>']
+      .concat((data || []).map(row => {
+        const kode = row.kode_mk || '';
+        const nama = row.nama_mk || '';
+        const label = nama ? `${kode} - ${nama}` : kode;
+        return `<option value="${kode}">${label}</option>`;
+      }))
+      .join('');
+
+    selectEl.innerHTML = optionsHtml;
+  } catch (e) {
+    console.warn('Error populating mata kuliah select:', e);
+  }
+}
+
 // Configuration
+// For now, we'll keep the Apps Script URL as fallback, but we'll primarily use Supabase
 window.APPS_SCRIPT_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbypUM_sGULsRKMkkvqTh3qDpu8YpyIAlGpZG24rWzQFRCBWgmIai5FNQZTIvkzk5Ltv/exec';
 
 // Login validation functions
@@ -129,121 +189,7 @@ function slugify(text) {
     .replace(/\s+/g, '-');
 }
 
-// Fallback submit via hidden iframe to bypass CORS
-function submitViaIframe(endpoint, formData) {
-  return new Promise((resolve, reject) => {
-    // Create hidden iframe
-    const iframe = document.createElement('iframe');
-    const iframeName = 'upload_iframe_' + Date.now();
-    iframe.name = iframeName;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-
-    const form = document.getElementById('uploadForm');
-    // Keep original attrs
-    const orig = {
-      action: form.getAttribute('action'),
-      method: form.getAttribute('method'),
-      enctype: form.getAttribute('enctype'),
-      target: form.getAttribute('target')
-    };
-
-    // Add hidden fields needed by Apps Script (DON'T add return=json for iframe mode)
-    const hiddenFields = [];
-    function addHidden(name, value) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = name;
-      input.value = value;
-      form.appendChild(input);
-      hiddenFields.push(input);
-    }
-    
-    // Extract data from FormData
-    const email = localStorage.getItem('userEmail') || '';
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-    const nama = userInfo?.name || userInfo?.given_name || '';
-    const mataKuliah = document.getElementById('mataKuliah').value.trim(); // Sudah berupa kode mata kuliah
-    const jenisUjian = document.getElementById('jenisUjian').value.trim();
-    const tahun = document.getElementById('tahun').value.trim();
-    const file = document.getElementById('fileUpload').files[0];
-    
-    const ext = (file.name.split('.').pop() || '').toLowerCase();
-    const today = new Date();
-    const tanggal = today.toISOString().split('T')[0].replace(/-/g, ''); // YYYYMMDD format
-    const uploadFileName = `${mataKuliah}_${tahun}_${slugify(jenisUjian)}_${tanggal}_${slugify(nama)}.${ext}`;
-
-    addHidden('action', 'uploadFile');
-    addHidden('mataKuliah', mataKuliah);
-    addHidden('jenisUjian', jenisUjian);
-    addHidden('tahun', tahun);
-    addHidden('uploaderEmail', email);
-    addHidden('uploaderName', nama);
-    addHidden('fileRename', uploadFileName);
-
-    // Configure and submit
-    form.setAttribute('action', endpoint);
-    form.setAttribute('method', 'POST');
-    form.setAttribute('enctype', 'multipart/form-data');
-    form.setAttribute('target', iframeName);
-
-    let resolved = false;
-    
-    // Listen for postMessage from iframe (success case)
-    function handleMessage(event) {
-      if (event.data && event.data.type === 'ictlab-upload' && !resolved) {
-        resolved = true;
-        window.removeEventListener('message', handleMessage);
-        cleanup();
-        resolve(event.data.payload);
-      }
-    }
-    window.addEventListener('message', handleMessage);
-
-    // When iframe loads (fallback case if no postMessage received)
-    iframe.addEventListener('load', function onLoad() {
-      iframe.removeEventListener('load', onLoad);
-      if (!resolved) {
-        resolved = true;
-        window.removeEventListener('message', handleMessage);
-        // Assume success if no error and we reach here
-        setTimeout(() => {
-          cleanup();
-          resolve({ success: true, message: 'Upload selesai (via iframe)' });
-        }, 1000);
-      }
-    });
-
-    function cleanup() {
-      // Clean up
-      hiddenFields.forEach(h => h.remove());
-      if (orig.action) form.setAttribute('action', orig.action); else form.removeAttribute('action');
-      if (orig.method) form.setAttribute('method', orig.method); else form.removeAttribute('method');
-      if (orig.enctype) form.setAttribute('enctype', orig.enctype); else form.removeAttribute('enctype');
-      if (orig.target) form.setAttribute('target', orig.target); else form.removeAttribute('target');
-      setTimeout(() => {
-        if (document.body.contains(iframe)) {
-          document.body.removeChild(iframe);
-        }
-      }, 500);
-    }
-
-    // Error handling
-    iframe.addEventListener('error', function() {
-      if (!resolved) {
-        resolved = true;
-        window.removeEventListener('message', handleMessage);
-        cleanup();
-        reject(new Error('Iframe upload failed'));
-      }
-    });
-
-    // Submit form to iframe
-    form.submit();
-  });
-}
-
-// Main upload function
+// Main upload function using Supabase
 async function handleUploadSubmit(e) {
   e.preventDefault();
 
@@ -259,6 +205,7 @@ async function handleUploadSubmit(e) {
 
   const email = localStorage.getItem('userEmail') || '';
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+  const userId = userInfo?.sub || ''; // Google User ID
   const nama = userInfo?.name || userInfo?.given_name || '';
 
   const mataKuliah = document.getElementById('mataKuliah').value.trim(); // Ini sekarang adalah kode mata kuliah (misal: IFB-202)
@@ -275,6 +222,27 @@ async function handleUploadSubmit(e) {
     return;
   }
 
+  // Get mata kuliah ID from kode_mk
+  if (!uploadSupabaseModule) {
+    await loadUploadSupabase();
+  }
+  
+  console.log('Fetching mata kuliah with kode:', mataKuliah);
+  const mkResult = await uploadGetMataKuliahByKode(mataKuliah);
+  console.log('Mata kuliah fetch result:', mkResult);
+  
+  if (!mkResult.success) {
+    Swal.fire({ 
+      icon: 'error', 
+      title: 'Mata Kuliah Tidak Ditemukan', 
+      text: `Mata kuliah dengan kode ${mataKuliah} tidak ditemukan: ${mkResult.error}` 
+    });
+    return;
+  }
+  
+  const mkId = mkResult.data.mk_id;
+  console.log('Found mk_id:', mkId);
+
   const ext = (file.name.split('.').pop() || '').toLowerCase();
   
   // Format: KodeMatkul_Tahun_Jenis_TGL_Nama
@@ -282,6 +250,9 @@ async function handleUploadSubmit(e) {
   const today = new Date();
   const tanggal = today.toISOString().split('T')[0].replace(/-/g, ''); // YYYYMMDD format
   const uploadFileName = `${mataKuliah}_${tahun}_${slugify(jenisUjian)}_${tanggal}_${slugify(nama)}.${ext}`;
+  
+  // Path in Supabase Storage
+  const storagePath = `uploads/${Date.now()}_${uploadFileName}`;
 
   // Show loading
   Swal.fire({
@@ -292,92 +263,84 @@ async function handleUploadSubmit(e) {
   });
 
   try {
-    // Convert file to base64 (like in your example)
-    const reader = new FileReader();
+    // Upload file to Supabase Storage
+    const filePath = storagePath; // Already includes timestamp and filename
     
-    reader.onload = async function(e) {
-      try {
-        const base64Data = e.target.result.split(",")[1]; // Only take base64 data part
-        
-        // Build form data with base64 approach
-        const formData = new FormData();
-        formData.append('file', base64Data);
-        formData.append('filename', uploadFileName);
-        formData.append('mimeType', file.type);
-        formData.append('mataKuliah', mataKuliah);
-        formData.append('jenisUjian', jenisUjian);
-        formData.append('tahun', tahun);
-        formData.append('uploaderEmail', email);
-        formData.append('uploaderName', nama);
-
-        const endpoint = window.APPS_SCRIPT_UPLOAD_URL;
-        if (!endpoint) {
-          throw new Error('Endpoint upload belum dikonfigurasi.');
-        }
-
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          body: formData
-        });
-
-        let data;
-        try {
-          data = await res.json();
-        } catch (jsonError) {
-          // Even if JSON parsing fails due to CORS, the upload likely succeeded
-          data = { status: 'success', message: 'Upload processed (CORS limited response)' };
-        }
-
-        if (data.status === 'success' || data.success) {
-          const link = data.url || data.webViewLink || data.webContentLink || null;
-          Swal.fire({
-            icon: 'success',
-            title: 'Upload Berhasil!',
-            html: `Soal berhasil diunggah dan akan diverifikasi tim.<br>${link ? `<a href="${link}" target="_blank">Lihat file</a>` : ''}`,
-            confirmButtonText: 'OK'
-          }).then(() => {
-            resetForm();
-          });
-        } else {
-          throw new Error(data.message || 'Upload gagal');
-        }
-        
-      } catch (uploadError) {
-        // Even if we get an error due to CORS, the file is likely uploaded
-        // Show success message as the upload probably worked
-        Swal.fire({
-          icon: 'success',
-          title: 'Upload Berhasil!',
-          html: 'Soal berhasil diunggah dan akan diverifikasi tim.',
-          confirmButtonText: 'OK'
-        }).then(() => {
-          resetForm();
-        });
-      }
-    };
-
-    reader.onerror = function(error) {
-      Swal.fire({ 
-        icon: 'error', 
-        title: 'Upload Gagal', 
-        text: 'Gagal membaca file. Coba lagi.' 
+    console.log('Uploading file to storage:', { filePath, fileName: file.name });
+    
+    const { data: uploadData, error: uploadError } = await uploadSupabaseModule.supabase
+      .storage
+      .from('bank-soal')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
       });
+
+    if (uploadError) {
+      console.error('Error uploading file to storage:', uploadError);
+      throw new Error(`Gagal mengupload file ke storage: ${uploadError.message}`);
+    }
+
+    console.log('File uploaded successfully:', uploadData);
+
+    // Get public URL for the uploaded file
+    const { data: publicUrlData } = uploadSupabaseModule.supabase
+      .storage
+      .from('bank-soal')
+      .getPublicUrl(filePath);
+
+    const fileUrl = publicUrlData.publicUrl;
+    console.log('File public URL:', fileUrl);
+
+    // Save upload data to upload_soal table using the new function
+    const uploadRecord = {
+      mk_id: mkId,
+      tahun: parseInt(tahun),
+      jenis_ujian: jenisUjian,
+      file_url: fileUrl,
+      uploaded_by: userId, // Google User ID
+      status: 'pending'
     };
 
-    // Start reading file as base64
-    reader.readAsDataURL(file);
+    console.log('Saving upload record:', uploadRecord);
+    
+    if (!uploadSaveUploadData) {
+      await loadUploadSupabase();
+    }
+    
+    const saveResult = await uploadSaveUploadData(uploadRecord);
+    console.log('Save result:', saveResult);
+    
+    if (!saveResult.success) {
+      throw new Error(`Gagal menyimpan data upload: ${saveResult.error}`);
+    }
 
+    Swal.fire({
+      icon: 'success',
+      title: 'Upload Berhasil!',
+      html: `Soal berhasil diunggah dan akan diverifikasi tim.<br><a href="${fileUrl}" target="_blank">Lihat file</a>`,
+      confirmButtonText: 'OK'
+    }).then(() => {
+      resetForm();
+    });
+    
   } catch (err) {
+    console.error('Upload error:', err);
     Swal.fire({ 
       icon: 'error', 
       title: 'Upload Gagal', 
-      text: err.message || 'Coba lagi beberapa saat lagi.' 
+      text: err.message || 'Terjadi kesalahan saat mengunggah file. Coba lagi beberapa saat lagi.' 
     });
   }
 }
 
 // Initialize page functionality
 function initializeUploadPage() {
+  // Load Supabase module
+  loadUploadSupabase();
+  // Populate mata kuliah from DB
+  populateMataKuliahSelect();
+  
   // Add small delay to prevent redirect loops
   setTimeout(() => {
     // Check if user is logged in
@@ -443,33 +406,6 @@ function initializeUploadPage() {
     uploadForm.addEventListener('submit', handleUploadSubmit);
   }
 }
-
-// Listen for postMessage from Apps Script iframe response
-window.addEventListener('message', function(event) {
-  if (event.data && event.data.type === 'ictlab-upload' && event.data.payload) {
-    const result = event.data.payload;
-    
-    if (result.success) {
-      const link = result.webViewLink || result.webContentLink || result.url || null;
-      Swal.close(); // Close any existing loading
-      Swal.fire({
-        icon: 'success',
-        title: 'Upload Berhasil!',
-        html: `Soal berhasil diunggah dan akan diverifikasi tim.<br>${link ? `<a href="${link}" target="_blank">Lihat file</a>` : ''}`,
-        confirmButtonText: 'OK'
-      }).then(() => {
-        resetForm();
-      });
-    } else {
-      Swal.close();
-      Swal.fire({ 
-        icon: 'error', 
-        title: 'Upload Gagal', 
-        text: result.message || 'Terjadi kesalahan saat mengunggah.' 
-      });
-    }
-  }
-});
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', initializeUploadPage);

@@ -1,0 +1,6 @@
+# Ignore local env overrides and OS junk
+js/env.js
+.env
+*.env
+.DS_Store
+Thumbs.db

@@ -991,6 +991,27 @@ body {
   transition: all 0.8s ease;
   padding: 15px 0;
 }
+  .catalog-navbar-menu .catalog-navbar-item,
+  .navbar-menu a,
+  .navbar-menu .navbar-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+  }
+
+  .catalog-navbar-menu .catalog-navbar-item i,
+  .navbar-menu a i,
+  .navbar-menu .navbar-item i {
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  /* Slightly adjust user icon sizing in nav */
+  .catalog-navbar-menu .catalog-navbar-item .fa-user-circle,
+  .navbar-menu .fa-user-circle {
+    font-size: 18px;
+  }
 
 .navbar.visible {
   opacity: 1;
@@ -1952,7 +1973,7 @@ body {
   font-family: 'Zen Old Mincho', serif;
   font-style: italic;
   font-size: 7vw;
-  max-font-size: 7rem;
+  /* removed invalid max-font-size property */
   min-width: 180px;
   font-weight: 900;
   text-transform: uppercase;

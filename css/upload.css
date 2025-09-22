@@ -69,8 +69,7 @@
 }
 
 /* User Dropdown Menu Styles */
-.user-dropdown-menu,
-.simple-logout-menu {
+.user-dropdown-menu {
   position: fixed;
   background: white;
   border-radius: 12px;

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICT Lab Admin Dashboard</title>
+  <link rel="icon" href="../img/logo-bg.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/scrollbar.css">
+  <link rel="stylesheet" href="../css/upload.css">
+  <link rel="stylesheet" href="../css/admin-dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../js/env.js"></script>
+  <script src="../js/login-manager.js" defer></script>
+</head>
+<body>
+  <!-- Simplified Navbar -->
+  <nav class="catalog-navbar">
+    <div class="catalog-navbar-container">
+      <div class="catalog-navbar-logo">
+        <img src="../img/logo-bg.png" alt="ICT Lab Logo" loading="lazy">
+      </div>
+      <div class="catalog-navbar-menu">
+        <a href="../index.html" class="catalog-navbar-item">Home</a>
+        <a href="../catalog.html" class="catalog-navbar-item">Catalog</a>
+        <a href="../soal.html" class="catalog-navbar-item">Bank</a>
+        <a href="../upload.html" class="catalog-navbar-item">Upload</a>
+        <a href="../login.html" class="catalog-navbar-item catalog-navbar-login" style="display: none;">Login</a>
+          <button class="catalog-navbar-item catalog-navbar-logout logout-danger" onclick="confirmLogout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="admin-container">
+    <!-- Stats Overview -->
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-icon bg-blue">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="usersCount">0</h3>
+          <p>Total Users</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon bg-green">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="documentsCount">0</h3>
+          <p>Dokumen Resmi</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon bg-orange">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="pendingCount">0</h3>
+          <p>Pending Uploads</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="pending">Pending Uploads</button>
+      <button class="tab-btn" data-tab="documents">Dokumen Resmi</button>
+      <button class="tab-btn" data-tab="users">Users</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- Pending Uploads Tab -->
+      <div id="pending-tab" class="tab-pane active">
+        <div class="tab-header">
+          <h2>Pending Uploads</h2>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="pendingSearch" placeholder="Cari berdasarkan mata kuliah...">
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Mata Kuliah</th>
+                <th>Tahun</th>
+                <th>Jenis Ujian</th>
+                <th>Uploaded By</th>
+                <th>Tanggal Upload</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="pendingTableBody">
+              <!-- Data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+        <div id="pendingEmptyState" class="empty-state" style="display: none;">
+          <i class="fas fa-inbox"></i>
+          <h3>Tidak ada pending uploads</h3>
+          <p>Semua uploads telah diapprove atau direject</p>
+        </div>
+      </div>
+
+      <!-- Dokumen Resmi Tab -->
+      <div id="documents-tab" class="tab-pane">
+        <div class="tab-header">
+          <h2>Dokumen Resmi</h2>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="documentsSearch" placeholder="Cari berdasarkan mata kuliah...">
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Mata Kuliah</th>
+                <th>Tahun</th>
+                <th>Jenis Ujian</th>
+                <th>Uploader & Approver</th>
+                <th>Tanggal Approval</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="documentsTableBody">
+              <!-- Data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+        <div id="documentsEmptyState" class="empty-state" style="display: none;">
+          <i class="fas fa-file-export"></i>
+          <h3>Belum ada dokumen resmi</h3>
+          <p>Tidak ada dokumen yang telah diapprove</p>
+        </div>
+      </div>
+
+      <!-- Users Tab -->
+      <div id="users-tab" class="tab-pane">
+        <div class="tab-header">
+          <h2>Daftar Users</h2>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="usersSearch" placeholder="Cari berdasarkan nama...">
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Role</th>
+                <th>Tanggal Registrasi</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <!-- Data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+        <div id="usersEmptyState" class="empty-state" style="display: none;">
+          <i class="fas fa-user-friends"></i>
+          <h3>Belum ada users</h3>
+          <p>Belum ada user yang terdaftar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/supabase.js" type="module"></script>
+  <script src="../js/admin-dashboard.js" type="module"></script>
+  
+  <script>
+    // Handle logout function
+    function handleLogout() {
+      if (typeof loginManager !== 'undefined' && loginManager.logout) {
+        loginManager.logout();
+      } else {
+        // Fallback logout
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = '/login.html';
+      }
+    }
+    function confirmLogout() {
+      if (typeof Swal === 'undefined') { return handleLogout(); }
+      Swal.fire({
+        title: 'Logout dari Dashboard?',
+        text: 'Anda akan keluar dari sesi admin.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Ya, Logout',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleLogout();
+        }
+      });
+    }
+    
+    // Initialize page function similar to soal.html
+    function initializePage() {
+      console.log('Initializing Admin Dashboard page...');
+      
+      // Initialize login manager with a small delay to ensure it's loaded
+      setTimeout(() => {
+        if (typeof LoginManager !== 'undefined') {
+          window.loginManager = new LoginManager();
+          console.log('Login Manager initialized');
+          
+          // Force update the navbar UI
+          if (window.loginManager.updateLoginUI) {
+            window.loginManager.updateLoginUI();
+          }
+        } else {
+          console.warn('LoginManager class not available');
+        }
+      }, 100);
+    }
+    
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Small delay to ensure all scripts are loaded
+      setTimeout(() => {
+        // Initialize login manager
+        if (typeof LoginManager !== 'undefined') {
+          window.loginManager = new LoginManager();
+        }
+        
+        // Also update the navbar immediately after initialization
+        setTimeout(() => {
+          if (window.loginManager && typeof window.loginManager.updateLoginUI === 'function') {
+            window.loginManager.updateLoginUI();
+          }
+        }, 100);
+      }, 100);
+      
+      // Call initializePage similar to soal.html
+      initializePage();
+    });
+  </script>
+</body>
+</html>

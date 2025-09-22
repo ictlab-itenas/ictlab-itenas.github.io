@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="css/fa-brands.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/scrollbar.css">
+  <script src="js/env.js"></script>
   <script src="js/login-manager.js" defer></script>
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -224,6 +226,46 @@
       </form>
     </div>
   </div>
+
+  <script>
+    // Handle logout function
+    function handleLogout() {
+      if (typeof loginManager !== 'undefined' && loginManager.logout) {
+        loginManager.logout();
+      } else {
+        // Fallback logout
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = '/login.html';
+      }
+    }
+    
+    // Initialize page function similar to soal.html
+    function initializePage() {
+      console.log('Initializing Upload page...');
+      
+      // Initialize login manager with a small delay to ensure it's loaded
+      setTimeout(() => {
+        if (typeof LoginManager !== 'undefined') {
+          window.loginManager = new LoginManager();
+          console.log('Login Manager initialized');
+          
+          // Force update the navbar UI
+          if (window.loginManager.updateLoginUI) {
+            window.loginManager.updateLoginUI();
+          }
+        } else {
+          console.warn('LoginManager class not available');
+        }
+      }, 100);
+    }
+    
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Call initializePage similar to soal.html
+      initializePage();
+    });
+  </script>
 
 </body>
 </html>

@@ -3,6 +3,23 @@
  * Manages user authentication state across all pages
  */
 
+// Import Supabase functions
+let loginSupabaseModule;
+let loginGetUserProfile;
+
+// Dynamically import Supabase module
+async function loadLoginSupabase() {
+  try {
+    if (!loginSupabaseModule) {
+      loginSupabaseModule = await import('./supabase.js');
+      loginGetUserProfile = loginSupabaseModule.getUserProfile;
+      console.log('Login Supabase module loaded successfully');
+    }
+  } catch (error) {
+    console.error('Failed to load Login Supabase module:', error);
+  }
+}
+
 class LoginManager {
   constructor() {
     this.storageKeys = {
@@ -11,6 +28,9 @@ class LoginManager {
       loginMethod: 'loginMethod',
       loginTime: 'loginTime'
     };
+    
+    // Load Supabase module
+    loadLoginSupabase();
     
     this.init();
   }
@@ -74,8 +94,8 @@ class LoginManager {
     localStorage.removeItem('quizResults');
     
     // Redirect to login page if not already there
-    if (!window.location.pathname.includes('login.html')) {
-      window.location.href = 'login.html';
+        if (!window.location.pathname.includes('login.html')) {
+          window.location.href = '/login.html';
     }
   }
 
@@ -96,10 +116,13 @@ class LoginManager {
     // For main navbar (index.html)
     const mainNavbar = document.querySelector('.navbar-menu');
     if (mainNavbar) {
-      const loginLink = mainNavbar.querySelector('a[href="login.html"]');
+      // match any href that ends with login.html to be resilient to relative paths
+      const loginLink = mainNavbar.querySelector('a[href$="login.html"]');
       if (loginLink) {
         if (isLoggedIn && userInfo) {
-          loginLink.innerHTML = `<i class="fas fa-user-circle"></i> ${userInfo.name || 'User'}`;
+          // Show only first name
+          const firstName = userInfo && (userInfo.given_name || userInfo.name) ? (userInfo.given_name || userInfo.name).split(' ')[0] : (localStorage.getItem('userEmail') || 'User');
+          loginLink.innerHTML = `<i class="fas fa-user-circle"></i> ${firstName}`;
           loginLink.href = '#';
           loginLink.onclick = (e) => {
             e.preventDefault();
@@ -107,7 +130,7 @@ class LoginManager {
           };
         } else {
           loginLink.innerHTML = 'Login';
-          loginLink.href = 'login.html';
+              loginLink.href = '/login.html';
           loginLink.onclick = null;
         }
       }
@@ -116,26 +139,41 @@ class LoginManager {
     // For catalog navbar
     const catalogNavbar = document.querySelector('.catalog-navbar-menu');
     if (catalogNavbar) {
-      const loginLink = catalogNavbar.querySelector('a[href="login.html"]');
-      if (loginLink) {
+      const loginLink = catalogNavbar.querySelector('a[href$="login.html"]');
+      const logoutBtn = catalogNavbar.querySelector('.catalog-navbar-logout');
+      
+      if (loginLink && logoutBtn) {
         if (isLoggedIn && userInfo) {
-          loginLink.innerHTML = `<i class="fas fa-user-circle"></i> ${userInfo.given_name || 'User'}`;
-          loginLink.href = '#';
-          loginLink.onclick = (e) => {
-            e.preventDefault();
-            this.showUserMenu(e);
-          };
+          // For admin dashboard, hide login link and show logout button
+          if (window.location.pathname.includes('/admin/')) {
+            loginLink.style.display = 'none';
+            logoutBtn.style.display = 'flex';
+          } else {
+            // For other pages, show first name in login link and hide logout button
+            const firstName = userInfo && (userInfo.given_name || userInfo.name) ? (userInfo.given_name || userInfo.name).split(' ')[0] : (localStorage.getItem('userEmail') || 'User');
+            loginLink.innerHTML = `<i class="fas fa-user-circle"></i> ${firstName}`;
+            loginLink.href = '#';
+            loginLink.onclick = (e) => {
+              e.preventDefault();
+              this.showUserMenu(e);
+            };
+            loginLink.style.display = 'flex';
+            logoutBtn.style.display = 'none';
+          }
         } else {
+          // Show login link and hide logout button when not logged in
           loginLink.innerHTML = 'Login';
-          loginLink.href = 'login.html';
+              loginLink.href = '/login.html';
           loginLink.onclick = null;
+          loginLink.style.display = 'flex';
+          logoutBtn.style.display = 'none';
         }
       }
     }
   }
 
   // Show user dropdown menu
-  showUserMenu(event) {
+  async showUserMenu(event) {
     // Remove existing menu if any
     const existingMenu = document.querySelector('.user-dropdown-menu');
     if (existingMenu) {
@@ -145,23 +183,55 @@ class LoginManager {
     const userInfo = this.getUserInfo();
     const loginMethod = this.getLoginMethod();
     
-    // Create dropdown menu
-    const menu = document.createElement('div');
-    menu.className = 'user-dropdown-menu';
-    menu.innerHTML = `
+    // Check if user is admin
+    let isAdmin = false;
+    if (loginSupabaseModule && loginGetUserProfile) {
+      try {
+        const userId = userInfo?.sub || localStorage.getItem('userId');
+        if (userId) {
+          const profileResult = await loginGetUserProfile(userId);
+          if (profileResult.success && profileResult.data) {
+            isAdmin = profileResult.data.role === 'admin';
+          }
+        }
+      } catch (error) {
+        console.error('Error checking admin role:', error);
+      }
+    }
+    
+    // Compute display name (first name only)
+    const displayName = userInfo && (userInfo.given_name || userInfo.name) ? (userInfo.given_name || userInfo.name).split(' ')[0] : (localStorage.getItem('userEmail') || 'User');
+
+    // Create dropdown menu with centered avatar and first name only
+    let menuHTML = `
       <div class="user-info">
         <img src="${userInfo?.picture || 'img/logo-bg.png'}" alt="Profile" class="user-avatar">
-        <div class="user-details">
-          <div class="user-name">${userInfo?.name || 'User'}</div>
-          <div class="user-email">${localStorage.getItem('userEmail') || userInfo?.email || ''}</div>
-          <div class="login-method">via ${loginMethod === 'google' ? 'Google' : 'Guest'}</div>
-        </div>
+        <div class="user-name">${displayName}</div>
+        <div class="user-email">${localStorage.getItem('userEmail') || userInfo?.email || ''}</div>
+        <div class="login-method">via ${loginMethod === 'google' ? 'Google' : 'Guest'}</div>
       </div>
       <div class="menu-divider"></div>
+    `;
+    
+    // Add admin dashboard link if user is admin
+    if (isAdmin) {
+      menuHTML += `
+        <a href="/admin/dashboard.html" class="menu-item">
+          <i class="fas fa-cog"></i> Admin Dashboard
+        </a>
+        <div class="menu-divider"></div>
+      `;
+    }
+    
+    menuHTML += `
       <button class="menu-item" onclick="loginManager.logout()">
         <i class="fas fa-sign-out-alt"></i> Logout
       </button>
     `;
+
+    const menu = document.createElement('div');
+    menu.className = 'user-dropdown-menu';
+    menu.innerHTML = menuHTML;
 
     // Position menu
     const rect = event.target.getBoundingClientRect();
@@ -227,7 +297,7 @@ class LoginManager {
           <button class="btn-secondary" onclick="this.parentElement.parentElement.parentElement.remove()">
             Cancel
           </button>
-          <button class="btn-primary" onclick="window.location.href='login.html'">
+              <button class="btn-primary" onclick="window.location.href='/login.html'">
             Login
           </button>
         </div>
@@ -278,34 +348,35 @@ const loginStyles = `
 }
 
 .user-info {
-  padding: 20px;
+  padding: 20px 20px 16px;
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 8px;
   align-items: center;
   background: #f8f9fa;
+  text-align: center;
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.user-details {
-  flex: 1;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .user-name {
-  font-weight: 600;
+  font-weight: 700;
   color: #1a1a1a;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  margin-top: 6px;
 }
 
 .user-email {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #666;
-  margin: 2px 0;
+  margin: 0;
 }
 
 .login-method {

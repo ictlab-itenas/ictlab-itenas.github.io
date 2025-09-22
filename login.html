@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="css/fa-brands.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/scrollbar.css">
   <link rel="stylesheet" href="css/login.css">
+  <script src="js/env.js"></script>
   
   <!-- Google OAuth -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -32,8 +34,8 @@
         <div class="login-form">
           <!-- Google Sign-In Button Container -->
           <div class="google-signin-container">
-            <div id="g_id_onload"
-                 data-client_id="932373464615-f07kgcbiulom1g59nrs5i6k696m5lq3t.apps.googleusercontent.com"
+      <div id="g_id_onload"
+        data-client_id=""
                  data-context="signin"
                  data-ux_mode="popup"
                  data-callback="handleCredentialResponse"
@@ -57,6 +59,15 @@
         </div>
       </div>
     </div>
+
+    <script>
+      // Dynamically set Google Client ID from env if present
+      (function() {
+        var cid = (window.__ENV__ && window.__ENV__.GOOGLE_CLIENT_ID) ? window.__ENV__.GOOGLE_CLIENT_ID : '932373464615-f07kgcbiulom1g59nrs5i6k696m5lq3t.apps.googleusercontent.com';
+        var el = document.getElementById('g_id_onload');
+        if (el) el.setAttribute('data-client_id', cid);
+      })();
+    </script>
 
     <!-- Background decoration -->
     <div class="login-background">
@@ -114,9 +125,9 @@
         <ul>
           <li><strong>Data yang dikumpulkan:</strong> Email, nama, dan informasi profil Google</li>
           <li><strong>Penggunaan data:</strong> Autentikasi, personalisasi, dan administrasi sistem</li>
-          <li><strong>Penyimpanan:</strong> Data disimpan dengan aman di Google Sheets</li>
+          <li><strong>Penyimpanan:</strong> Data disimpan dengan aman di Supabase</li>
           <li><strong>Pembagian:</strong> Data tidak dibagikan kepada pihak ketiga</li>
-          <li><strong>Keamanan:</strong> Enkripsi dan proteksi sesuai standar Google</li>
+          <li><strong>Keamanan:</strong> Enkripsi dan proteksi sesuai standar Google dan Supabase</li>
           <li><strong>Hak Anda:</strong> Dapat meminta penghapusan data kapan saja</li>
         </ul>
         <p>Untuk pertanyaan tentang privasi, hubungi admin ICT Laboratory.</p>

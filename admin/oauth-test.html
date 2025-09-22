@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OAuth & Database Test</title>
+    <link rel="stylesheet" href="../css/scrollbar.css">
+    <script src="../js/env.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -123,8 +125,8 @@
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
-        const GOOGLE_CLIENT_ID = '932373464615-f07kgcbiulom1g59nrs5i6k696m5lq3t.apps.googleusercontent.com';
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpH3tbEZ_C9jWvXZQhefCIhCps1aKZm01TQURPxyvCbIKb0Jw6yyMuoUyWzCARZVMs-w/exec';
+    const GOOGLE_CLIENT_ID = (window.__ENV__ && window.__ENV__.GOOGLE_CLIENT_ID) ? window.__ENV__.GOOGLE_CLIENT_ID : '932373464615-f07kgcbiulom1g59nrs5i6k696m5lq3t.apps.googleusercontent.com';
+    const APPS_SCRIPT_URL = (window.__ENV__ && window.__ENV__.APPS_SCRIPT_URL) ? window.__ENV__.APPS_SCRIPT_URL : 'https://script.google.com/macros/s/AKfycbxpH3tbEZ_C9jWvXZQhefCIhCps1aKZm01TQURPxyvCbIKb0Jw6yyMuoUyWzCARZVMs-w/exec';
 
         function log(message, type = 'info') {
             const timestamp = new Date().toISOString();
